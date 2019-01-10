@@ -1,0 +1,34 @@
+extends ../layouts/library
+block content
+  .container(style="padding-top:50px")
+    #alertDanger
+    .d-flex.m-auto.col-5
+          h1.col-8.mb-3 LOGIN
+          .col-2
+          a(href="/").mt-2
+                button(class="btn btn-light") BACK
+    form(
+        action="/user/login",
+        method="POST",
+        class="col-3 mt-2",
+        onsubmit="return checkpass()",
+      ).needs-validation.col-5.m-auto
+      //- Email
+      label(for="useremail") Email
+      input#useremail.form-control(
+            name="email",
+            type='email', 
+            placeholder='Email', 
+            required='')
+      .invalid-feedback Please provide a valid Email.
+      //- Password
+      label(for="userpassword") Password
+      input#userpassword.form-control(
+            name="password",
+            type='password', 
+            placeholder='Password', 
+            required='',
+            pattern='.{6,}')
+      .invalid-feedback Please provide a valid Password.
+      //- Create
+      button.btn.btn-success.mt-3 Login

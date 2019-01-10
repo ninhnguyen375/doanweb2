@@ -1,11 +1,12 @@
 doctype html
 html
   head
-    title= title
+    title This is Title :)
     
     link(rel="stylesheet", href="/public/css/bootstrap.min.css")
     link(rel="stylesheet", href="/public/fontawesome/css/all.min.css")
     link(rel="stylesheet", href="/public/css/styles.css")
+    link(rel="shortcut icon", href="/public/img/icon.png")
   body
     //- Navbar
     nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top.border-bottom
@@ -29,8 +30,17 @@ html
                 a.dropdown-item(href=`/?producer=${producer.producer_id}&&page=1`)= producer.producer_name
           //- end category
           form.form-inline.my-2.my-lg-0
-              input.form-control.mr-sm-2(type='search', placeholder='Search', aria-label='Search')
-              button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
+              input.form-control.mr-sm-2(
+                type='search', 
+                placeholder='Search', 
+                aria-label='Search',
+                name="search"
+              )
+              //- button.btn.btn-outline-success.mr-2.my-2.my-sm-0(type='submit') Search
+          
+          a(href="/user/login").btn.btn-light#login Login
+          span | 
+          a(href="/user/signup").btn.btn-light#signup Sign up
     //- End navbar
     block content
     //- Footer
@@ -38,8 +48,14 @@ html
         .row
           .col-6 Copyright © ShopPi
           .col-6.text-right
-              a(href='https://github.com/ninhnguyen375/web-server-nodejs') Project on GitHub
+              a(href='https://github.com/ninhnguyen375/doanweb2') Project on GitHub
               i.fab.fa-github.ml-2
+    #showAuth(style="display: none")
+      .showAuth-content
+        #authName te
+        #authPhone te
+        #authEmail te 
+        #authPermission te
     //- End Footer
     script(src="/public/js/scripts.js")    
     script(src="/public/js/jquery.min.js")

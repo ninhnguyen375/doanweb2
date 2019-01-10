@@ -6,6 +6,7 @@ const mongoose = require("mongoose")
 const homeRoute = require("./routes/home.route")
 const cartRoute = require("./routes/cart.route")
 const productRoute = require("./routes/product.route")
+const userRoute = require("./routes/user.route")
 
 // connect to mongodb
 // let dblink = "mongodb://ninhnguyen375:ninhnguyen3755@ds127634.mlab.com:27634/salesweb"
@@ -41,7 +42,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/', homeRoute)
 app.use('/cart', cartRoute)
 app.use('/product', productRoute)
-
+app.use('/user', userRoute)
 
 //Listen Port
 app.listen(3001, () => {

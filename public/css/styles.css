@@ -1,0 +1,8 @@
+*{
+  outline: none !important;
+}
+body{
+  min-height: 100vh;
+  height: auto;
+  position: relative;
+}

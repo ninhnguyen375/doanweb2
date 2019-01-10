@@ -1,0 +1,48 @@
+doctype html
+html
+  head
+    title= title
+    
+    link(rel="stylesheet", href="/public/css/bootstrap.min.css")
+    link(rel="stylesheet", href="/public/fontawesome/css/all.min.css")
+    link(rel="stylesheet", href="/public/css/styles.css")
+  body
+    //- Navbar
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top.border-bottom
+        a.navbar-brand(href='/') ShopPi
+        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+          span.navbar-toggler-icon
+        #navbarSupportedContent.collapse.navbar-collapse
+          ul.navbar-nav.mr-auto
+              li.nav-item
+                a.nav-link(href='/') Home
+              li.nav-item
+                a.nav-link(href='/') About
+              li.nav-item
+                a.nav-link.active(href='https://www.facebook.com/ninhnguyen375') Contact Us
+          //- category
+          .dropdown.mr-3
+            button#dropdownMenuButton.btn.btn-outline-primary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+              | Category
+            .dropdown-menu(aria-labelledby='dropdownMenuButton')
+              each producer in producers
+                a.dropdown-item(href=`/?producer=${producer.producer_id}&&page=1`)= producer.producer_name
+          //- end category
+          form.form-inline.my-2.my-lg-0
+              input.form-control.mr-sm-2(type='search', placeholder='Search', aria-label='Search')
+              button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
+    //- End navbar
+    block content
+    //- Footer
+    .container-fluid.bg-light.pt-2.pb-2#footer
+        .row
+          .col-6 Copyright © ShopPi
+          .col-6.text-right
+              a(href='https://github.com/ninhnguyen375/web-server-nodejs') Project on GitHub
+              i.fab.fa-github.ml-2
+    //- End Footer
+    script(src="/public/js/scripts.js")    
+    script(src="/public/js/jquery.min.js")
+    script(src="/public/js/popper.js")
+    script(src="/public/js/bootstrap.min.js")
+    

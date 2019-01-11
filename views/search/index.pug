@@ -30,7 +30,7 @@ block content
   .container(style="padding-top:50px; padding-bottom: 50px;overflow:auto")
     h1.font-weight-bold Your Search
     if querys.page
-      - let pages = ((products.length / 8) + 1)
+      - let pages = Math.ceil(products.length / 8)
       - let start = (((querys.page) - 1)*8)
       - let end = ((querys.page)*8)
       - for(let i = start; i < end && i < products.length; i++)

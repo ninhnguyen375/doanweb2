@@ -1,8 +1,7 @@
 extends ../layouts/common
 block content
-  h1 Welcom to your Cart
-  a(href="/") Home
-  h1= test
+  .container(style="padding-top:80px")
+  h1 Your Cart
   each item in cart
     - let productCurrent = products.find((p)=>{return p.product_id == item.proId})
     - let producerCurrent = producers.find((p)=>{return p.producer_id == productCurrent.producer})

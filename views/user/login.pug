@@ -1,7 +1,8 @@
 extends ../layouts/library
 block content
   .container(style="padding-top:50px")
-    #alertDanger
+    if err
+      .alert.alert-danger.m-auto.col-5= err
     .d-flex.m-auto.col-5
           h1.col-8.mb-3 LOGIN
           .col-2
@@ -10,8 +11,7 @@ block content
     form(
         action="/user/login",
         method="POST",
-        class="col-3 mt-2",
-        onsubmit="return checkpass()",
+        class="col-3 mt-2"
       ).needs-validation.col-5.m-auto
       //- Email
       label(for="useremail") Email
@@ -32,3 +32,5 @@ block content
       .invalid-feedback Please provide a valid Password.
       //- Create
       button.btn.btn-success.mt-3 Login
+  script(type="text/javascript").
+    document.getElementById('useremail').focus()

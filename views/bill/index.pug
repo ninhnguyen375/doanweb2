@@ -1,0 +1,41 @@
+extends ../layouts/common
+block content
+  .container.pt-5.mt-3
+  h1.text-center Your Bills
+  - if(bills[0])
+    each bill in bills
+      h4= 'Auth ID : ' + user.id
+      h4= 'Bill id : ' + bill.id
+      h4= 'Bill total price : $' + bill.totalPrice
+      h4= 'Auth name : ' + user.user_name
+      h4= 'Status : ' + bill.status
+      .container.col-10
+        h3 Details
+        table.table.col-5.text-center
+          thead
+            tr
+              th Product Id
+              th Quantity
+              th Product Price
+              th Counted
+          tbody
+            - for(let i = 0; i < bill.details.proId.length; i++)
+              tr
+                td= bill.details.proId[i]
+                td= bill.details.proQuantity[i]
+                td='$' + bill.details.proPrice[i]
+                td='$' + (bill.details.proPrice[i] * bill.details.proQuantity[i])
+            tr
+              td
+              td
+              td
+              td= 'Total : $' + bill.totalPrice
+        form(action="/bill/deleteBill", method="POST")
+          input(type="hidden", name='billId', value=bill.id)
+          input(type="hidden", name='userId', value=user.id)
+          button.btn.btn-danger Cancel
+      hr
+  - else
+    h3.text-center Your Bills is Empty
+    h4.text-center
+      a(href="/").btn.btn-primary Go to shopping

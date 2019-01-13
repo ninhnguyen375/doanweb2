@@ -44,9 +44,17 @@ html
           a(href="/user/login").btn.btn-light#login Login
           span | 
           a(href="/user/signup").btn.btn-light#signup Sign up
-          a(href="/cart")
-            button.btn.btn-light
-              i.fas.fa-shopping-cart(style="font-size: 20px;color:#4e7bff")
+          //- Cart & Bill
+          .dropdown.ml-2
+            button#dropdownMenuButton.btn.btn-outline-primary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+              i.fas.fa-shopping-cart
+            .dropdown-menu(aria-labelledby='dropdownMenuButton')
+              a(href="/cart").dropdown-item Cart
+              a#goToBill(href="").dropdown-item Bill
+          //- end Cart & Bill
+          //- a(href="/cart")
+          //-   button.btn.btn-light
+          //-     i.fas.fa-shopping-cart(style="font-size: 20px;color:#4e7bff")
     //- End navbar
     block content
     //- Footer

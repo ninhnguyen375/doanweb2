@@ -4,7 +4,6 @@ const Products = require('../models/products.model');
 module.exports.index = async (req, res) => {
   const querys = req.query;
   const producers = await Producers.find();
-  // const temps = await Products.find();
   let products = await Products.find();
   if (querys.search) {
     products = products.filter(
@@ -28,17 +27,41 @@ module.exports.index = async (req, res) => {
     ));
   }
   if (querys.sortByName) {
+    if (querys.sortByName === 'AtoZ') {
+      products.sort((a, b) => {
+        const nameA = a.product_name.toLowerCase();
+        const nameB = b.product_name.toLowerCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+    } else {
+      products.sort((a, b) => {
+        const nameA = a.product_name.toLowerCase();
+        const nameB = b.product_name.toLowerCase();
+        if (nameA < nameB) {
+          return 1;
+        }
+        if (nameA > nameB) {
+          return -1;
+        }
+        return 0;
+      });
+    }
+  }
+  if (querys.sortByPrice) {
     products.sort((a, b) => {
-      const nameA = a.product_name.toUpperCase();
-      const nameB = b.product_name.toUpperCase();
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
-      }
-      return 0;
+      const priceA = parseInt(a.product_price, 10);
+      const priceB = parseInt(b.product_price, 10);
+      return priceA - priceB;
     });
+    if (querys.sortByPrice !== 'Asc') {
+      products.reverse();
+    }
   }
   res.render('search/index', {
     querys,

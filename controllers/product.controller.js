@@ -14,6 +14,12 @@ module.exports.index = async (req, res) => {
 
 module.exports.postAddToCart = async (req, res) => {
   const reqBody = await req.body;
-  await Cart.insertMany(reqBody);
+  const cart = await Cart.find({ proId: reqBody.proId });
+  if (cart[0]) {
+    const newQua = parseInt(reqBody.quantity, 10) + cart[0].quantity;
+    await Cart.findOneAndUpdate({ proId: reqBody.proId }, { quantity: newQua });
+  } else {
+    await Cart.insertMany(reqBody);
+  }
   res.redirect('/cart');
 };

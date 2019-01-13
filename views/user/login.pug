@@ -31,6 +31,7 @@ block content
             pattern='.{6,}')
       .invalid-feedback Please provide a valid Password.
       //- Create
-      button.btn.btn-success.mt-3 Login
+      button(type="submit").btn.btn-success.mt-3 Login
+      a(href='/user/signup').btn.btn-light.mt-3.float-right Sign up
   script(type="text/javascript").
     document.getElementById('useremail').focus()

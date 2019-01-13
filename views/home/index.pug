@@ -5,7 +5,7 @@ block content
     h1="All products : " + products.length
   .container(style="padding-top:50px; padding-bottom: 50px;overflow:auto")
     if querys.page
-      - let pages = Math.ceil(products.length / 8) + 1)
+      - let pages = Math.ceil(products.length / 8)
       - let start = (((querys.page) - 1)*8)
       - let end = ((querys.page)*8)
       - for(let i = start; i < end && i < products.length; i++)

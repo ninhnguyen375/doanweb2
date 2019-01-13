@@ -1,23 +1,27 @@
+require('dotenv').config();
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
-
 // get route
 const homeRoute = require('./routes/home.route');
 const cartRoute = require('./routes/cart.route');
 const productRoute = require('./routes/product.route');
 const userRoute = require('./routes/user.route');
+const billRoute = require('./routes/bill.route');
 const searchRoute = require('./routes/search.route');
 
-// connect to mongodb
-// let dblink = "mongodb://ninhnguyen375:ninhnguyen3755@ds127634.mlab.com:27634/salesweb"
-const dbLinkLocal = 'mongodb://127.0.0.1:27017/webbanhangdb';
-//  ||
-// "mongodb://127.0.0.1:27017/webbanhangdb"
-mongoose.connect(
-  dbLinkLocal,
-  { useNewUrlParser: true },
-);
+const PORT = process.env.PORT || 3000 || 8080;
+// const localDB = 'mongodb://127.0.0.1:27017/webbanhangdb';
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
+const db = mongoose.connection;
+
+// check connection
+db.once('open', () => console.log('Connected to MongoDB'));
+// check error
+db.on('error', (err) => {
+  console.log(err);
+});
+
 // init app
 const app = express();
 
@@ -39,6 +43,7 @@ app.use('/cart', cartRoute);
 app.use('/product', productRoute);
 app.use('/user', userRoute);
 app.use('/search', searchRoute);
+app.use('/bill', billRoute);
 
 // Listen Port
-app.listen(3000);
+app.listen(PORT);

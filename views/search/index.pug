@@ -25,6 +25,12 @@ block content
         option(value="") Sort By Name
         option(value="AtoZ") A - Z
         option(value="ZtoA") Z - A
+      //- sort price
+      label(for="sortByPrice").mt-2 Sort by Price
+      select.custom-select#sortByPrice(name="sortByPrice")
+        option(value="") Sort By Price
+        option(value="Asc") Asc
+        option(value="Desc") Desc
       //- button seach
       button.btn.btn-success.mt-3 Search
   .container(style="padding-top:50px; padding-bottom: 50px;overflow:auto")
@@ -54,9 +60,9 @@ block content
         - for(let i = 1; i <= pages; i++)
           if querys.page == i
             a.btn.btn-outline-primary.mr-2.active(
-              href="?search="+querys.search+"&page="+i+"&price="+querys.price+"&producer="+querys.producer+"&sortByName="+querys.sortByName
+              href="?search="+querys.search+"&page="+i+"&price="+querys.price+"&producer="+querys.producer+"&sortByName="+querys.sortByName+"&sortByPrice="+querys.sortByPrice
             )= i
           else
             a.btn.btn-outline-primary.mr-2(
-              href="?search="+querys.search+"&page="+i+"&price="+querys.price+"&producer="+querys.producer+"&sortByName="+querys.sortByName
+              href="?search="+querys.search+"&page="+i+"&price="+querys.price+"&producer="+querys.producer+"&sortByName="+querys.sortByName+"&sortByPrice="+querys.sortByPrice
             )= i

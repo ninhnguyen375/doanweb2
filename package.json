@@ -5,8 +5,8 @@
   "author": "ninh",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --inspect index.js",
-    "run dev": "node index.js"
+    "run dev": "nodemon --inspect index.js",
+    "start": "node index.js"
   },
   "dependencies": {
     "body-parser": "^1.18.3",

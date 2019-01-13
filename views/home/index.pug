@@ -34,6 +34,7 @@ block content
             a.btn.btn-outline-primary.mr-2(
               href="?producer=" + querys.producer + "&page=" + i)= i
     else
+      h2 Featured products
       - for(let i = 0; i < 12 && i < products.length; i++)
         - let found = producers.find((elm)=>{return elm.producer_id == products[0].producer})
         .card.float-left.m-3.mt-5.position-relative.shadow-lg(
@@ -59,3 +60,4 @@ block content
           else
             a.btn.btn-outline-primary.mr-2(
               href="?producer=" + querys.producer + "&&page=" + i)= i
+      h3 END Featured

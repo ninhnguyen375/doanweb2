@@ -33,6 +33,7 @@ module.exports.addBill = async (req, res) => {
     pro.push(obj);
   }
   pro.forEach(async p => {
+    // find() return an array
     const curr = await Products.find({ product_id: p.proId });
     const newQua = curr[0].quantity - p.proQua;
     await Products.findOneAndUpdate(

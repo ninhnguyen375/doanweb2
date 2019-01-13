@@ -11,8 +11,11 @@ const billRoute = require('./routes/bill.route');
 const searchRoute = require('./routes/search.route');
 
 const PORT = process.env.PORT || 3000 || 8080;
-// const localDB = 'mongodb://127.0.0.1:27017/webbanhangdb';
-mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
+// const mongodb = 'mongodb://127.0.0.1:27017/webbanhangdb';
+mongoose.connect(
+  process.env.MONGO_URL,
+  { useNewUrlParser: true },
+);
 const db = mongoose.connection;
 
 // check connection
@@ -46,4 +49,6 @@ app.use('/search', searchRoute);
 app.use('/bill', billRoute);
 
 // Listen Port
-app.listen(PORT);
+app.listen(PORT, () => {
+  console.log(PORT);
+});

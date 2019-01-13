@@ -1,3 +1,4 @@
+/* eslint-disable */
 const Products = require('../models/products.model');
 const Producers = require('../models/producers.model');
 const Bills = require('../models/bills.model');
@@ -23,6 +24,29 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.deleteBill = async (req, res) => {
-  await Bills.findByIdAndDelete(req.body.billId);
-  res.redirect(`/bill/${req.body.userId}`);
+  const { billId } = req.body;
+  const { userId } = req.body;
+  let { proId } = req.body;
+  let { proQuantity } = req.body;
+  proId = JSON.parse(proId);
+  proQuantity = JSON.parse(proQuantity);
+
+  let data = [];
+  for (let i = 0; i < proId.length; i++) {
+    const obj = {
+      proId: proId[i],
+      proQuan: proQuantity[i],
+    };
+    data.push(obj);
+  }
+  data.forEach( async d=>{
+    const currPro = await Products.find({ product_id: d.proId });
+    const newQuan = currPro[0].quantity + d.proQuan;
+    await Products.findOneAndUpdate(
+        { product_id: d.proId },
+        { quantity: newQuan }
+      );
+  });
+  await Bills.findByIdAndDelete(billId);
+  res.redirect(`/bill/${userId}`);
 };

@@ -6,28 +6,42 @@ function changeAuth() {
   const login = document.getElementById("login");
   const signup = document.getElementById("signup");
   const auth = JSON.parse(localStorage.getItem("auth"));
+  const adminPage = document.getElementById("adminPage");
+  const adminName = document.getElementById("adminName");
   if (!auth) {
     return;
   }
-  signup.innerHTML = "Logout";
-  signup.addEventListener("click", nonAuth);
-  signup.href = "";
-  login.removeAttribute("href");
-  login.addEventListener("click", () => {
-    const showAuth = document.getElementById("showAuth");
-
-    showAuth.style.display = "block";
-    window.addEventListener("click", e => {
-      if (e.target === showAuth) {
-        showAuth.style.display = "none";
-      }
+  if (auth.user_permission === "admin") {
+    if (adminPage) {
+      adminPage.style.display = "block";
+    }
+    if (adminName) {
+      adminName.innerHTML = auth.user_name;
+    }
+  }
+  if (signup) {
+    signup.innerHTML = "Logout";
+    signup.addEventListener("click", nonAuth);
+    signup.href = "";
+  }
+  if (login) {
+    login.removeAttribute("href");
+    login.addEventListener("click", () => {
+      const showAuth = document.getElementById("showAuth");
+      showAuth.style.display = "block";
+      window.addEventListener("click", e => {
+        if (e.target === showAuth) {
+          showAuth.style.display = "none";
+        }
+      });
+      document.getElementById("authName").innerHTML = auth.user_name;
+      document.getElementById("authPhone").innerHTML = auth.user_phone;
+      document.getElementById("authEmail").innerHTML = auth.user_email;
+      document.getElementById("authPermission").innerHTML =
+        auth.user_permission;
     });
-    document.getElementById("authName").innerHTML = auth.user_name;
-    document.getElementById("authPhone").innerHTML = auth.user_phone;
-    document.getElementById("authEmail").innerHTML = auth.user_email;
-    document.getElementById("authPermission").innerHTML = auth.user_permission;
-  });
-  login.innerHTML = auth.user_name;
+    login.innerHTML = auth.user_name;
+  }
 }
 function checkpass() {
   const pass1 = document.getElementById("userpassword");
@@ -80,12 +94,16 @@ function postAddBill() {
       proId.push(proIdInput[i].value);
       proPrice.push(proPriceInput[i].value);
       proQuantity.push(proQuantityInput[i].value);
-      if (parseInt(proQuantityInput[i].value, 10) > parseInt(rootQuantity[i].value, 10)){
-        alert("Product : " + 
-            proName[i].value + 
-            " not enough quantity!\nCurrent quantity in stock : "+ 
+      if (
+        parseInt(proQuantityInput[i].value, 10) >
+        parseInt(rootQuantity[i].value, 10)
+      ) {
+        alert(
+          "Product : " +
+            proName[i].value +
+            " not enough quantity!\nCurrent quantity in stock : " +
             rootQuantity[i].value
-          );
+        );
         proQuantityInput[i].focus();
         return false;
       }
@@ -145,8 +163,33 @@ function changeQuantity(e) {
   console.log(proQuantity);
   console.log(totalPrice);
 }
+function changeAdminPermisson(e, p) {
+  const form = document.getElementById(e);
+  form.onsubmit = function() {
+    const prom = prompt("Enter this admin's Password:");
+    if (prom == p) {
+      form.innerHTML +=
+        '<input type="hidden" value=' + p + ' name="user_password"/>';
+      return true;
+    } else {
+      return false;
+    }
+  };
+}
+function activeLeftMenu() {
+  const links = document.getElementsByClassName("left-menu__item");
+  if (!links) {
+    return;
+  }
+  for (let i = 0; i < links.length; i++) {
+    if (window.location.href.indexOf(links[i].href) != -1) {
+      links[i].className += " active";
+    }
+  }
+}
 window.onload = () => {
   changeAuth();
+  activeLeftMenu();
   postAddBill();
   changeDataFromCart();
   try {

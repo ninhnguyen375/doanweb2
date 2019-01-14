@@ -9,13 +9,20 @@ const productRoute = require('./routes/product.route');
 const userRoute = require('./routes/user.route');
 const billRoute = require('./routes/bill.route');
 const searchRoute = require('./routes/search.route');
+const adminRoute = require('./routes/admin.route');
 
 const PORT = process.env.PORT || 3000 || 8080;
-// const mongodb = 'mongodb://127.0.0.1:27017/webbanhangdb';
+const mongodb = 'mongodb://127.0.0.1:27017/webbanhangdb';
+// ---------- local
 mongoose.connect(
-  process.env.MONGO_URL,
+  mongodb,
   { useNewUrlParser: true },
 );
+// ---------- online
+// mongoose.connect(
+//   process.env.MONGO_URL,
+//   { useNewUrlParser: true },
+// );
 const db = mongoose.connection;
 
 // check connection
@@ -47,6 +54,7 @@ app.use('/product', productRoute);
 app.use('/user', userRoute);
 app.use('/search', searchRoute);
 app.use('/bill', billRoute);
+app.use('/admin', adminRoute);
 
 // Listen Port
 app.listen(PORT, () => {

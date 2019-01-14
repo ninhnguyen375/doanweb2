@@ -1,0 +1,154 @@
+extends ../layouts/admin
+block content
+  .breadcrumb
+    span
+      a(href='/') Client Page
+    span.ml-2.mr-2  / 
+    span Admin
+    span.ml-2.mr-2  / 
+    span Product
+  .container.col-11.mt-5.pt-4.pb-4(style='background:white')
+    if idIsDeleted
+      .alert.alert-danger.text-center.m-auto
+        = 'Your have been deleted product '
+        = ' ( id: ' + idIsDeleted + ' )'
+    if idIsEdited
+      - const productIsEdited = products.find(p=>p.id == idIsEdited)
+        .alert.alert-success.text-center.m-auto
+          = 'Your have been edited product : '+productIsEdited.product_name
+          = ' ( id: ' + productIsEdited.product_id + ' )'
+    if added
+      .alert.alert-success.text-center.m-auto Add new Product Successfull!
+    //- Add new product
+    h4.text-secondary Add new Product
+    form(action="/admin/product/add", method='POST')#addNewProduct.col-8
+      //- product_name
+      label(for="add-product_name") Product Name
+      input#add-product_name(
+        type="text", 
+        placeholder="Product Name", 
+        name='product_name',
+        required).form-control
+      //- product quantity
+      label(for="add-product_name") Quantity
+      input#add-quantity(
+        type="number",
+        min="1", 
+        placeholder="Quantity", 
+        name='quantity',
+        required).form-control
+      //- product_price
+      label(for="add-product_price") Product Price ( $ )
+      input#add-product_price(
+        type="number",
+        min="1", 
+        placeholder="Product Price", 
+        name='product_price',
+        required).form-control
+      //- search price
+      label(for="add-producer").mt-2 Producer
+      select.custom-select#add-producer(name="producer")
+        each producer in producers
+          option(value=producer.producer_id)= producer.producer_name
+      //- product_id
+      - const proId = products.length + 1
+        input(type="hidden", name='product_id', value=proId)
+      button.btn.btn-success.mb-3.mt-3(form='addNewProduct', type='submit') Add Product
+    //- END Add Product
+
+    table#table-sp.text-center
+      thead
+        tr
+          th.p-3
+          th Image
+          th Name
+          th Producer
+          th Price
+          th ID
+          th Quantity
+          th Action
+      tbody
+      - const startLoad = (parseInt(page) - 1 )*10
+      - const endLoad = parseInt(page)*10
+      - for(let i = startLoad; i < products.length && i < endLoad; i++)
+        tr
+          td= i + 1
+          td
+            img(src="/public/img/imgtemp.jpeg", width="110px")
+          td= products[i].product_name
+          td= producers.find(p => products[i].producer == p.producer_id).producer_name
+          td='$'+ products[i].product_price
+          td= products[i].product_id
+          td= products[i].quantity
+          td
+            form(action='#', method='POST')
+              input(type="hidden", value=products[i].id, name='id')
+              button.xoa_sp(type='submit', formaction='/admin/product/delete') Delete
+
+            // Button trigger modal
+            button.xoa_sp(
+              type='button', 
+              data-toggle='modal', 
+              data-target='#form' + products[i].id) Edit
+            // Modal
+            form(
+              action="/admin/product/edit", 
+              method="post",
+              tabindex='-1', 
+              role='dialog',
+              aria-hidden='true',
+              id='form' + products[i].id).modal.fade
+                .modal-dialog(role='document')
+                  .modal-content
+                    .modal-header
+                      h5.modal-title Edit Product
+                      button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                    .modal-body
+                      input(type="hidden",value=products[i].id, name='id').form-control
+                      //- product_name
+                      label(for="edit-product_name") Product Name
+                      input#edit-product_name(
+                        type="text", 
+                        placeholder="Product Name", 
+                        name='product_name',
+                        value=products[i].product_name,
+                        required).form-control
+                      //- product quantity
+                      label(for="edit-product_name") Quantity
+                      input#edit-quantity(
+                        type="number",
+                        min="1", 
+                        placeholder="Quantity", 
+                        name='quantity',
+                        value=products[i].quantity,
+                        required).form-control
+                      //- product_price
+                      label(for="edit-product_price") Product Price ( $ )
+                      input#edit-product_price(
+                        type="number",
+                        min="1", 
+                        placeholder="Product Price", 
+                        name='product_price',
+                        value=products[i].product_price,
+                        required).form-control
+                      //- search price
+                      label(for="edit-producer").mt-2 Producer
+                      select.custom-select#edit-producer(name="producer")
+                        each producer in producers
+                          if producer.producer_id == products[i].producer
+                            option(value=producer.producer_id, selected)= producer.producer_name
+                          else
+                            option(value=producer.producer_id)= producer.producer_name
+                    .modal-footer
+                      button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+                      button.btn.btn-primary(type='submit', form='form'+products[i].id) Save changes
+
+
+    .container.text-center
+      - const pages = Math.ceil(products.length/10)
+      - for(let i = 1; i <= pages; i++)
+        if page == i
+          a.btn.btn-outline-primary.m-2.active(href='/admin/product?page='+i)= i
+        else
+          a.btn.btn-outline-primary.m-2(href='/admin/product?page='+i)= i

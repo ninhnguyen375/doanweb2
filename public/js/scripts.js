@@ -55,14 +55,48 @@ function checkpass() {
   alertDanger.className = "alert alert-danger col-5 m-auto";
   return false;
 }
-function goToBill() {
+function renderSearch() {
+  const search = document.getElementById("valueToRenderSearch");
+  if (!search) return;
+  search.onkeyup = function() {
+    const items = document.getElementsByClassName("items");
+    const item_names = document.getElementsByClassName("item-names");
+    const listPages = document.getElementById("listPages");
+    for (let i = 0; i < items.length; i++) {
+      if (
+        item_names[i].innerHTML
+          .toLowerCase()
+          .trim()
+          .indexOf(search.value.toLowerCase().trim()) !== -1
+      ) {
+        items[i].className = "items";
+      } else {
+        items[i].className = "items hidden";
+      }
+    }
+    if (search.value !== ""){
+      listPages.className += "container text-center hidden";
+    } else {
+      listPages.className += "container text-center";
+    }
+  };
+}
+function goToBillandCart() {
   const auth = JSON.parse(localStorage.getItem("auth"));
   const gotobill = document.getElementById("goToBill");
+  const gotocart = document.getElementById("goToCart");
   if (auth) {
     gotobill.href = "/bill/" + auth._id;
+    gotocart.href = "/cart/" + auth._id;
   } else {
     gotobill.href = "#";
     gotobill.onclick = () => {
+      if (confirm("Login first!")) {
+        window.location = "/user/login";
+      }
+    };
+    gotocart.href = "#";
+    gotocart.onclick = () => {
       if (confirm("Login first!")) {
         window.location = "/user/login";
       }
@@ -176,6 +210,21 @@ function changeAdminPermisson(e, p) {
     }
   };
 }
+function completeFormPOSTAddToCart() {
+  const form = document.getElementById("formPOSTAddToCart");
+  if (!form) return;
+  form.onsubmit = () => {
+    const userId = document.getElementsByName("userId")[0];
+    const auth = JSON.parse(localStorage.getItem("auth"));
+    if (!auth) {
+      alert("login first");
+      return false;
+    } else {
+      userId.value = auth._id;
+      return true;
+    }
+  };
+}
 function activeLeftMenu() {
   const links = document.getElementsByClassName("left-menu__item");
   if (!links) {
@@ -191,8 +240,10 @@ window.onload = () => {
   changeAuth();
   activeLeftMenu();
   postAddBill();
+  renderSearch();
+  completeFormPOSTAddToCart();
   changeDataFromCart();
   try {
-    goToBill();
+    goToBillandCart();
   } catch (e) {}
 };

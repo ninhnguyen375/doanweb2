@@ -5,7 +5,8 @@ const Cart = require("../models/cart.model");
 const Bills = require("../models/bills.model");
 
 module.exports.index = async (req, res) => {
-  const cart = await Cart.find();
+  const { id } = req.params;
+  const cart = await Cart.find({ userId: id });
   const products = await Products.find();
   const producers = await Producers.find();
   res.render("cart/index", {
@@ -42,5 +43,5 @@ module.exports.addBill = async (req, res) => {
     );
   });
 
-  res.redirect("/cart");
+  res.redirect("/");
 };

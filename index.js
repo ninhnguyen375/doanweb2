@@ -13,16 +13,17 @@ const adminRoute = require('./routes/admin.route');
 
 const PORT = process.env.PORT || 3000 || 8080;
 // ---------- local
-// const mongodb = 'mongodb://127.0.0.1:27017/webbanhangdb';
-// mongoose.connect(
-//   mongodb,
-//   { useNewUrlParser: true },
-// );
-// ---------- online
+const mongodb = 'mongodb://127.0.0.1:27017/webbanhangdb';
 mongoose.connect(
-  process.env.MONGO_URL,
+  mongodb,
   { useNewUrlParser: true },
 );
+// ---------- online
+// mongoose.connect(
+// process.env.MONGO_URL,
+// { useNewUrlParser: true },
+// );
+
 const db = mongoose.connection;
 
 // check connection

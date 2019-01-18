@@ -21,5 +21,5 @@ module.exports.postAddToCart = async (req, res) => {
   } else {
     await Cart.insertMany(reqBody);
   }
-  res.redirect('/cart');
+  res.redirect(`/cart/${reqBody.userId}`);
 };

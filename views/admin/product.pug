@@ -55,7 +55,9 @@ block content
         input(type="hidden", name='product_id', value=proId)
       button.btn.btn-success.mb-3.mt-3(form='addNewProduct', type='submit') Add Product
     //- END Add Product
-
+    //- search product
+    input(type="text", data-datas=products)#valueToRenderSearch.form-control
+    //- end serch
     table#table-sp.text-center
       thead
         tr
@@ -70,12 +72,17 @@ block content
       tbody
       - const startLoad = (parseInt(page) - 1 )*10
       - const endLoad = parseInt(page)*10
-      - for(let i = startLoad; i < products.length && i < endLoad; i++)
-        tr
+      - for(let i = 0; i < products.length; i++)
+        - let testClass = ''
+        if i < startLoad || i >= endLoad
+          - testClass = 'hidden'
+        else
+          - testClass = ''
+        tr(class=testClass).items
           td= i + 1
           td
             img(src="/public/img/imgtemp.jpeg", width="110px")
-          td= products[i].product_name
+          td.item-names= products[i].product_name
           td= producers.find(p => products[i].producer == p.producer_id).producer_name
           td='$'+ products[i].product_price
           td= products[i].product_id
@@ -145,7 +152,7 @@ block content
                       button.btn.btn-primary(type='submit', form='form'+products[i].id) Save changes
 
 
-    .container.text-center
+    .container.text-center#listPages
       - const pages = Math.ceil(products.length/10)
       - for(let i = 1; i <= pages; i++)
         if page == i

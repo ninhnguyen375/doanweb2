@@ -9,11 +9,11 @@ module.exports.index = async (req, res) => {
     products = await Products.find({ producer: querys.producer });
   } else if (querys.search) {
     const temps = await Products.find();
-    products = temps.filter(product => (
-      product.product_name
+    products = temps.filter(
+      product => product.product_name
         .toLowerCase()
-        .indexOf(querys.search.toLowerCase()) !== -1
-    ));
+        .indexOf(querys.search.toLowerCase()) !== -1,
+    );
   } else {
     products = await Products.find();
   }

@@ -13,7 +13,7 @@ block content
         .card.float-left.m-3.mt-5.position-relative.shadow-lg(
           style='width: 15.3rem;height: 340px'
         ).product__cart
-          img.card-img-top(src= "/public/img/imgtemp.jpeg", alt='Card image cap')
+          img.card-img-top(src= products[i].product_img, alt='Card image cap')
           .card-body
               a(href=`/product/${products[i].id}`)
                 h5.card-title= products[i].product_name
@@ -36,22 +36,30 @@ block content
     else
       h2 Featured products
       - for(let i = 0; i < 12 && i < products.length; i++)
-        - let found = producers.find((elm)=>{return elm.producer_id == products[0].producer})
+        - let found = producers.find((elm)=>{return elm.producer_id == products[i].producer})
         .card.float-left.m-3.mt-5.position-relative.shadow-lg(
           style='width: 15.3rem;height: 340px'
         ).product__cart
-          img.card-img-top(src= "/public/img/imgtemp.jpeg", alt='Card image cap')
+          img.card-img-top(src= products[i].product_img, alt='Card image cap')
           .card-body
               a(href=`/product/${products[i].id}`)
                 h5.card-title= products[i].product_name
               p.card-text.text-secondary= found.producer_name
               .text-danger.position-absolute(style="bottom:10px;left:15px")="$" + products[i].product_price
-              a.btn.btn-outline-primary.position-absolute(
-                href=`/product/${products[i].id}`,
-              style="bottom:10px;right:10px"
-              )
-                i.fas.fa-cart-plus
-                span(style="font-size: 13px")= ` (${products[i].quantity})`
+              if  products[i].quantity != '0'
+                a.btn.btn-outline-primary.position-absolute(
+                  href=`/product/${products[i].id}`,
+                style="bottom:10px;right:10px"
+                )
+                  i.fas.fa-cart-plus
+                  span(style="font-size: 13px")= ` (${products[i].quantity})`
+              else
+                a.btn.btn-outline-primary.position-absolute(
+                  href='#',style="bottom:10px;right:10px",
+                  onclick="alert('Shop will be add this product. See again.')"
+                )
+                  i.fas.fa-cart-plus
+                  span(style="font-size: 13px")= ` (${products[i].quantity})`
       div.m-auto(style="text-align:center; clear:both")
         - for(let i = 1; i <= pages; i++)
           if querys.page == i
@@ -61,3 +69,6 @@ block content
             a.btn.btn-outline-primary.mr-2(
               href="?producer=" + querys.producer + "&&page=" + i)= i
       h3 END Featured
+
+
+

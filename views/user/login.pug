@@ -1,37 +1,109 @@
-extends ../layouts/library
-block content
-  .container(style="padding-top:50px")
-    if err
-      .alert.alert-danger.m-auto.col-5= err
-    .d-flex.m-auto.col-5
-          h1.col-8.mb-3 LOGIN
-          .col-2
-          a(href="/").mt-2
-                button(class="btn btn-light") BACK
-    form(
-        action="/user/login",
-        method="POST",
-        class="col-3 mt-2"
-      ).needs-validation.col-5.m-auto
-      //- Email
-      label(for="useremail") Email
-      input#useremail.form-control(
-            name="email",
-            type='email', 
-            placeholder='Email', 
-            required='')
-      .invalid-feedback Please provide a valid Email.
-      //- Password
-      label(for="userpassword") Password
-      input#userpassword.form-control(
-            name="password",
-            type='password', 
-            placeholder='Password', 
-            required='',
-            pattern='.{6,}')
-      .invalid-feedback Please provide a valid Password.
-      //- Create
-      button(type="submit").btn.btn-success.mt-3 Login
-      a(href='/user/signup').btn.btn-light.mt-3.float-right Sign up
-  script(type="text/javascript").
-    document.getElementById('useremail').focus()
+//- extends ../layouts/library
+//- block content
+//-   .container(style="padding-top:50px")
+//-     if err
+//-       .alert.alert-danger.m-auto.col-5= err
+//-     .d-flex.m-auto.col-5
+//-           h1.col-8.mb-3 LOGIN
+//-           .col-2
+//-           a(href="/").mt-2
+//-                 button(class="btn btn-light") BACK
+//-     form(
+//-         action="/user/login",
+//-         method="POST",
+//-         class="col-3 mt-2"
+//-       ).needs-validation.col-5.m-auto
+//-       //- Email
+//-       label(for="useremail") Email
+//-       input#useremail.form-control(
+//-             name="email",
+//-             type='email', 
+//-             placeholder='Email', 
+//-             required='')
+//-       .invalid-feedback Please provide a valid Email.
+//-       //- Password
+//-       label(for="userpassword") Password
+//-       input#userpassword.form-control(
+//-             name="password",
+//-             type='password', 
+//-             placeholder='Password', 
+//-             required='',
+//-             pattern='.{6,}')
+//-       .invalid-feedback Please provide a valid Password.
+//-       //- Create
+//-       button(type="submit").btn.btn-success.mt-3 Login
+//-       a(href='/user/signup').btn.btn-light.mt-3.float-right Sign up
+//-   script(type="text/javascript").
+//-     document.getElementById('useremail').focus()
+
+
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, shrink-to-fit=no')
+    title Untitled
+    link(rel='stylesheet', href='/public/login/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/public/login/fonts/ionicons.min.css')
+    link(rel='stylesheet', href='/public/login/css/Login-Form-Dark.css')
+    link(rel='stylesheet', href='/public/login/css/styles.css')
+  body
+    .login-dark(style='height: 100vh;color: rgb(255,255,255);')
+      nav.navbar.navbar-light.navbar-expand-md
+        .container-fluid
+          a.navbar-brand(href='/', style='color: rgba(255,255,255,0.9);') ShopPi
+          button.navbar-toggler(data-toggle='collapse', data-target='#navcol-1')
+            span.sr-only Toggle navigation
+            span.navbar-toggler-icon
+          #navcol-1.collapse.navbar-collapse(style='color: rgb(255,255,255);')
+            ul.nav.navbar-nav
+              li.nav-item(role='presentation')
+                a.nav-link.active(href='/#page-top', style='color: rgba(204,204,204,0.9);') Home
+              li.nav-item(role='presentation')
+                a.nav-link.active(href='/user/signup', style='color: rgba(204,204,204,0.9);')
+                  | Sign Up
+                  br
+      
+      form(method='post', action="/user/login")
+        h2.sr-only Login Form
+        .illustration
+          i.icon.ion-ios-locked-outline
+        if err
+          .text-danger= err
+        if email
+          .form-group
+            input.form-control#useremail(
+              type='email', 
+              name='email', 
+              placeholder='Email', 
+              required,
+              value=email)
+        else
+          .form-group
+            input.form-control(
+              type='email', 
+              name='email', 
+              placeholder='Email', 
+              required)
+        if password
+          .form-group
+            input.form-control(
+              type='password', 
+              name='password', 
+              placeholder='Password', 
+              required,
+              value=password)
+        else
+          .form-group
+            input.form-control(
+              type='password', 
+              name='password', 
+              placeholder='Password', 
+              required)
+        .form-group
+          button.btn.btn-primary.btn-block(type='submit') Log In
+        a.forgot(href='/user/signup') Don't have account. Sign Up?
+    script(src='/public/login/js/jquery.min.js')
+    script(src='/public/login/bootstrap/js/bootstrap.min.js')
+    script(type="text/javascript").
+      document.getElementById('useremail').focus()

@@ -1,89 +1,207 @@
 doctype html
 html
   head
-    title This is Title :)
-    
-    link(rel="stylesheet", href="/public/css/bootstrap.min.css")
-    link(rel="stylesheet", href="/public/fontawesome/css/all.min.css")
-    link(rel="stylesheet", href="/public/css/styles.css")
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, shrink-to-fit=no')
+    title ShopPhone
     link(rel="shortcut icon", href="/public/img/icon.png")
-  body
-    //- Navbar
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top.border-bottom
-        a.navbar-brand(href='/') ShopPi
-        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
-          span.navbar-toggler-icon
-        #navbarSupportedContent.collapse.navbar-collapse
-          ul.navbar-nav.mr-auto
-              li.nav-item
-                a.nav-link(href='/') Home
-              li.nav-item
-                a.nav-link(href='/') About
-              li.nav-item
-                a.nav-link.active(target="blank",href='https://www.facebook.com/ninhnguyen375') Contact Us
-              li.nav-item(style='display:none')#adminPage
-                a.nav-link.active(href='/admin/dashboard') Admin Page
-          //- Search
-          form.form-inline.my-2.my-lg-0.m-auto(action="/search")
-              input.form-control.mr-2(
-                type='search', 
-                placeholder='Search',
-                name="search",
-              )
-              input(type="hidden", value="1", name="page")
-              button.btn.btn-light
-                i.fas.fa-search
-              a(href="/search").btn.btn-light.ml-2 More
-          
-          //- category
-          .dropdown.mr-3
-            button#dropdownMenuButton.btn.btn-outline-primary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-              | Category
-            .dropdown-menu(aria-labelledby='dropdownMenuButton')
-              each producer in producers
-                a.dropdown-item(href=`/?producer=${producer.producer_id}&&page=1`)= producer.producer_name
-          //- end category
-          a(href="/user/login").btn.btn-light#login Login
-          span | 
-          a(href="/user/signup").btn.btn-light#signup Sign up
-          //- Cart & Bill
-          .dropdown.ml-2
-            button#dropdownMenuButton.btn.btn-outline-primary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-              i.fas.fa-shopping-cart
-            .dropdown-menu(aria-labelledby='dropdownMenuButton')
-              a#goToCart(href="/cart").dropdown-item Cart
-              a#goToBill(href="").dropdown-item Bill
-          //- end Cart & Bill
-          //- a(href="/cart")
-          //-   button.btn.btn-light
-          //-     i.fas.fa-shopping-cart(style="font-size: 20px;color:#4e7bff")
-    //- End navbar
+    link(rel='stylesheet', href='/public/home/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/public/home/fonts/fontawesome-all.min.css')
+    link(rel='stylesheet', href='/public/home/fonts/font-awesome.min.css')
+    link(rel='stylesheet', href='/public/home/fonts/ionicons.min.css')
+    link(rel='stylesheet', href='/public/home/css/Corporate-Footer-Clean.css')
+    link(rel='stylesheet', href='/public/home/css/Footer-Dark.css')
+    link(rel='stylesheet', href='/public/home/css/News-Cards.css')
+  body#page-top
+    nav#mainNav.navbar.navbar-light.navbar-expand-lg.fixed-top
+      .container
+        a.navbar-brand.js-scroll-trigger(href='/') ShopPhone
+        button.navbar-toggler.float-right(data-toggle='collapse', data-target='#navbarResponsive', aria-controls='navbarResponsive', aria-expanded='false', aria-label='Toggle navigation')
+          i.fa.fa-bars
+        #navbarResponsive.collapse.navbar-collapse
+          ul.nav.navbar-nav.ml-auto
+            li.nav-item.dropdown
+              a.dropdown-toggle.nav-link(data-toggle='dropdown', aria-expanded='false', href='#') Category
+              .dropdown-menu(role='menu')
+                each producer in producers
+                  a.dropdown-item(
+                    role='presentation', 
+                    href=`/?producer=${producer.producer_id}&page=1`)= producer.producer_name
+            li.nav-item(role='presentation')
+              a.nav-link.js-scroll-trigger(href='/#containerFeature') Features
+            li.nav-item(role='presentation')
+              a.nav-link.js-scroll-trigger(href='#contact') Contact
+            li.nav-item.dropdown
+              a.dropdown-toggle.nav-link(
+                data-toggle='dropdown', 
+                aria-expanded='false', 
+                href='#')#loginDropdown Login
+              .dropdown-menu(role='menu')
+                a.dropdown-item(role='presentation', href='/user/login')#login Login
+                a.dropdown-item(role='presentation', href='/user/signup')#signup Sign Up
+                a.dropdown-item(
+                  role='presentation', 
+                  href='/admin/dashboard',
+                  style='display:none')#adminPage Admin Manager
+            //- Search
+            li.nav-item.dropdown
+              a.dropdown-toggle.nav-link(
+                data-toggle='dropdown', 
+                aria-expanded='false', 
+                href='#')#searchDropdown
+                i.fas.fa-search(style="font-size: 15px;")
+              .dropdown-menu(role='menu').col-4
+                form.form-inline.my-2.my-lg-0.m-auto(action="/search")
+                  input.form-control.col-6.ml-2(
+                    type='search', 
+                    placeholder='Search',
+                    name="search",
+                  )
+                  input(type="hidden", value="1", name="page")
+                  input(type="submit", value="Go").form-control.ml-2
+                .text-center.mt-2
+                  a(href="/search") More
+            //- Cart & Bill
+            li.nav-item.dropdown
+              a.dropdown-toggle.nav-link(
+                data-toggle='dropdown', 
+                aria-expanded='false', 
+                href='#')#searchDropdown
+                i.fas.fa-shopping-cart(style="font-size: 15px;")
+              .dropdown-menu(role='menu').col-4
+                a#goToCart(href="/cart").dropdown-item Cart
+                a#goToBill(href="").dropdown-item Bill
     block content
     //- Footer
-    .container-fluid.bg-light.pt-2.pb-2#footer
-        .row
-          .col-6 Copyright © ShopPi
-          .col-6.text-right
-              a(href='https://github.com/ninhnguyen375/doanweb2') Project on GitHub
-              i.fab.fa-github.ml-2
+    #contact.footer-dark(style='background-color: rgb(34,34,34);')
+      footer
+        .container
+          .row
+            .col-sm-6.col-md-3.item
+              h3 Services
+              ul
+                li
+                  a(href='#') Web design
+                li
+                  a(href='#') Development
+                li
+                  a(href='#') Hosting
+            .col-sm-6.col-md-3.item
+              h3 About
+              ul
+                li
+                  a(href='#') Company
+                li
+                  a(href='#') Team
+                li
+                  a(href='#') Careers
+            .col-md-6.item.text
+              h3 Company Name
+              p
+                | Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.
+            .col.item.social
+              a(href='#')
+                i.icon.ion-social-facebook
+              a(href='#')
+                i.icon.ion-social-twitter
+              a(href='#')
+                i.icon.ion-social-snapchat
+              a(href='#')
+                i.icon.ion-social-instagram
+          p.copyright Company Name © 2017
+    script(src='/public/home/js/jquery.min.js')
+    script(src='/public/home/bootstrap/js/bootstrap.min.js')
+    script(src='/public/home/js/jquery-ui.min.js')
+    script(src='/public/home/js/new-age.js')
+    script(src="/public/js/scripts.js")
 
-    //- End Footer
-    #showAuth(style="display: none;background: rgba(0,0,0,0.5);position:fixed;top:0;left:0;right:0;width:100%;height:100%")  
-      aside.profile-card(style="")
-        .container#profile-card-content
-          .h4.text-secondary.text-right.mb-3#authName none
-          table.table 
-              tr
-                td Email : 
-                td.text-right#authEmail none
-              tr
-                td Phone : 
-                td.text-right#authPhone te
-              tr
-                td Permisstion : 
-                td.text-right.text-black-50#authPermission te
-    script(src="/public/js/scripts.js")    
-    script(src="/public/js/jquery.min.js")
-    script(src="/public/js/popper.js")
-    script(src="/public/js/bootstrap.min.js")
+
+//- doctype html
+//- html
+//-   head
+//-     title This is Title :)
     
+//-     link(rel="stylesheet", href="/public/css/bootstrap.min.css")
+//-     link(rel="stylesheet", href="/public/fontawesome/css/all.min.css")
+//-     link(rel="stylesheet", href="/public/css/styles.css")
+//-     link(rel="shortcut icon", href="/public/img/icon.png")
+//-   body
+//-     //- Navbar
+//-     nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top.border-bottom
+//-         a.navbar-brand(href='/') ShopPi
+//-         button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+//-           span.navbar-toggler-icon
+//-         #navbarSupportedContent.collapse.navbar-collapse
+//-           ul.navbar-nav.mr-auto
+//-               li.nav-item
+//-                 a.nav-link(href='/') Home
+//-               li.nav-item
+//-                 a.nav-link(href='/') About
+//-               li.nav-item
+//-                 a.nav-link.active(target="blank",href='https://www.facebook.com/ninhnguyen375') Contact Us
+//-               li.nav-item(style='display:none')#adminPage
+//-                 a.nav-link.active(href='/admin/dashboard') Admin Page
+//-           //- Search
+//-           form.form-inline.my-2.my-lg-0.m-auto(action="/search")
+//-               input.form-control.mr-2(
+//-                 type='search', 
+//-                 placeholder='Search',
+//-                 name="search",
+//-               )
+//-               input(type="hidden", value="1", name="page")
+//-               button.btn.btn-light
+//-                 i.fas.fa-search
+//-               a(href="/search").btn.btn-light.ml-2 More
+          
+//-           //- category
+//-           .dropdown.mr-3
+//-             button#dropdownMenuButton.btn.btn-outline-primary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+//-               | Category
+//-             .dropdown-menu(aria-labelledby='dropdownMenuButton')
+//-               each producer in producers
+//-                 a.dropdown-item(href=`/?producer=${producer.producer_id}&&page=1`)= producer.producer_name
+//-           //- end category
+//-           a(href="/user/login").btn.btn-light#login Login
+//-           span | 
+//-           a(href="/user/signup").btn.btn-light#signup Sign up
+//-           //- Cart & Bill
+//-           .dropdown.ml-2
+//-             button#dropdownMenuButton.btn.btn-outline-primary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+//-               i.fas.fa-shopping-cart
+//-             .dropdown-menu(aria-labelledby='dropdownMenuButton')
+//-               a#goToCart(href="/cart").dropdown-item Cart
+//-               a#goToBill(href="").dropdown-item Bill
+//-           //- end Cart & Bill
+//-           //- a(href="/cart")
+//-           //-   button.btn.btn-light
+//-           //-     i.fas.fa-shopping-cart(style="font-size: 20px;color:#4e7bff")
+//-     //- End navbar
+//-     block content
+//-     //- Footer
+//-     .container-fluid.bg-light.pt-2.pb-2#footer
+//-         .row
+//-           .col-6 Copyright © ShopPi
+//-           .col-6.text-right
+//-               a(href='https://github.com/ninhnguyen375/doanweb2') Project on GitHub
+//-               i.fab.fa-github.ml-2
+
+//-     //- End Footer
+//-     #showAuth(style="display: none;background: rgba(0,0,0,0.5);position:fixed;top:0;left:0;right:0;width:100%;height:100%")  
+//-       aside.profile-card(style="")
+//-         .container#profile-card-content
+//-           .h4.text-secondary.text-right.mb-3#authName none
+//-           table.table 
+//-               tr
+//-                 td Email : 
+//-                 td.text-right#authEmail none
+//-               tr
+//-                 td Phone : 
+//-                 td.text-right#authPhone te
+//-               tr
+//-                 td Permisstion : 
+//-                 td.text-right.text-black-50#authPermission te
+//-     script(src="/public/js/scripts.js")    
+//-     script(src="/public/js/jquery.min.js")
+//-     script(src="/public/js/popper.js")
+//-     script(src="/public/js/bootstrap.min.js")
+//-     script(src="/public/js/axios.min.js")

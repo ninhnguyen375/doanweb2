@@ -1,145 +1,208 @@
-extends ../layouts/admin
-block content
-  .breadcrumb
-    span
-      a(href='/') Client Page
-    span.ml-2.mr-2  / 
-    span Admin
-    span.ml-2.mr-2  / 
-    span Dash Board
-  //- .container.col-11.mt-5.pt-4.pb-4(style='background:white')
-  .chart.chart-bgred
-    .chart__num 12.558
-    .chart__label Người Truy Cập
-    .chart__img.chart__img-img1
-  .chart.chart-bgblue
-    .chart__num 9.823
-    .chart__label Sản Phẩm Đã Bán
-    .chart__img.chart__img-img2
-  .chart.chart-bgbluewhite
-    .chart__num 5.423
-    .chart__label Khách Hàng
-    .chart__img.chart__img-img3
-  .chart.chart-bgyellow
-    .chart__num 7.000.256.000 VNĐ
-    .chart__label Doanh Thu
-    .chart__img.chart__img-img4
-  .section
-    .top-user__header TOP USER 2018
-    table#top-user__table
-      thead
-        tr
-          th
-            i.far.fa-user
-          th Họ Tên
-          th Top
-          th Email
-          th Sản Phẩm Đã Mua
-          th Thanh Toán
-          th Tổng Giá Trị
-          th Lượt Truy Cập
-      tbody
-        tr
-          td
-            img.top-user__img(src='image/user1.jpg', height='40')
-          td
-            span Nguyễn An Ninh
-            label VIP | Tháng 8 2016
-          td 1
-          td
-            span ninhnguyen375
-            label @gmail.com
-          td
-            span 22.265
-            label Sản Phẩm
-          td
-            i.fab.fa-cc-mastercard(style='font-size: 28px')
-          td
-            span 220.265.250
-            label VND
-          td
-            span 55.658
-            label 12 lần / ngày
-        tr
-          td
-            img.top-user__img(src='image/user2.jpg', height='40')
-          td
-            span Phạm Phương Thanh
-            label VIP | Tháng 8 2016
-          td 2
-          td
-            span thanhpham456
-            label @gmail.com
-          td
-            span 22.265
-            label Sản Phẩm
-          td
-            i.fab.fa-cc-visa(style='font-size: 28px')
-          td
-            span 220.265.250
-            label VND
-          td
-            span 55.658
-            label 12 lần / ngày
-        tr
-          td
-            img.top-user__img(src='image/user3.jpg', height='40')
-          td
-            span Huỳnh Khương Ninh
-            label VIP | Tháng 8 2016
-          td 3
-          td
-            span ninhkhuong375
-            label @gmail.com
-          td
-            span 22.265
-            label Sản Phẩm
-          td
-            i.fab.fa-paypal(style='font-size: 28px')
-          td
-            span 220.265.250
-            label VND
-          td
-            span 55.658
-            label 12 lần / ngày
-        tr
-          td
-            img.top-user__img(src='image/user4.jpg', height='40')
-          td
-            span Đào Bá Tước
-            label VIP | Tháng 8 2016
-          td 4
-          td
-            span batuoc778
-            label @gmail.com
-          td
-            span 20.265
-            label Sản Phẩm
-          td
-            i.fab.fa-cc-visa(style='font-size: 28px')
-          td
-            span 120.265.250
-            label VND
-          td
-            span 25.658
-            label 12 lần / ngày
-  a(href='/admin/product?page=1')
-    .thong-ke
-      .thong-ke__num 55.222
-      .thong-ke__title Tổng Sản Phẩm
-      .thong-ke__img.img1
-  a(href='/admin/user?page=1')
-    .thong-ke.mt-3
-      .thong-ke__num 11.513
-      .thong-ke__title Khách Hàng
-      .thong-ke__img.img2
-  a(href='/admin/bill?page=1')
-    .thong-ke.mt-3
-      .thong-ke__num 11.513
-      .thong-ke__title Đơn Hàng
-      .thong-ke__img.img3
-  a(href='/admin/category?page=1')
-    .thong-ke.mt-3
-      .thong-ke__num 6
-      .thong-ke__title Danh Mục SP
-      .thong-ke__img.img4
+doctype html
+html(lang='en')
+  head
+    base(href='./')
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, shrink-to-fit=no')
+    meta(name='description', content='CoreUI - Open Source Bootstrap Admin Template')
+    meta(name='author', content='Łukasz Holeczek')
+    meta(name='keyword', content='Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard')
+    title CoreUI Free Bootstrap Admin Template
+    link(rel="shortcut icon", href="/public/img/icon.png")
+    link(rel='stylesheet', href='/public/home/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/public/home/fonts/fontawesome-all.min.css')
+    link(rel='stylesheet', href='/public/home/fonts/font-awesome.min.css')
+    link(rel='stylesheet', href='/public/home/fonts/ionicons.min.css')
+    link(rel='stylesheet', href='/public/home/css/Corporate-Footer-Clean.css')
+    link(rel='stylesheet', href='/public/home/css/Footer-Dark.css')
+    link(rel='stylesheet', href='/public/home/css/News-Cards.css')
+    // Global site tag (gtag.js) - Google Analytics
+    link(href='/public/css/index.admin.styles.min.css', rel='stylesheet')
+    script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-118965717-3')
+    script.
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+      dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      // Shared ID
+      gtag('config', 'UA-118965717-3');
+      // Bootstrap ID
+      gtag('config', 'UA-118965717-5');
+  body.app.header-fixed.sidebar-fixed.aside-menu-fixed.sidebar-lg-show
+    //- Header
+    header.app-header.navbar
+      h4.text-bold.ml-3.mt-2 ADMIN AREA
+        i.fas.fa-bars.ml-4#toggleLeftMenu
+      .float-right.mb-3
+        i.fas.fa-user-lock.mr-2(style='margin-top:20px')
+        span.ten-admin#adminName
+        a(href='/')
+          span.admin-signout(style='font-size: 15px;margin:17px 8px 0 8px') - Sign Out
+    .app-body
+      .sidebar.left-menu
+        nav.sidebar-nav
+          a.left-menu__item(href='/admin/dashboard')
+            i.fas.fa-tachometer-alt.mr-3
+            span Dashboard
+          a.left-menu__item(href='/admin/product?page=1')
+            i.fas.fa-archive.mr-3
+            span Products
+          a.left-menu__item(href='/admin/user?page=1')
+            i.fas.fa-users.mr-3
+            span Users
+          a.left-menu__item(href='/admin/bill?page=1')
+            i.fas.fa-money-bill.mr-3
+            span Bills
+          a.left-menu__item(href='/admin/category?page=1')
+            i.fas.fa-clipboard-list.mr-3
+            span Categories
+
+      main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item
+            a(href='/') Client page
+          li.breadcrumb-item Admin
+          li.breadcrumb-item.active Dashboard
+          // Breadcrumb Menu
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-sm-6.col-lg-3
+                .card.text-white.bg-primary
+                  .card-body.pb-0
+                    .text-value 9.823
+                    div Members online
+                  .chart-wrapper.mt-3.mx-3(style='height:70px;')
+                    canvas#card-chart1.chart(height='70')
+              // /.col
+              .col-sm-6.col-lg-3
+                .card.text-white.bg-info
+                  .card-body.pb-0
+                    .text-value 9.823
+                    div Members online
+                  .chart-wrapper.mt-3.mx-3(style='height:70px;')
+                    canvas#card-chart2.chart(height='70')
+              // /.col
+              .col-sm-6.col-lg-3
+                .card.text-white.bg-warning
+                  .card-body.pb-0
+                    .text-value 9.823
+                    div Members online
+                  .chart-wrapper.mt-3(style='height:70px;')
+                    canvas#card-chart3.chart(height='70')
+              // /.col
+              .col-sm-6.col-lg-3
+                .card.text-white.bg-danger
+                  .card-body.pb-0
+                    .text-value 9.823
+                    div Members online
+                  .chart-wrapper.mt-3.mx-3(style='height:70px;')
+                    canvas#card-chart4.chart(height='70')
+              // /.col
+            // /.row
+            .row
+              .col-sm-6.col-lg-3
+                .brand-card
+                  .brand-card-header.bg-facebook
+                    i.fa.fa-facebook
+                    .chart-wrapper
+                      canvas#social-box-chart-1(height='90')
+                  .brand-card-body
+                    div
+                      .text-value 89k
+                      .text-uppercase.text-muted.small friends
+                    div
+                      .text-value 459
+                      .text-uppercase.text-muted.small feeds
+              // /.col
+              .col-sm-6.col-lg-3
+                .brand-card
+                  .brand-card-header.bg-twitter
+                    i.fa.fa-twitter
+                    .chart-wrapper
+                      canvas#social-box-chart-2(height='90')
+                  .brand-card-body
+                    div
+                      .text-value 973k
+                      .text-uppercase.text-muted.small followers
+                    div
+                      .text-value 1.792
+                      .text-uppercase.text-muted.small tweets
+              // /.col
+              .col-sm-6.col-lg-3
+                .brand-card
+                  .brand-card-header.bg-linkedin
+                    i.fa.fa-linkedin
+                    .chart-wrapper
+                      canvas#social-box-chart-3(height='90')
+                  .brand-card-body
+                    div
+                      .text-value 500+
+                      .text-uppercase.text-muted.small contacts
+                    div
+                      .text-value 292
+                      .text-uppercase.text-muted.small feeds
+              // /.col
+              .col-sm-6.col-lg-3
+                .brand-card
+                  .brand-card-header.bg-google-plus
+                    i.fa.fa-google-plus
+                    .chart-wrapper
+                      canvas#social-box-chart-4(height='90')
+                  .brand-card-body
+                    div
+                      .text-value 894
+                      .text-uppercase.text-muted.small followers
+                    div
+                      .text-value 92
+                      .text-uppercase.text-muted.small circles
+
+    footer.app-footer
+      div
+        a(href='/') ShopPhone 
+        span © 2018
+      .ml-auto
+        span Project on 
+        a(href='/')
+          span Github 
+          i.fab.fa-github
+    script(src="/public/js/jquery.min.js")
+    script(src="/public/js/popper.js")
+    script(src="/public/js/axios.min.js")
+    script(src="/public/js/bootstrap.min.js")
+    script(src="/public/js/scripts.js")
+    script.
+      $(document).ready(()=>{
+        //- Toggle check box
+        let checkBox;
+        $("#checkAll").click(function() {
+            var checkBoxes = $("input[type=checkbox");
+            checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+        });
+        //- Toggle left-menu
+        $('#toggleLeftMenu').on('click',()=>{
+          $('.left-menu').toggleClass('show');
+        });
+        //- submit remove many
+        $('#deleteMany').on('submit', () => {
+          let ids = [];
+          checkBox = document.querySelectorAll('.checkbox:checked');
+          checkBox.forEach(ch => {
+            if(ch.value == 'on'){
+              alert('you can not remove an admin');
+              ch.click();
+            } else {
+              ids.push(ch.value);
+            }
+          });
+          if(ids[0]){
+            $('#idToDeletes').val(ids);
+            return true;
+          } else {
+            return false;
+          }
+        })
+      })

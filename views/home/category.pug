@@ -1,0 +1,33 @@
+extends ../layouts/common
+block content
+  header(style="background:url('/public/home/img/bg-pattern.png'), linear-gradient(to left, #7b4397, #dc2430);height:10%;")
+  section#features.features
+    .container
+      .section-heading.text-center
+        - const producerCurrent = producers.find(p => (p.producer_id == querys.producer))
+          h2= `All ${producerCurrent.producer_name} Phones`
+          p.text-muted All the best for you.
+          hr
+      #containerFeature.row.d-flex.flex-wrap.justify-content-around
+        - let pages = Math.ceil(products.length / 6)
+        - let start = (((querys.page) - 1)*6)
+        - let end = ((querys.page)*6)
+        - for(let i = start; i < end && i < products.length; i++)
+          figure.snip1527.mt-3
+            .image
+              img(src= products[i].product_img, alt='pr-sample25')
+            figcaption
+              .date
+                i.fas.fa-cart-plus
+              h3= products[i].product_name
+              h4= producerCurrent.producer_name
+              p It is a long established fact that a reader will be distracted.
+            a(href='/product/'+products[i].id)
+    div.text-center.mt-3
+      - for(let i = 1; i <= pages; i++)
+        if querys.page == i
+          a.btn.mr-2.active(
+            href="?producer=" + querys.producer + "&page=" + i)= i
+        else
+          a.btn.mr-2( style="background-color: #c1c1c1"
+            href="?producer=" + querys.producer + "&page=" + i)= i

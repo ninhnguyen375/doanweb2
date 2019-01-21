@@ -8,6 +8,8 @@ block content
     span.ml-2.mr-2  / 
     span Category
   .container.col-11.mt-5.pt-4.pb-4(style='background:white')
+    h4.text-secondary.text-center.font-weight-bold Manager
+    hr
     if idIsDeleted
       .alert.alert-danger.text-center.m-auto
         = 'Producer '
@@ -43,6 +45,17 @@ block content
         autocomplete="off").form-control
       button.btn.btn-success.mb-3.mt-3(form='addNewProducer', type='submit') Add Producer
     //- END Add Producer
+    h4.text-secondary.text-center.font-weight-bold All Category
+    hr
+    .row(style='margin-bottom: 5px;')
+      //- search 
+      .col
+        input#valueToRenderSearch.d-inline.form-control.col-4(type='text', placeholder='Search by name', style='margin-right: 95px;')
+      //- Remove many
+      .col.text-right
+        form(action="/admin/category/deleteManyCategory", method='post')#deleteMany
+          input(type="hidden", name='idToDeletes')#idToDeletes
+          button.btn.btn-danger(type='submit', form='deleteMany') Remove selected
 
     table#table-sp.text-center
       thead
@@ -51,13 +64,16 @@ block content
           th Name
           th Id
           th Action
+          th
+            .btn.btn-sm.btn-primary#checkAll
+              i.fas.fa-check
       tbody
       - const startLoad = (parseInt(page) - 1 )*10
       - const endLoad = parseInt(page)*10
       - for(let i = startLoad; i < producers.length && i < endLoad; i++)
-        tr
+        tr.items
           td= i + 1
-          td= producers[i].producer_name
+          td.item-names= producers[i].producer_name
           td= producers[i].producer_id
           td
             //- Delete Producer
@@ -98,7 +114,8 @@ block content
                         button.btn.btn-primary(
                           type='submit', 
                           form='form'+producers[i].id) Save changes
-
+          td
+            input.checkbox(type="checkbox", value=producers[i].id)
 
     .container.text-center
       - const pages = Math.ceil(producers.length/10)

@@ -1,62 +1,193 @@
-extends ../layouts/library
-block content
-  .container(style="padding-top:50px")
-    #alertDanger
-    .d-flex.m-auto.col-5
-          h1.col-8.mb-3 SIGN UP
-          .col-2
-          a(href="/").mt-2
-                button(class="btn btn-light") BACK
-    form(
-        action="/user/signup",
-        method="POST",
-        class="col-3 mt-2",
-        onsubmit="return checkpass()",
-      ).needs-validation.col-5.m-auto
-      //- Name
-      label(for="username") Name
-      input#username.form-control(
-            type='text', 
-            placeholder='Name', 
-            required='',
-            name="user_name")
-      .invalid-feedback Please provide a valid Name.
-      //- Phone
-      label(for="userphone") Phone
-      input#userphone.form-control(
-            type='text', 
-            placeholder='Phone',
-            pattern="[0-9]{10,}", 
-            required='',
-            name="user_phone")
-      .invalid-feedback Please provide a valid Phone.
-      //- Email
-      label(for="useremail") Email
-      input#useremail.form-control(
-            name="user_email",
-            type='email', 
-            placeholder='Email', 
-            required='')
-      .invalid-feedback Please provide a valid Email.
-      //- Password
-      label(for="userpassword") Password (6 character)
-      input#userpassword.form-control(
-            name="user_password",
-            type='password', 
-            placeholder='Password', 
-            required='',
-            pattern='.{6,}')
-      .invalid-feedback Please provide a valid Password.
-      //- Password again
-      label(for="userpassword2") Confirm password
-      input#userpassword2.form-control(
-            type='password', 
-            placeholder='Confirm Password', 
-            required='',
-            pattern='.{6,}')
-      .invalid-feedback Please provide a valid Confirm Password.
-      //- user permission
-      input(value="client", type="hidden", name="user_permission")
-      //- Create
-      button.btn.btn-success.mt-3 Sign up
-      a(href='/user/login').btn.btn-light.mt-3.float-right Login
+//- extends ../layouts/library
+//- block content
+//-   .container(style="padding-top:50px")
+//-     #alertDanger
+//-     .d-flex.m-auto.col-5
+//-           h1.col-8.mb-3 SIGN UP
+//-           .col-2
+//-           a(href="/").mt-2
+//-                 button(class="btn btn-light") BACK
+//-     form(
+//-         action="/user/signup",
+//-         method="POST",
+//-         class="col-3 mt-2",
+//-         onsubmit="return checkpass()",
+//-       ).needs-validation.col-5.m-auto
+//-       //- Name
+//-       label(for="username") Name
+//-       input#username.form-control(
+//-             type='text', 
+//-             placeholder='Name', 
+//-             required='',
+//-             name="user_name")
+//-       .invalid-feedback Please provide a valid Name.
+//-       //- Phone
+//-       label(for="userphone") Phone
+//-       input#userphone.form-control(
+//-             type='text', 
+//-             placeholder='Phone',
+//-             pattern="[0-9]{10,}", 
+//-             required='',
+//-             name="user_phone")
+//-       .invalid-feedback Please provide a valid Phone.
+//-       //- Email
+//-       label(for="useremail") Email
+//-       input#useremail.form-control(
+//-             name="user_email",
+//-             type='email', 
+//-             placeholder='Email', 
+//-             required='')
+//-       .invalid-feedback Please provide a valid Email.
+//-       //- Password
+//-       label(for="userpassword") Password (6 character)
+//-       input#userpassword.form-control(
+//-             name="user_password",
+//-             type='password', 
+//-             placeholder='Password', 
+//-             required='',
+//-             pattern='.{6,}')
+//-       .invalid-feedback Please provide a valid Password.
+//-       //- Password again
+//-       label(for="userpassword2") Confirm password
+//-       input#userpassword2.form-control(
+//-             type='password', 
+//-             placeholder='Confirm Password', 
+//-             required='',
+//-             pattern='.{6,}')
+//-       .invalid-feedback Please provide a valid Confirm Password.
+//-       //- user permission
+//-       input(value="client", type="hidden", name="user_permission")
+//-       //- Create
+//-       button.btn.btn-success.mt-3 Sign up
+//-       a(href='/user/login').btn.btn-light.mt-3.float-right Login
+
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, shrink-to-fit=no')
+    title Sign Up
+    link(rel='stylesheet', href='/public/signup/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/public/signup/fonts/fontawesome-all.min.css')
+    link(rel='stylesheet', href='/public/signup/fonts/ionicons.min.css')
+    link(rel='stylesheet', href='/public/signup/css/Footer-Dark.css')
+    link(rel='stylesheet', href='/public/signup/css/Login-Form-Dark.css')
+    link(rel='stylesheet', href='/public/signup/css/styles.css')
+  body
+    .login-dark(style='height: 100vh;color: rgb(255,255,255);')
+      .row
+        .col.float-left
+          section.float-left
+            a(href='/', style='font-size: 32px;padding: 9px;color: rgb(225,225,225);text-decoration: none;') ShopPi
+      form(
+            onsubmit='return checkpass()'
+            method='post',
+            action='/user/signup', 
+            style='max-width: 494px;padding: 40px;padding-top: 14px;padding-bottom: 16px;')
+        .illustration(style='height: 171px;padding-top: 0px;padding-bottom: 0px;')
+          i.far.fa-user-circle(style='font-size: 125px;color: rgb(168,206,255);')
+        .text-danger.alertDanger
+        if err
+          .text-danger.alertDanger= err
+        //-   Name
+        .form-group
+          input.form-control(type='text', placeholder='Name', name='user_name', required)
+        //-   Phone
+        .form-group
+          input.form-control(
+                type='text', 
+                placeholder='Phone', 
+                name='user_phone', 
+                required,
+                pattern='[0-9]{10,}')
+        //-   Email
+        .form-group
+          input#nameInput.form-control(type='email', placeholder='Email', name='user_email', required)
+        //-   Password
+        .form-group
+          input.form-control(
+                type='password', 
+                name='user_password', 
+                required, 
+                pattern='.{6,}',
+                placeholder='Password')#userpassword
+        //-   Confirm Password
+        .form-group
+          input.form-control(
+                type='password', 
+                name='confirmPassword', 
+                required, 
+                pattern='.{6,}',
+                placeholder='Confirm Password')#userpassword2
+        //- User permission
+        input(type="hidden", name='user_permission', value='client')
+        .form-group
+          button.btn.btn-primary.btn-block(type='submit') Sign Up
+        a.forgot(href='/user/login') Have account. Login?
+      section
+    .footer-dark
+      footer
+        .container
+          .row
+            .col-sm-6.col-md-3.item
+              h3 Services
+              ul
+                li
+                  a(href='#') Web design
+                li
+                  a(href='#') Development
+                li
+                  a(href='#') Hosting
+            .col-sm-6.col-md-3.item
+              h3 About
+              ul
+                li
+                  a(href='#') Company
+                li
+                  a(href='#') Team
+                li
+                  a(href='#') Careers
+            .col-md-6.item.text
+              h3 Company Name
+              p
+                | Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.
+            .col.item.social
+              a(href='#')
+                i.icon.ion-social-facebook
+              a(href='#')
+                i.icon.ion-social-twitter
+              a(href='#')
+                i.icon.ion-social-snapchat
+              a(href='#')
+                i.icon.ion-social-instagram
+          p.copyright Company Name © 2017
+    script(src='/public/signup/js/jquery.min.js')
+    script(src='/public/signup/bootstrap/js/bootstrap.min.js')
+    script(src="/public/js/scripts.js")
+    script(src="/public/js/axios.min.js")
+    script.
+      $(document).ready( async () => {
+        const datas = await axios.get('/api/user');
+        const pass1 = $('#userpassword');
+        const pass2 = $('#userpassword2');
+        let canSubmit = false;
+        $('#nameInput').on('keyup',function () {
+          const found = datas.data.find(dat => (
+            dat.user_email == $(this).val()
+          ));
+          if(found){
+            $('.text-danger.alertDanger').html('This email has been used!');
+            $(this).focus();
+          } else {
+            $('.text-danger.alertDanger').html('');
+            canSubmit = true;
+          }
+        });
+        $('form').on('submit', () => {
+          if(canSubmit && (pass1.value == pass2.value)){
+            return true;
+          }else{
+            return false;
+          }
+        });
+      });

@@ -5,6 +5,7 @@ function nonAuth() {
 function changeAuth() {
   const login = document.getElementById("login");
   const signup = document.getElementById("signup");
+  const loginDropdown = document.getElementById("loginDropdown");
   const auth = JSON.parse(localStorage.getItem("auth"));
   const adminPage = document.getElementById("adminPage");
   const adminName = document.getElementById("adminName");
@@ -24,6 +25,9 @@ function changeAuth() {
     signup.addEventListener("click", nonAuth);
     signup.href = "";
   }
+  if (loginDropdown){
+    loginDropdown.innerHTML = auth.user_name;
+  }
   if (login) {
     login.removeAttribute("href");
     login.addEventListener("click", () => {
@@ -40,20 +44,8 @@ function changeAuth() {
       document.getElementById("authPermission").innerHTML =
         auth.user_permission;
     });
-    login.innerHTML = auth.user_name;
+    login.innerHTML = 'Profile';
   }
-}
-function checkpass() {
-  const pass1 = document.getElementById("userpassword");
-  const pass2 = document.getElementById("userpassword2");
-  const alertDanger = document.getElementById("alertDanger");
-  if (pass1.value === pass2.value) {
-    return true;
-  }
-  pass2.focus();
-  alertDanger.innerHTML = "Confirm Password not correct!";
-  alertDanger.className = "alert alert-danger col-5 m-auto";
-  return false;
 }
 function renderSearch() {
   const search = document.getElementById("valueToRenderSearch");

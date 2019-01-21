@@ -1,17 +1,18 @@
 extends ../layouts/common
 block content
+  header(style="background:url('/public/home/img/bg-pattern.png'), linear-gradient(to left, #7b4397, #dc2430);height:10%;")
   .container.pt-5.mt-3
-  h1.text-center Your Bills
+    .section-heading.text-center.mb-5
+      h2 Your Bills
+      p.text-muted= user.user_name
+      hr
   - if(bills[0])
     each bill in bills
-      h4= 'Auth ID : ' + user.id
-      h4= 'Bill id : ' + bill.id
-      h4= 'Bill total price : $' + bill.totalPrice
-      h4= 'Auth name : ' + user.user_name
-      h4= 'Status : ' + bill.status
-      .container.col-10
-        h3 Details
-        table.table.col-8.text-center
+      .container.col-8
+        p
+          b Status :  
+          span= bill.status
+        table.table.text-center.m-auto
           thead
             tr
               th Product Id
@@ -33,14 +34,16 @@ block content
               td
               td
               td
-              td= 'Total : $' + bill.totalPrice
-        form(action="/bill/deleteBill", method="POST")
+              td
+                b= 'Total : ' 
+                span.text-danger= '$'+bill.totalPrice
+        form(action="/bill/deleteBill", method="POST").text-right.mr-4
           input(type="hidden", name='billId', value=bill.id)
           input(type="hidden", name='userId', value=user.id)
           input(type="hidden", name='proId', value=bill.details.proId)
           input(type="hidden", name='proQuantity', value=bill.details.proQuantity)
           button.btn.btn-danger Cancel
-      hr
+      hr.mb-5.mt-5
   - else
     h3.text-center Your Bills is Empty
     h4.text-center

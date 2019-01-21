@@ -4,7 +4,16 @@ const Users = require('../models/user.model');
 const Bills = require('../models/bills.model');
 
 module.exports.index = async (req, res) => {
-  res.render('admin/index');
+  const products = await Products.find();
+  const producers = await Producers.find();
+  const users = await Users.find();
+  const bills = await Bills.find();
+  res.render('admin/index', {
+    producers,
+    products,
+    users,
+    bills,
+  });
 };
 // -----------------------------> Bill
 // index
@@ -38,6 +47,19 @@ module.exports.deleteBill = async (req, res) => {
     res.redirect(`/admin/bill?page=1&idIsDeleted=${idIsDeleted}`);
   }
 };
+// delete many
+module.exports.deleteManyBill = async (req, res) => {
+  const { idToDeletes } = req.body;
+  const ids = idToDeletes.split(',');
+  const lenghtIds = ids.length;
+  // ids.forEach(async (id) => {
+  //   await Bills.findByIdAndDelete(id);
+  // });
+  res.redirect(
+    `/admin/bill?page=1&error=There+Are+${lenghtIds}+Bills+Have+Been+Deleted!
+    Delete Many - Tạm thời chặn . Sợ mất hết dữ liệu thôi :))`,
+  );
+};
 // edit
 module.exports.editBill = async (req, res) => {
   const idToEdit = req.body.id;
@@ -60,7 +82,6 @@ module.exports.addBill = async (req, res) => {
     res.redirect('/admin/category?page=1&added=1');
   }
 };
-// -----------------------------> End Bill
 
 // -----------------------------> Category
 // index
@@ -90,6 +111,17 @@ module.exports.deleteProducer = async (req, res) => {
     res.redirect(`/admin/category?page=1&idIsDeleted=${idIsDeleted}`);
   }
 };
+// delete many
+module.exports.deleteManyCategory = async (req, res) => {
+  const { idToDeletes } = req.body;
+  const ids = idToDeletes.split(',');
+  const lenghtIds = ids.length;
+  // ids.forEach(async (id) => {
+  //   await Producers.findByIdAndDelete(id);
+  // });
+  res.redirect(`/admin/category?page=1&error=There+Are+${lenghtIds}+Category+Have+Been+Deleted!
+    Delete Many - Tạm thời chặn . Sợ mất hết dữ liệu thôi :))`);
+};
 // edit
 module.exports.editProducer = async (req, res) => {
   const idToEdit = req.body.id;
@@ -112,15 +144,14 @@ module.exports.addProducer = async (req, res) => {
     res.redirect('/admin/category?page=1&added=1');
   }
 };
-// -----------------------------> End Category
 
-// ------------------------> Product Managemant
+// ------------------------> Product
 // index
 module.exports.product = async (req, res) => {
   const products = await Products.find();
   const producers = await Producers.find();
   const {
-    page, idIsDeleted, idIsEdited, added,
+    page, idIsDeleted, idIsEdited, added, error, note,
   } = req.query;
   res.render('admin/product', {
     products,
@@ -129,6 +160,8 @@ module.exports.product = async (req, res) => {
     idIsDeleted,
     idIsEdited,
     added,
+    error,
+    note,
   });
 };
 // delete
@@ -143,12 +176,24 @@ module.exports.deleteProduct = async (req, res) => {
     res.redirect(`/admin/product?page=1&idIsDeleted=${idIsDeleted}`);
   }
 };
+// delete many
+module.exports.deleteManyProduct = async (req, res) => {
+  const { idToDeletes } = req.body;
+  const ids = idToDeletes.split(',');
+  const lenghtIds = ids.length;
+  // ids.forEach(async (id) => {
+  //   await Products.findByIdAndDelete(id);
+  // });
+  res.redirect(`/admin/product?page=1&error=There+Are+${lenghtIds}+Products+Have+Been+Deleted!
+    Delete Many - Tạm thời chặn . Sợ mất hết dữ liệu thôi :))`);
+};
 // edit
 module.exports.editProduct = async (req, res) => {
   const idToEdit = req.body.id;
   const editData = req.body;
   const productIsEdited = await Products.findById(idToEdit);
   const idIsEdited = productIsEdited.id;
+  console.log(editData.product_img);
   await Products.findByIdAndUpdate(idToEdit, {
     product_name: editData.product_name,
     producer: editData.producer,
@@ -160,9 +205,8 @@ module.exports.editProduct = async (req, res) => {
 // add
 module.exports.addProduct = async (req, res) => {
   await Products.insertMany(req.body);
-  res.redirect('/admin/product?page=1&added=1');
+  res.redirect(`/admin/product?page=1&added=1&note=${req.body.product_name}`);
 };
-// ------------------------------> END Product
 
 
 // ------------------------------> User
@@ -192,6 +236,17 @@ module.exports.deleteUser = async (req, res) => {
     await Users.findByIdAndDelete(idToDelete);
     res.redirect(`/admin/user?page=1&idIsDeleted=${idIsDeleted}`);
   }
+};
+// delete many
+module.exports.deleteManyUser = async (req, res) => {
+  const { idToDeletes } = req.body;
+  const ids = idToDeletes.split(',');
+  const lenghtIds = ids.length;
+  // ids.forEach(async (id) => {
+  //   await Users.findByIdAndDelete(id);
+  // });
+  res.redirect(`/admin/user?page=1&error=There+Are+${lenghtIds}+Users+Have+Been+Deleted!
+    Delete Many - Tạm thời chặn . Sợ mất hết dữ liệu thôi :))`);
 };
 // edit
 module.exports.editUser = async (req, res) => {

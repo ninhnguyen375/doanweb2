@@ -1,0 +1,10 @@
+extends ../layouts/common
+block content
+  .container(style="padding-top:60px")
+    h1 Your Profile
+    h4= "user id : " + user[0].id
+    h4= "user name : " + user[0].user_name
+    h4= "user email : " + user[0].user_email
+    h4= "user phone : " + user[0].user_phone
+    h4= "user permission : " + user[0].user_permission
+    script!= "(function() {let items = "+JSON.stringify(user[0])+"; localStorage.setItem('auth', JSON.stringify(items)); })();"

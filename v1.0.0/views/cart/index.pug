@@ -1,0 +1,86 @@
+extends ../layouts/common
+block content
+  //- bootstrap4
+  .container.mb-4.pt-5.mt-3
+    h1 Your Cart
+    - if(cart[0])
+      .row
+        .col-12
+          .table-responsive
+            table.table.table-striped.text-center
+              thead
+                tr
+                  th(scope='col')  
+                  th(scope='col') Product Name
+                  th(scope='col') Producer
+                  th.text-center(scope='col') Quantity
+                  th.text-right(scope='col') Price
+                  th  
+              tbody
+                - let total = 0
+                each item in cart
+                  - let productCurrent = products.find((p)=>{return p.product_id == item.proId})
+                  - let producerCurrent = producers.find((p)=>{return p.producer_id == productCurrent.producer})
+                  - total += (item.proPrice * item.quantity)
+                    //- hidden input hava data for bill
+                    input(type="hidden", value=productCurrent.quantity, name='rootQuantity')
+                    input(type="hidden", value=item.proId, name='proId')
+                    input(type="hidden", value=item.proPrice, name='proPrice')
+                    input(type="hidden", value=productCurrent.product_name, name='proName')
+                    //- End hidden input
+                  tr
+                    td
+                      img(src='/public/img/imgtemp.jpeg').img-thumbnail.rounded
+                    td= productCurrent.product_name
+                    td= producerCurrent.producer_name
+                    td
+                      input.form-control.p-2(
+                          name="proQuantity",
+                          type="number", 
+                          min="1", 
+                          max="5", 
+                          required, 
+                          value = item.quantity
+                        )
+                    td.text-right.totalPriceOfProduct= "$" + (item.proPrice * item.quantity)
+                    td.text-right
+                      a(href="/cart/removeCart/"+item.id)
+                        button.btn.btn-danger.ml-2
+                          i.far.fa-trash-alt
+                //- Total
+                tr
+                  td
+                  td
+                  td
+                  td
+                  td Sub-Total
+                  td.text-right.subTotalAndTotal="$" + total
+                tr
+                  td
+                  td
+                  td
+                  td
+                  td Shipping
+                  td.text-right="$" + 0
+                tr
+                  td
+                  td
+                  td
+                  td
+                  td
+                    strong Total
+                  td.text-right
+                    strong.totalPrice.subTotalAndTotal="$" + total
+        .col.mb-2
+            .row
+              .col-sm-12.col-md-6
+                a(href="/", style="text-decoration:none")
+                  button(type="button").btn.btn-block.btn-light Continue Shopping
+              .col-sm-12.col-md-6.text-right
+                form(action="/cart/addBill", method = "POST")#addBill
+                  input(type="hidden", value='', name="bill")#billValue
+                  button#checkOut.btn.btn-lg.btn-block.btn-success.text-uppercase Checkout
+    - else
+        h3.text-center Your Cart is Empty
+        h4.text-center
+          a(href="/").btn.btn-primary Go to shopping

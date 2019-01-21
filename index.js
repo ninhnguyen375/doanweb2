@@ -11,6 +11,10 @@ const billRoute = require('./routes/bill.route');
 const searchRoute = require('./routes/search.route');
 const adminRoute = require('./routes/admin.route');
 
+// API
+const apiProductRoute = require('./api/routes/product.api.route');
+const apiUserRoute = require('./api/routes/user.api.route');
+
 const PORT = process.env.PORT || 3000 || 8080;
 // ---------- local
 const mongodb = 'mongodb://127.0.0.1:27017/webbanhangdb';
@@ -56,6 +60,11 @@ app.use('/user', userRoute);
 app.use('/search', searchRoute);
 app.use('/bill', billRoute);
 app.use('/admin', adminRoute);
+
+// API
+app.use('/api/product', apiProductRoute);
+app.use('/api/user', apiUserRoute);
+
 
 // Listen Port
 app.listen(PORT, () => {

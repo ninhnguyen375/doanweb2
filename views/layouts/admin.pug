@@ -2,7 +2,7 @@ doctype html
 html
   head
     title This is Title :)
-    
+    meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
     link(rel="stylesheet", href="/public/css/bootstrap.min.css")
     link(rel="stylesheet", href="/public/fontawesome/css/all.min.css")
     link(rel="stylesheet", href="/public/css/admin.css")
@@ -10,12 +10,12 @@ html
   body
     .header
       span.title-header ADMIN AREA
-        i.fas.fa-bars.ml-4
+        i.fas.fa-bars.ml-4#toggleLeftMenu
       .nav-right
         i.fas.fa-user-lock.mr-2(style='margin-top:20px')
         .ten-admin#adminName
         a(href='/')
-          div(style='font-size: 15px;margin:17px 8px 0 8px') - Sign Out
+          div.admin-signout(style='font-size: 15px;margin:17px 8px 0 8px') - Sign Out
     .left-menu
       a.left-menu__item(href='/admin/dashboard')
         i.fas.fa-tachometer-alt.mr-2
@@ -38,12 +38,53 @@ html
           padding-top:55px;
           padding-left:200px;
           background:#E4E5E6;
-          padding-bottom:25px`
+          padding-bottom:25px;`
       )
       block content
+    .row.footer
+      .col
+        p.text-center Copy right &copy; ShopPhone 
+      .col
+        p.text-right
+          span Project on 
+          a(href='/')
+            span Github 
+            i.fab.fa-github
     script(src="/public/js/scripts.js")    
     script(src="/public/js/jquery.min.js")
     script(src="/public/js/popper.js")
+    script(src="/public/js/axios.min.js")
     script(src="/public/js/bootstrap.min.js")
-    
+    script.
+      $(document).ready(()=>{
+        //- Toggle check box
+        let checkBox;
+        $("#checkAll").click(function() {
+            var checkBoxes = $("input[type=checkbox");
+            checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+        });
+        //- Toggle left-menu
+        $('#toggleLeftMenu').on('click',()=>{
+          $('.left-menu').toggleClass('show');
+        });
+        //- submit remove many
+        $('#deleteMany').on('submit', () => {
+          let ids = [];
+          checkBox = document.querySelectorAll('.checkbox:checked');
+          checkBox.forEach(ch => {
+            if(ch.value == 'on'){
+              alert('you can not remove an admin');
+              ch.click();
+            } else {
+              ids.push(ch.value);
+            }
+          });
+          if(ids[0]){
+            $('#idToDeletes').val(ids);
+            return true;
+          } else {
+            return false;
+          }
+        })
+      })
 

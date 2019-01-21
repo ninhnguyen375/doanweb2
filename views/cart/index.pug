@@ -1,8 +1,11 @@
 extends ../layouts/common
 block content
-  //- bootstrap4
+  header(style="background:url('/public/home/img/bg-pattern.png'), linear-gradient(to left, #7b4397, #dc2430);height:10%;")
   .container.mb-4.pt-5.mt-3
-    h1 Your Cart
+    .section-heading.text-center.mb-5
+      h2 YOUR CART
+      p.text-muted your cart
+      hr
     - if(cart[0])
       .row
         .col-12
@@ -30,7 +33,8 @@ block content
                     //- End hidden input
                   tr
                     td
-                      img(src='/public/img/imgtemp.jpeg').img-thumbnail.rounded
+                      img(src=productCurrent.product_img,
+                        style='width:100px').img-thumbnail.rounded
                     td= productCurrent.product_name
                     td= producerCurrent.producer_name
                     td
@@ -44,8 +48,10 @@ block content
                         )
                     td.text-right.totalPriceOfProduct= "$" + (item.proPrice * item.quantity)
                     td.text-right
-                      a(href="/cart/removeCart/"+item.id)
-                        button.btn.btn-danger.ml-2
+                      form(action="/cart/removeCart", method="post")
+                        input(type="hidden", name='userId', value=userId)
+                        input(type="hidden", name='id', value=item.id)
+                        button.btn.btn-danger.ml-3
                           i.far.fa-trash-alt
                 //- Total
                 tr
@@ -75,7 +81,9 @@ block content
             .row
               .col-sm-12.col-md-6
                 a(href="/", style="text-decoration:none")
-                  button(type="button").btn.btn-block.btn-light Continue Shopping
+                  button(
+                    type="button", 
+                    style='background: #bd2e52').btn.btn-block.mt-1 Continue Shopping
               .col-sm-12.col-md-6.text-right
                 form(action="/cart/addBill", method = "POST")#addBill
                   input(type="hidden", value='', name="bill")#billValue

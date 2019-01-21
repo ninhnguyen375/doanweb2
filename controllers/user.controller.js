@@ -19,9 +19,11 @@ module.exports.postLogin = async (req, res) => {
       user,
     });
   } else {
-    const err = "Don't have This account in Database!";
+    const err = 'Account incorrect';
     res.render('user/login', {
       err,
+      password,
+      email,
     });
   }
 };

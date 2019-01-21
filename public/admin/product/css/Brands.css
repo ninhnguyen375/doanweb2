@@ -1,0 +1,73 @@
+.brands {
+  color: #313437;
+  background-color: #fff;
+}
+
+.brands a {
+  display: block;
+  text-align: center;
+  padding: 40px 0;
+}
+
+@media (max-width:767px) {
+  .brands a {
+    padding: 30px 0;
+  }
+}
+
+.brands a img {
+  display: inline-block;
+  margin: 10px 20px;
+  vertical-align: middle;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.text-nowrap.d-block:hover {
+  background-color: #575757;
+  text-decoration: none;
+  /*color: blue;*/
+}
+
+button, input {
+}
+
+.table-item {
+}
+
+.table-item {
+}
+
+.table-item:hover {
+  background: #f8f8f8;
+}
+
+.col-lg-2.left-menu {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: 10vh;
+}
+
+.col.page-content {
+  height: 90vh;
+  overflow: auto;
+}
+
+body {
+  height: 100vh;
+  max-height: 100vh;
+}
+
+.navbar.navbar-light.navbar-expand-md.navigation-clean {
+  height: 10vh;
+  border-bottom: 1px solid rgb(227,227,227);
+}
+
+.table-responsive.text-center {
+  border-bottom: 1px solid rgb(204,204,204);
+}
+

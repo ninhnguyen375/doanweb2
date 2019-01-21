@@ -6,20 +6,22 @@ const Bills = require("../models/bills.model");
 
 module.exports.index = async (req, res) => {
   const { id } = req.params;
+  const userId = id;
   const cart = await Cart.find({ userId: id });
   const products = await Products.find();
   const producers = await Producers.find();
   res.render("cart/index", {
     cart,
     products,
-    producers
+    producers,
+    userId,
   });
 };
 
 module.exports.removeCart = async (req, res) => {
-  const idToDeleted = req.params.id;
-  await Cart.findByIdAndDelete(idToDeleted);
-  res.redirect("/cart");
+  const { id, userId } = req.body;
+  await Cart.findByIdAndDelete(id);
+  res.redirect(`/cart/${userId}`);
 };
 
 module.exports.addBill = async (req, res) => {

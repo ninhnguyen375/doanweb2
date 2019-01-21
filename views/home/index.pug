@@ -1,74 +1,54 @@
 extends ../layouts/common
 block content
-  .col-12.banner(style="height:300px;text-align:center;padding-top:200px")
-    h1 THIS IS BANNER
-    h1="All products : " + products.length
-  .container(style="padding-top:50px; padding-bottom: 50px;overflow:auto")
-    if querys.page
-      - let pages = Math.ceil(products.length / 8)
-      - let start = (((querys.page) - 1)*8)
-      - let end = ((querys.page)*8)
-      - for(let i = start; i < end && i < products.length; i++)
-        - let found = producers.find((elm)=>{return elm.producer_id == products[0].producer})
-        .card.float-left.m-3.mt-5.position-relative.shadow-lg(
-          style='width: 15.3rem;height: 340px'
-        ).product__cart
-          img.card-img-top(src= products[i].product_img, alt='Card image cap')
-          .card-body
-              a(href=`/product/${products[i].id}`)
-                h5.card-title= products[i].product_name
-              p.card-text.text-secondary= found.producer_name
-              .text-danger.position-absolute(style="bottom:10px;left:15px")="$" + products[i].product_price
-              a.btn.btn-outline-primary.position-absolute(
-                href=`/product/${products[i].id}`,
-              style="bottom:10px;right:10px"
-              )
-                i.fas.fa-cart-plus
-                span(style="font-size: 13px")= ` (${products[i].quantity})`
-      div.m-auto(style="text-align:center; clear:both")
-        - for(let i = 1; i <= pages; i++)
-          if querys.page == i
-            a.btn.btn-outline-primary.mr-2.active(
-              href="?producer=" + querys.producer + "&page=" + i)= i
-          else
-            a.btn.btn-outline-primary.mr-2(
-              href="?producer=" + querys.producer + "&page=" + i)= i
-    else
-      h2 Featured products
-      - for(let i = 0; i < 12 && i < products.length; i++)
-        - let found = producers.find((elm)=>{return elm.producer_id == products[i].producer})
-        .card.float-left.m-3.mt-5.position-relative.shadow-lg(
-          style='width: 15.3rem;height: 340px'
-        ).product__cart
-          img.card-img-top(src= products[i].product_img, alt='Card image cap')
-          .card-body
-              a(href=`/product/${products[i].id}`)
-                h5.card-title= products[i].product_name
-              p.card-text.text-secondary= found.producer_name
-              .text-danger.position-absolute(style="bottom:10px;left:15px")="$" + products[i].product_price
-              if  products[i].quantity != '0'
-                a.btn.btn-outline-primary.position-absolute(
-                  href=`/product/${products[i].id}`,
-                style="bottom:10px;right:10px"
-                )
+  header.masthead(style="background:url('/public/home/img/bg-pattern.png'), linear-gradient(to left, #7b4397, #dc2430);height:100%;")
+    .container.h-100
+      .row.h-100
+        .col-lg-7.my-auto
+          .mx-auto.header-content
+            h1.mb-5
+              | The phone Will Change The World. 
+              br
+              | Simply dummy text of the printing and typesetting industry.
+              br
+              br
+            a.btn.btn-outline-warning.btn-xl.js-scroll-trigger(role='button', href='#download') see more information!
+        .col-lg-5.my-auto
+          .device-container
+            .device-mockup.iphone6_plus.portrait.white
+              .device(style="background-image:url('/public/home/img/iphone_6_plus_white_port.png');")
+                .screen
+                  img.img-fluid(src='/public/home/img/demo-screen-1.jpg')
+                .button
+          .iphone-mockup
+  section#features.features
+    .container
+      .section-heading.text-center
+        h2 Unlimited Features, Unlimited Fun
+        p.text-muted All the best for you.
+        hr
+      #containerFeature.row.d-flex.flex-wrap.justify-content-around
+        - for(let i = 0; i < 6 && i < products.length; i++)
+          - const producerCurrent = producers.find(p => (p.producer_id == products[i].producer))
+            figure.snip1527
+              .image
+                img(src= products[i].product_img, alt='pr-sample25')
+              figcaption
+                .date
                   i.fas.fa-cart-plus
-                  span(style="font-size: 13px")= ` (${products[i].quantity})`
-              else
-                a.btn.btn-outline-primary.position-absolute(
-                  href='#',style="bottom:10px;right:10px",
-                  onclick="alert('Shop will be add this product. See again.')"
-                )
-                  i.fas.fa-cart-plus
-                  span(style="font-size: 13px")= ` (${products[i].quantity})`
-      div.m-auto(style="text-align:center; clear:both")
-        - for(let i = 1; i <= pages; i++)
-          if querys.page == i
-            a.btn.btn-outline-primary.mr-2.active(
-              href="?producer=" + querys.producer + "&&page=" + i)= i
-          else
-            a.btn.btn-outline-primary.mr-2(
-              href="?producer=" + querys.producer + "&&page=" + i)= i
-      h3 END Featured
-
+                h3= products[i].product_name
+                h4= producerCurrent.producer_name
+                p It is a long established fact that a reader will be distracted.
+              a(href='/product/'+products[i].id)
+  section.cta(style="background-image:url('/public/home/img/bg-cta.jpg');")
+    .cta-content
+      .container
+        h2
+          | Stop waiting.
+          br
+          | Start building.
+          br
+        a.btn.btn-outline-warning.btn-xl.js-scroll-trigger(role='button', href='#contact') buy now
+    .overlay
+    
 
 

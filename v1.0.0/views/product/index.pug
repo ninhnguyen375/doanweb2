@@ -1,0 +1,18 @@
+extends ../layouts/common
+block content
+  h1 Product information
+  - let found = producers.find((elm)=>{return elm.producer_id == product.producer})
+  img(src="/public/img/imgtemp.jpeg", alt="this is hinh")
+  h4="OjectId = " + product.id
+  h4="id = " + product.product_id
+  h4="name = " + product.product_name
+  h4="price = $" + product.product_price
+  h4="producer name = " + found.producer_name
+  form(action="/product/postAddToCart", method="POST")#formPOSTAddToCart
+    input(type="hidden", name="proId",value=product.product_id)
+    input(type="hidden", name="userId",value="")
+    input(type="hidden", name="proPrice",value=product.product_price)
+    span.ml-3 quantity
+    input.ml-2.p-2(name="quantity",type="number", min="1", max="5", required, value = "1")
+    br
+    button.btn.btn-primary.mt-2.ml-2 Add To Cart

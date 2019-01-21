@@ -2,6 +2,7 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
+
 // get route
 const homeRoute = require('./routes/home.route');
 const cartRoute = require('./routes/cart.route');
@@ -17,16 +18,16 @@ const apiUserRoute = require('./api/routes/user.api.route');
 
 const PORT = process.env.PORT || 3000 || 8080;
 // ---------- local
-// const mongodb = 'mongodb://127.0.0.1:27017/webbanhangdb';
-// mongoose.connect(
-//   mongodb,
-//   { useNewUrlParser: true },
-// );
-// ---------- online
+const mongodb = 'mongodb://127.0.0.1:27017/webbanhangdb';
 mongoose.connect(
-process.env.MONGO_URL,
-{ useNewUrlParser: true },
+  mongodb,
+  { useNewUrlParser: true },
 );
+// ---------- online
+// mongoose.connect(
+// process.env.MONGO_URL,
+// { useNewUrlParser: true },
+// );
 
 const db = mongoose.connection;
 
@@ -42,7 +43,9 @@ const app = express();
 
 // public dir
 app.use('/public', express.static('public/'));
+app.use('/uploads', express.static('uploads/'));
 app.use(express.static('public'));
+app.use(express.static('uploads'));
 
 // view pug
 app.set('view engine', 'pug');

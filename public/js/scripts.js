@@ -241,7 +241,6 @@ function isAdmin(){
     return false;
   }
   for (let i = 0; i < showQuantity.length; i++) {
-    console.log('i am here');
     showQuantity[i].style.display = 'inline-block';    
   }
   return true;

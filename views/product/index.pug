@@ -25,7 +25,13 @@ block content
     - const found = producers.find((elm)=>{return elm.producer_id == product.producer})
       .row
         .col-lg-5.offset-lg-1
-          img(src='/public/img/imgtemp.jpeg', style='width: 310px;height: 370px;')
+          .img-thumbnail(style=`
+              width: 310px;
+              height: 370px;
+              background-image: url(${product.product_img});
+              background-position: center;
+              background-size: cover;
+          `)
         .col-lg-5.offset-lg-0
           h1= product.product_name
           h3(style='color:gray')= found.producer_name

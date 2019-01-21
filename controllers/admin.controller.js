@@ -148,7 +148,7 @@ module.exports.addProducer = async (req, res) => {
 // ------------------------> Product
 // index
 module.exports.product = async (req, res) => {
-  const products = await Products.find();
+  const products = await Products.find().sort({ product_id: 1 });
   const producers = await Producers.find();
   const {
     page, idIsDeleted, idIsEdited, added, error, note,
@@ -193,8 +193,9 @@ module.exports.editProduct = async (req, res) => {
   const editData = req.body;
   const productIsEdited = await Products.findById(idToEdit);
   const idIsEdited = productIsEdited.id;
-  console.log(editData.product_img);
+  const imgPath = req.file.path;
   await Products.findByIdAndUpdate(idToEdit, {
+    product_img: `/${imgPath}`,
     product_name: editData.product_name,
     producer: editData.producer,
     product_price: editData.product_price,

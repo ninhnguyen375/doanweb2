@@ -9,8 +9,8 @@ body {
   display: none;
   position: absolute;
   color: gray;
-  top: 8px;
-  right: 8px;
+  top: 0px;
+  right: 0px;
 }
 
 /* search */
@@ -31,6 +31,7 @@ body {
 .search__field {
   background: rgba(0, 0, 0, 0);
   width: 30px;
+  text-indent: 5px;
   height: 30px;
   color: transparent;
   font-family: Lato, sans-serif;
@@ -42,11 +43,12 @@ body {
   transition: all 0.3s ease-in-out;
 }
 .search__field:focus {
+  border-radius: 5px;
   border-bottom-color: #fff;
   width: 20vw;
   color: white;
   cursor: default;
-  background: rgba(0, 0, 0, 0.233);
+  background: rgba(0, 0, 0, 0.432);
 }
 .search__field:focus ~ .search__icon {
   background-color: transparent;

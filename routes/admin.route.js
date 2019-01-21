@@ -1,7 +1,19 @@
 const express = require('express');
+const multer = require('multer');
 const controller = require('../controllers/admin.controller');
 
 const router = express.Router();
+
+// config upload file
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage });
 
 router.get('/dashboard', controller.index);
 router.get('/bill', controller.bill);
@@ -11,7 +23,7 @@ router.get('/user', controller.user);
 
 router.post('/product/delete', controller.deleteProduct);
 router.post('/product/deleteManyProduct', controller.deleteManyProduct);
-router.post('/product/edit', controller.editProduct);
+router.post('/product/edit', upload.single('product_img'), controller.editProduct);
 router.post('/product/add', controller.addProduct);
 
 router.post('/user/delete', controller.deleteUser);

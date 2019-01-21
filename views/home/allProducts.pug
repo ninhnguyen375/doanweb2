@@ -23,27 +23,27 @@ block content
   section#features.features
     .container
       .section-heading.text-center
-        - const producerCurrent = producers.find(p => (p.producer_id == querys.producer))
-          h2= `All ${producerCurrent.producer_name} Phones`
+          h2= `All Phones`
           p.text-muted All the best for you.
           hr
       #containerFeature.row.d-flex.flex-wrap.justify-content-around
-        - let pages = Math.ceil(products.length / 6)
-        - let start = (((querys.page) - 1)*6)
-        - let end = ((querys.page)*6)
+        - let pages = Math.ceil(products.length / 9)
+        - let start = (((querys.page) - 1)*9)
+        - let end = ((querys.page)*9)
         - for(let i = start; i < end && i < products.length; i++)
-          figure.snip1527.mt-3
-            .image
-              img(src= products[i].product_img, alt='pr-sample25')
-            figcaption
-              .date
-                i.fas.fa-cart-plus
-              h3= products[i].product_name
-              h4= producerCurrent.producer_name
-              p It is a long established fact that a reader will be distracted.
-            a(href='/product/'+products[i].id)
-              span.btn.btn-light.text-danger.ml-2.mt-2= '$' + products[i].product_price
-              span.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
+          - const producerCurrent = producers.find(p => (p.producer_id == products[i].producer))
+            figure.snip1527.mt-3
+              .image
+                img(src= products[i].product_img, alt='pr-sample25')
+              figcaption
+                .date
+                  i.fas.fa-cart-plus
+                h3= products[i].product_name
+                h4= producerCurrent.producer_name
+                p It is a long established fact that a reader will be distracted.
+              a(href='/product/'+products[i].id)
+                span.btn.btn-light.text-danger.ml-2.mt-2= '$' + products[i].product_price
+                span.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
     div.text-center.mt-3
       - for(let i = 1; i <= pages; i++)
         if querys.page == i

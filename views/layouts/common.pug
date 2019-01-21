@@ -12,6 +12,7 @@ html
     link(rel='stylesheet', href='/public/home/css/Corporate-Footer-Clean.css')
     link(rel='stylesheet', href='/public/home/css/Footer-Dark.css')
     link(rel='stylesheet', href='/public/home/css/News-Cards.css')
+    link(rel="stylesheet", href='/public/css/styles.css')
   body#page-top
     nav#mainNav.navbar.navbar-light.navbar-expand-lg.fixed-top
       .container
@@ -44,23 +45,23 @@ html
                   href='/admin/dashboard',
                   style='display:none')#adminPage Admin Manager
             //- Search
-            li.nav-item.dropdown
-              a.dropdown-toggle.nav-link(
-                data-toggle='dropdown', 
-                aria-expanded='false', 
-                href='#')#searchDropdown
-                i.fas.fa-search(style="font-size: 15px;")
-              .dropdown-menu(role='menu').col-4
-                form.form-inline.my-2.my-lg-0.m-auto(action="/search")
-                  input.form-control.col-6.ml-2(
-                    type='search', 
-                    placeholder='Search',
-                    name="search",
-                  )
-                  input(type="hidden", value="1", name="page")
-                  input(type="submit", value="Go").form-control.ml-2
-                .text-center.mt-2
-                  a(href="/search") More
+            //- li.nav-item.dropdown
+            //-   a.dropdown-toggle.nav-link(
+            //-     data-toggle='dropdown', 
+            //-     aria-expanded='false', 
+            //-     href='#')#searchDropdown
+            //-     i.fas.fa-search(style="font-size: 15px;")
+            //-   .dropdown-menu(role='menu').col-4
+            //-     form.form-inline.my-2.my-lg-0.m-auto(action="/search")
+            //-       input.form-control.col-6.ml-2(
+            //-         type='search', 
+            //-         placeholder='Search',
+            //-         name="search",
+            //-       )
+            //-       input(type="hidden", value="1", name="page")
+            //-       input(type="submit", value="Go").form-control.ml-2
+            //-     .text-center.mt-2
+            //-       a(href="/search") More
             //- Cart & Bill
             li.nav-item.dropdown
               a.dropdown-toggle.nav-link(
@@ -71,6 +72,15 @@ html
               .dropdown-menu(role='menu').col-4
                 a#goToCart(href="/cart").dropdown-item Cart
                 a#goToBill(href="").dropdown-item Bill
+            //- search 2
+            li.nav-item
+              form(action="/search")
+                .search__wrapper
+                  input(type="hidden", value="1", name="page")
+                  input.search__field(type='search', name='search', placeholder='Search for...')
+                  button.fas.fa-search.search__icon(type='submit')
+            a(href="/search").mt-1.ml-2 More
+
     block content
     //- Footer
     #contact.footer-dark(style='background-color: rgb(34,34,34);')

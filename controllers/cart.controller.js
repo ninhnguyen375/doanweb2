@@ -45,5 +45,5 @@ module.exports.addBill = async (req, res) => {
     );
   });
 
-  res.redirect("/");
+  res.redirect(`/bill/${theBill.authId}`);
 };

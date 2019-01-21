@@ -12,6 +12,10 @@ module.exports.index = async (req, res) => {
       producers,
       querys,
     });
+  }
+  if (querys.producer === '') {
+    products = await Products.find();
+    res.render('home/allProducts', { products, producers, querys });
   } else if (querys.search) {
     const temps = await Products.find();
     products = temps.filter(

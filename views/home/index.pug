@@ -11,7 +11,7 @@ block content
               | Simply dummy text of the printing and typesetting industry.
               br
               br
-            a.btn.btn-outline-warning.btn-xl.js-scroll-trigger(role='button', href='#download') see more information!
+            a.btn.btn-outline-warning.btn-xl.js-scroll-trigger(role='button', href='#features') By Now!
         .col-lg-5.my-auto
           .device-container
             .device-mockup.iphone6_plus.portrait.white
@@ -21,12 +21,12 @@ block content
                 .button
           .iphone-mockup
   section#features.features
-    .container
+    .container#containerFeature
       .section-heading.text-center
         h2 Unlimited Features, Unlimited Fun
         p.text-muted All the best for you.
         hr
-      #containerFeature.row.d-flex.flex-wrap.justify-content-around
+      .row.d-flex.flex-wrap.justify-content-around
         - for(let i = 0; i < 6 && i < products.length; i++)
           - const producerCurrent = producers.find(p => (p.producer_id == products[i].producer))
             figure.snip1527
@@ -39,6 +39,10 @@ block content
                 h4= producerCurrent.producer_name
                 p It is a long established fact that a reader will be distracted.
               a(href='/product/'+products[i].id)
+                span.btn.btn-light.text-danger.ml-2.mt-2= '$' + products[i].product_price
+                span.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
+      div.text-center.mt-5          
+        a(href="/?producer=&page=1").btn.btn-outline-light.text-secondary  More >
   section.cta(style="background-image:url('/public/home/img/bg-cta.jpg');")
     .cta-content
       .container
@@ -47,7 +51,7 @@ block content
           br
           | Start building.
           br
-        a.btn.btn-outline-warning.btn-xl.js-scroll-trigger(role='button', href='#contact') buy now
+        a.btn.btn-outline-warning.btn-xl.js-scroll-trigger(role='button', href='#features') buy now
     .overlay
     
 

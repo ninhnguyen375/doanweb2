@@ -228,11 +228,30 @@ function activeLeftMenu() {
     }
   }
 }
+function isAdmin(){
+  const auth = JSON.parse(localStorage.getItem('auth'));
+  const showQuantity = document.getElementsByClassName('showQuantity');
+  if(!showQuantity){
+    return;
+  }
+  if(!auth){
+    return;
+  }
+  if(auth.user_permission !== 'admin'){
+    return false;
+  }
+  for (let i = 0; i < showQuantity.length; i++) {
+    console.log('i am here');
+    showQuantity[i].style.display = 'inline-block';    
+  }
+  return true;
+}
 window.onload = () => {
   changeAuth();
   activeLeftMenu();
   postAddBill();
   renderSearch();
+  isAdmin();
   completeFormPOSTAddToCart();
   changeDataFromCart();
   try {

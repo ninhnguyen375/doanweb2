@@ -193,14 +193,23 @@ module.exports.editProduct = async (req, res) => {
   const editData = req.body;
   const productIsEdited = await Products.findById(idToEdit);
   const idIsEdited = productIsEdited.id;
-  const imgPath = req.file.path;
-  await Products.findByIdAndUpdate(idToEdit, {
-    product_img: `/${imgPath}`,
-    product_name: editData.product_name,
-    producer: editData.producer,
-    product_price: editData.product_price,
-    quantity: editData.quantity,
-  });
+  if (req.file) {
+    const imgPath = req.file.path;
+    await Products.findByIdAndUpdate(idToEdit, {
+      product_img: `/${imgPath}`,
+      product_name: editData.product_name,
+      producer: editData.producer,
+      product_price: editData.product_price,
+      quantity: editData.quantity,
+    });
+  } else {
+    await Products.findByIdAndUpdate(idToEdit, {
+      product_name: editData.product_name,
+      producer: editData.producer,
+      product_price: editData.product_price,
+      quantity: editData.quantity,
+    });
+  }
   res.redirect(`/admin/product?page=1&idIsEdited=${idIsEdited}`);
 };
 // add
@@ -208,7 +217,6 @@ module.exports.addProduct = async (req, res) => {
   await Products.insertMany(req.body);
   res.redirect(`/admin/product?page=1&added=1&note=${req.body.product_name}`);
 };
-
 
 // ------------------------------> User
 // index

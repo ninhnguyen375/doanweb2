@@ -19,11 +19,11 @@
 .text-center.mt-3.mb-5
   - for(let i = 1; i <= pages; i++)
     if querys.page == i
-      a.btn.mr-2.active.page-btn.js-scroll-trigger(
+      a.btn.mr-2.active.page-btn(
         onclick=`loadPage(${i})`,
         href="#searchMore")= i
     else
-      a.btn.mr-2.page-btn.js-scroll-trigger( 
+      a.btn.mr-2.page-btn( 
         style="background-color: #c1c1c1",
         href="#searchMore",
         onclick=`loadPage(${i})` )= i

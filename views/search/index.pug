@@ -4,7 +4,7 @@ block content
   #searchMore.container(style="padding-top:80px;")
     .section-heading.text-center.mb-5
       h2 More Search
-      p.text-muted everything you want
+      p.text-muted#noti everything you want
       hr
     form(action="/search/get").d-flex
       //- search value
@@ -58,16 +58,17 @@ block content
     .text-center.mt-3.mb-5
       - for(let i = 1; i <= pages; i++)
         if querys.page == i
-          a.btn.mr-2.active.page-btn.js-scroll-trigger(
+          a.btn.mr-2.active.page-btn(
             onclick=`loadPage(${i})`,
             href='#searchMore',)= i
         else
-          a.btn.mr-2.page-btn.js-scroll-trigger( style="background-color: #c1c1c1",
+          a.btn.mr-2.page-btn( style="background-color: #c1c1c1",
             href='#searchMore',
             onclick=`loadPage(${i})`)= i
   script(src="/public/js/axios.min.js")
   script(src="/public/js/jquery.min.js")
   script.
+
     const searchValue = $('#searchValue');
     const searchPrice = $('#searchPrice');
     const searchProducer = $('#searchProducer');
@@ -91,87 +92,61 @@ block content
     }
     //- Load search value on keyup
     searchValue.on('keyup', async function(){
+      pageVal = 1;
       searchVal = this.value;
-      const data = await axios.post('/search/getSearch',{
-        search: searchVal,
-        page: "1",
-        price: priceVal,
-        producer: producerVal,
-        sortByName: sortByNameVal,
-        sortByPrice: sortByPriceVal,
-      });
+      const data = await postSearch();
       render(root, data.data);
     });
     //- Load search price on change
     searchPrice.on('change', async function(){
+      pageVal = 1;
       priceVal = this.value;
-      const data = await axios.post('/search/getSearch',{
-        search: searchVal,
-        page: "1",
-        price: priceVal,
-        producer: producerVal,
-        sortByName: sortByNameVal,
-        sortByPrice: sortByPriceVal,
-      });
+      const data = await postSearch();
       render(root, data.data);
     });
     //- Load search producerVal on change
     searchProducer.on('change', async function(){
+      pageVal = 1;
       producerVal = this.value;
-      const data = await axios.post('/search/getSearch',{
-        search: searchVal,
-        page: "1",
-        price: priceVal,
-        producer: producerVal,
-        sortByName: sortByNameVal,
-        sortByPrice: sortByPriceVal,
-      });
+      const data = await postSearch();
       render(root, data.data);
     });
     //- Load search sortByNameVal on change
     sortByName.on('change', async function(){
+      pageVal = 1;
       sortByNameVal = this.value;
-      const data = await axios.post('/search/getSearch',{
-        search: searchVal,
-        page: "1",
-        price: priceVal,
-        producer: producerVal,
-        sortByName: sortByNameVal,
-        sortByPrice: sortByPriceVal,
-      });
+      const data = await postSearch();
       render(root, data.data);
     });
     //- Load search sortByPriceVal on change
     sortByPrice.on('change', async function(){
       sortByPriceVal = this.value;
-      const data = await axios.post('/search/getSearch',{
-        search: searchVal,
-        page: "1",
-        price: priceVal,
-        producer: producerVal,
-        sortByName: sortByNameVal,
-        sortByPrice: sortByPriceVal,
-      });
+      pageVal = 1;
+      const data = await postSearch();
       render(root, data.data);
     });
     //- Load on click page
     async function loadPage(page){
       pageVal = page;
-      const data = await axios.post('/search/getSearch',{
+      const data = await postSearch();
+      render(root, data.data);
+    }
+    function postSearch(){
+      return axios.post('/search/getSearch',{
         search: searchVal,
         page: pageVal,
         price: priceVal,
         producer: producerVal,
         sortByName: sortByNameVal,
         sortByPrice: sortByPriceVal,
-      });
-      render(root, data.data);
-      //- reRenderListPage();
+      }, { onUploadProgress: addLoadingAnimate() });
     }
-    //- function reRenderListPage(){
-    //-   const page = document.getElementsById('page-btn');
-    //-   for(let i = 0; i < page.length; i++){
-    //-     page[i].className += ' js-scroll-trigger';
-    //-   }
-    //- }
-    
+    function addLoadingAnimate(){
+      $('#root').html(`
+        <div class="lds-css ng-scope" style="margin:auto;width: 200px; height: 200px;">
+          <div style="width:100%;height:100%" class="lds-ripple">
+            <div></div>
+            <div></div>
+          </div>
+      </div>`);
+    }

@@ -71,5 +71,5 @@ app.use('/api/user', apiUserRoute);
 
 // Listen Port
 app.listen(PORT, () => {
-  console.log(PORT);
+  console.log(`localhost:${PORT}`);
 });

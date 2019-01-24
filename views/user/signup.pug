@@ -110,10 +110,11 @@ html
       form(
             method='post',
             action='/user/signup', 
-            style='max-width: 494px;padding: 40px;padding-top: 14px;padding-bottom: 16px;')
+            style='max-width: 494px;padding: 40px;padding-top: 14px;padding-bottom: 16px;',
+            onsubmit='return canSubmit()')
         .illustration(style='height: 171px;padding-top: 0px;padding-bottom: 0px;')
           i.far.fa-user-circle(style='font-size: 125px;color: rgb(168,206,255);')
-        .text-danger.alertDanger
+        .text-danger.alertDanger#alert
         if err
           .text-danger.alertDanger= err
         //-   Name
@@ -196,8 +197,53 @@ html
     //- script(src="https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/index.js")
     //- script(src="https://unpkg.com/axios/dist/axios.min.js")
     script.
+      const noti = document.getElementById('alert');
+      const inputEmail = document.getElementById('emailInput');
+      let cansub = false;
+      function check(data){
+        const found = data.find((re) => {
+          return re.user_email === inputEmail.value;
+        });
+        if (found) {
+          noti.innerHTML = 'This email has been used!';
+          cansub = false;
+        } else {
+          noti.innerHTML = '';
+          cansub = true;
+        }
+      }
+      axios.get('/api/user/email', {
+        onDownloadProgress: function(e){
+          noti.innerHTML += 'load ajax : ' + e.loaded/ e.total * 100 + '%';
+        }
+      })
+        .then(function(res){
+          inputEmail.addEventListener('keyup', function(){
+            check(res.data);
+          });
+          inputEmail.addEventListener('focusout', function () {
+            check(res.data);
+          });
+          inputEmail.addEventListener('click', function () {
+            check(res.data);
+          });
+          inputEmail.addEventListener('change', function () {
+            check(res.data);
+          });
+        })
+        .catch(function(err){
+          console.log(err);
+        });
+      function canSubmit () {
+        const pass1 = document.getElementById('userpassword');
+        const pass2 = document.getElementById('userpassword2');
+        if(cansub && (pass1.value() === pass2.value())){
+          return true;
+        }
+        return false;
+      }
       //- loadProgressBar();
-      $(() => {
+      //- $(() => {
 
         //- async function testApi () {
         //-   try {
@@ -215,47 +261,47 @@ html
         //- testApi();
 
 
-        let canSubmit = false;
+      //-   let canSubmit = false;
 
-        async function checkCoincidentEmail (val) {
-          try {
-            const datasPromise = await axios.get('/api/user', {
-              onDownloadProgress: function(progressEvent) {
-              }
-            });
-            const { data } = datasPromise;
-            const found = data.find(dat => (dat.user_email === val));
-            if(found){
-              $('.text-danger.alertDanger').html('This Email Has Been Used');
-              canSubmit = false;
-            } else {
-              $('.text-danger.alertDanger').html('');
-              canSubmit = true;
-            }
-          } catch (error) {
-            $('.text-danger.alertDanger').html(`Can not connect to server
-            Please check your network.`);
-          }
-        }
-        //- call on load 
-        checkCoincidentEmail($('#emailInput').val());
-        //- check on keyup
-        $('#emailInput').on('keyup change click ', function () {
-          checkCoincidentEmail($(this).val());
-        });
-        //- check on autocomplete
-        $('html').bind('input', function() {
-          checkCoincidentEmail($('#emailInput').val());
-        });
-        //- finaly, check on submit
-        $('form').on('submit',() => {
-          if(canSubmit && ($('#userpassword').val() === $('#userpassword2').val())){
-            return true;
-          } else {
-            return false;
-          }
-        });
-      });
+      //-   async function checkCoincidentEmail (val) {
+      //-     try {
+      //-       const datasPromise = await axios.get('/api/user', {
+      //-         onDownloadProgress: function(progressEvent) {
+      //-         }
+      //-       });
+      //-       const { data } = datasPromise;
+      //-       const found = data.find(dat => (dat.user_email === val));
+      //-       if(found){
+      //-         $('.text-danger.alertDanger').html('This Email Has Been Used');
+      //-         canSubmit = false;
+      //-       } else {
+      //-         $('.text-danger.alertDanger').html('');
+      //-         canSubmit = true;
+      //-       }
+      //-     } catch (error) {
+      //-       $('.text-danger.alertDanger').html(`Can not connect to server
+      //-       Please check your network.`);
+      //-     }
+      //-   }
+      //-   //- call on load 
+      //-   checkCoincidentEmail($('#emailInput').val());
+      //-   //- check on keyup
+      //-   $('#emailInput').on('keyup change click ', function () {
+      //-     checkCoincidentEmail($(this).val());
+      //-   });
+      //-   //- check on autocomplete
+      //-   $('html').bind('input', function() {
+      //-     checkCoincidentEmail($('#emailInput').val());
+      //-   });
+      //-   //- finaly, check on submit
+      //-   $('form').on('submit',() => {
+      //-     if(canSubmit && ($('#userpassword').val() === $('#userpassword2').val())){
+      //-       return true;
+      //-     } else {
+      //-       return false;
+      //-     }
+      //-   });
+      //- });
 
 
 

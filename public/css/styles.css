@@ -1,5 +1,6 @@
 * {
   outline: none !important;
+  /* scroll-behavior: smooth; */
 }
 body {
   position: relative;

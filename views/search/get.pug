@@ -1,0 +1,29 @@
+#containerFeature.d-flex.flex-wrap.justify-content-around.container
+  - let pages = Math.ceil(products.length / 6)
+  - let start = (((querys.page) - 1)*6)
+  - let end = ((querys.page)*6)
+  - for(let i = start; i < end && i < products.length; i++)
+    - const found = producers.find((elm)=>{return elm.producer_id == products[0].producer})
+    figure.snip1527.mt-3
+      .image
+        img(src= products[i].product_img, alt='pr-sample25')
+      figcaption
+        .date
+          i.fas.fa-cart-plus
+        h3= products[i].product_name
+        h4= found.producer_name
+        p It is a long established fact that a reader will be distracted.
+      a(href='/product/'+products[i].id)
+        span.btn.btn-light.text-danger.border-danger.mt-1.ml-1= '$' + products[i].product_price
+        span.border.rounded-0.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
+.text-center.mt-3.mb-5
+  - for(let i = 1; i <= pages; i++)
+    if querys.page == i
+      a.btn.mr-2.active.page-btn.js-scroll-trigger(
+        onclick=`loadPage(${i})`,
+        href="#searchMore")= i
+    else
+      a.btn.mr-2.page-btn.js-scroll-trigger( 
+        style="background-color: #c1c1c1",
+        href="#searchMore",
+        onclick=`loadPage(${i})` )= i

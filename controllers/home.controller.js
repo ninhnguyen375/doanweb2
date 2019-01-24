@@ -1,6 +1,13 @@
 const Products = require('../models/products.model');
 const Producers = require('../models/producers.model');
 
+module.exports.getCategory = async (req, res) => {
+  const querys = req.query;
+  const producers = await Producers.find();
+  let products = [];
+  products = await Products.find({ producer: querys.producer });
+  res.render('home/getCategory', { products, producers, querys });
+};
 module.exports.index = async (req, res) => {
   const querys = req.query;
   const producers = await Producers.find();

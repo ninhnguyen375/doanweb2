@@ -1,103 +1,177 @@
 extends ../layouts/common
 block content
   header(style="background:url('/public/home/img/bg-pattern.png'), linear-gradient(to left, #7b4397, #dc2430);height:10%;")
-  #searchMore.container.col-5(style="padding-top:80px")
+  #searchMore.container(style="padding-top:80px;")
     .section-heading.text-center.mb-5
       h2 More Search
       p.text-muted everything you want
       hr
-    form(action="/search")
+    form(action="/search/get").d-flex
       //- search value
-      label(for="searchValue") Search value
-      input.form-control#searchValue(type="text", placeholder="Search value", name="search")
+      input.form-control#searchValue(type="text", placeholder="Search value", name="search", value=querys.search)
       //- input page
       input(type="hidden", value="1", name="page")
       //- search price
-      label(for="searchPrice").mt-2 Choose price
       select.custom-select#searchPrice(name="price")
         option(value="") Choose Price
         option(value="100to500") 100$ - 500$
         option(value="500to1000") 500$ - 1000$
       //- search by producer
-      label(for="searchProducer").mt-2 Choose producer
       select.custom-select#searchProducer(name="producer")
         option(value="") Choose Producer
         each producer in producers
           option(value=producer.producer_id)= producer.producer_name
       //- sort name
-      label(for="sortByName").mt-2 Sort by Name
       select.custom-select#sortByName(name="sortByName")
         option(value="") Sort By Name
         option(value="AtoZ") A - Z
         option(value="ZtoA") Z - A
       //- sort price
-      label(for="sortByPrice").mt-2 Sort by Price
       select.custom-select#sortByPrice(name="sortByPrice")
         option(value="") Sort By Price
         option(value="Asc") Asc
         option(value="Desc") Desc
       //- button seach
-      button.btn.btn-success.mt-3 Search
   .section-heading.text-center.mb-5.mt-5
-    h2 Your Search
-    p.text-muted='There is ' + products.length + '  products'
-    hr
-  #containerFeature.d-flex.flex-wrap.justify-content-around.container
-    - let pages = Math.ceil(products.length / 6)
-    - let start = (((querys.page) - 1)*6)
-    - let end = ((querys.page)*6)
-    - for(let i = start; i < end && i < products.length; i++)
-      - const found = producers.find((elm)=>{return elm.producer_id == products[0].producer})
-      figure.snip1527.mt-3
-        .image
-          img(src= products[i].product_img, alt='pr-sample25')
-        figcaption
-          .date
-            i.fas.fa-cart-plus
-          h3= products[i].product_name
-          h4= found.producer_name
-          p It is a long established fact that a reader will be distracted.
-        a(href='/product/'+products[i].id)
-  div.text-center.mt-3.mb-5
-    - for(let i = 1; i <= pages; i++)
-      if querys.page == i
-        a.btn.mr-2.active(
-          href="?producer=" + querys.producer + "&page=" + i)= i
-      else
-        a.btn.mr-2( style="background-color: #c1c1c1"
-          href="?producer=" + querys.producer + "&page=" + i)= i
+    //   h2 Your Search
+    //   p.text-muted='There is ' + products.length + '  products'
+      hr
+  #root    
+    #containerFeature.d-flex.flex-wrap.justify-content-around.container
+      - let pages = Math.ceil(products.length / 6)
+      - let start = (((querys.page) - 1)*6)
+      - let end = ((querys.page)*6)
+      - for(let i = start; i < end && i < products.length; i++)
+        - const found = producers.find((elm)=>{return elm.producer_id == products[0].producer})
+        figure.snip1527.mt-3
+          .image
+            img(src= products[i].product_img, alt='pr-sample25')
+          figcaption
+            .date
+              i.fas.fa-cart-plus
+            h3= products[i].product_name
+            h4= found.producer_name
+            p It is a long established fact that a reader will be distracted.
+          a(href='/product/'+products[i].id)
+            span.btn.btn-light.text-danger.border-danger.mt-1.ml-1= '$' + products[i].product_price
+            span.border.rounded-0.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
+    .text-center.mt-3.mb-5
+      - for(let i = 1; i <= pages; i++)
+        if querys.page == i
+          a.btn.mr-2.active.page-btn.js-scroll-trigger(
+            onclick=`loadPage(${i})`,
+            href='#searchMore',)= i
+        else
+          a.btn.mr-2.page-btn.js-scroll-trigger( style="background-color: #c1c1c1",
+            href='#searchMore',
+            onclick=`loadPage(${i})`)= i
+  script(src="/public/js/axios.min.js")
+  script(src="/public/js/jquery.min.js")
+  script.
+    const searchValue = $('#searchValue');
+    const searchPrice = $('#searchPrice');
+    const searchProducer = $('#searchProducer');
+    const sortByName = $('#sortByName');
+    const sortByPrice = $('#sortByPrice');
+    const root = $('#root');
 
+    let searchVal = "";
+    let pageVal = "1";
+    let priceVal = "";
+    let producerVal = "";
+    let sortByNameVal = "";
+    let sortByPriceVal = "";
 
-  //- .container(style="padding-top:50px; padding-bottom: 50px;overflow:auto")
-  //-   h1.font-weight-bold Search Result
-  //-   if querys.page
-  //-     - let pages = Math.ceil(products.length / 8)
-  //-     - let start = (((querys.page) - 1)*8)
-  //-     - let end = ((querys.page)*8)
-  //-     - for(let i = start; i < end && i < products.length; i++)
-  //-       - let found = producers.find((elm)=>{return elm.producer_id == products[0].producer})
-  //-       .card.float-left.m-3.mt-5.position-relative.shadow-lg(
-  //-         style='width: 15.3rem;height: 340px'
-  //-       ).product__cart
-  //-         img.card-img-top(src= "/public/img/imgtemp.jpeg", alt='Card image cap')
-  //-         .card-body
-  //-           a(href=`/product/${products[i].id}`)
-  //-             h5.card-title= products[i].product_name
-  //-           p.card-text.text-secondary= found.producer_name
-  //-           .text-danger.position-absolute(style="bottom:10px;left:15px")="$" + products[i].product_price
-  //-           a.btn.btn-outline-primary.position-absolute(
-  //-             href=`/product/${products[i].id}`,
-  //-           style="bottom:10px;right:10px"
-  //-           )
-  //-             i.fas.fa-cart-plus
-  //-             span(style="font-size: 13px")= ` (${products[i].quantity})`
-  //-     div.m-auto(style="text-align:center; clear:both")
-  //-       - for(let i = 1; i <= pages; i++)
-  //-         if querys.page == i
-  //-           a.btn.btn-outline-primary.mr-2.active(
-  //-             href="?search="+querys.search+"&page="+i+"&price="+querys.price+"&producer="+querys.producer+"&sortByName="+querys.sortByName+"&sortByPrice="+querys.sortByPrice
-  //-           )= i
-  //-         else
-  //-           a.btn.btn-outline-primary.mr-2(
-  //-             href="?search="+querys.search+"&page="+i+"&price="+querys.price+"&producer="+querys.producer+"&sortByName="+querys.sortByName+"&sortByPrice="+querys.sortByPrice
-  //-           )= i
+    function render(container, items){
+      container.html(items);
+    }
+    function getLink(search="",page="",price="",producer="",sortByName="",sortByPrice=""){
+      let link = `/search/getSearch?search=${search}&page=${page}&price=${price}&producer=${producer}&sortByName=${sortByName}&sortByPrice=${sortByPrice}`;
+      return link;
+    }
+    //- Load search value on keyup
+    searchValue.on('keyup', async function(){
+      searchVal = this.value;
+      const data = await axios.post('/search/getSearch',{
+        search: searchVal,
+        page: "1",
+        price: priceVal,
+        producer: producerVal,
+        sortByName: sortByNameVal,
+        sortByPrice: sortByPriceVal,
+      });
+      render(root, data.data);
+    });
+    //- Load search price on change
+    searchPrice.on('change', async function(){
+      priceVal = this.value;
+      const data = await axios.post('/search/getSearch',{
+        search: searchVal,
+        page: "1",
+        price: priceVal,
+        producer: producerVal,
+        sortByName: sortByNameVal,
+        sortByPrice: sortByPriceVal,
+      });
+      render(root, data.data);
+    });
+    //- Load search producerVal on change
+    searchProducer.on('change', async function(){
+      producerVal = this.value;
+      const data = await axios.post('/search/getSearch',{
+        search: searchVal,
+        page: "1",
+        price: priceVal,
+        producer: producerVal,
+        sortByName: sortByNameVal,
+        sortByPrice: sortByPriceVal,
+      });
+      render(root, data.data);
+    });
+    //- Load search sortByNameVal on change
+    sortByName.on('change', async function(){
+      sortByNameVal = this.value;
+      const data = await axios.post('/search/getSearch',{
+        search: searchVal,
+        page: "1",
+        price: priceVal,
+        producer: producerVal,
+        sortByName: sortByNameVal,
+        sortByPrice: sortByPriceVal,
+      });
+      render(root, data.data);
+    });
+    //- Load search sortByPriceVal on change
+    sortByPrice.on('change', async function(){
+      sortByPriceVal = this.value;
+      const data = await axios.post('/search/getSearch',{
+        search: searchVal,
+        page: "1",
+        price: priceVal,
+        producer: producerVal,
+        sortByName: sortByNameVal,
+        sortByPrice: sortByPriceVal,
+      });
+      render(root, data.data);
+    });
+    //- Load on click page
+    async function loadPage(page){
+      pageVal = page;
+      const data = await axios.post('/search/getSearch',{
+        search: searchVal,
+        page: pageVal,
+        price: priceVal,
+        producer: producerVal,
+        sortByName: sortByNameVal,
+        sortByPrice: sortByPriceVal,
+      });
+      render(root, data.data);
+      //- reRenderListPage();
+    }
+    //- function reRenderListPage(){
+    //-   const page = document.getElementsById('page-btn');
+    //-   for(let i = 0; i < page.length; i++){
+    //-     page[i].className += ' js-scroll-trigger';
+    //-   }
+    //- }
+    

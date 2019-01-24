@@ -11,7 +11,7 @@ block content
               | Simply dummy text of the printing and typesetting industry.
               br
               br
-            a.btn.btn-outline-warning.btn-xl.js-scroll-trigger(role='button', href='#features')  By Now!
+            a.btn.btn-outline-warning.btn-xl.js-scroll-trigger(role='button', href='#features')  Buy Now!
         .col-lg-5.my-auto
           .device-container
             .device-mockup.iphone6_plus.portrait.white
@@ -29,8 +29,8 @@ block content
           hr
       #containerFeature.row.d-flex.flex-wrap.justify-content-around
         - let pages = Math.ceil(products.length / 6)
-        - let start = (((querys.page) - 1)*6)
-        - let end = ((querys.page)*6)
+        - let start = (((1) - 1)*6)
+        - let end = ((1)*6)
         - for(let i = start; i < end && i < products.length; i++)
           figure.snip1527.mt-3
             .image
@@ -47,9 +47,35 @@ block content
               span.border.rounded-0.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
     div.text-center.mt-3
       - for(let i = 1; i <= pages; i++)
-        if querys.page == i
-          a.btn.mr-2.active(
-            href="?producer=" + querys.producer + "&page=" + i)= i
-        else
-          a.btn.mr-2( style="background-color: #c1c1c1"
-            href="?producer=" + querys.producer + "&page=" + i)= i
+        //- if querys.page == i
+        //-   a.btn.mr-2.page-btn(
+        //-     onclick=`clickPage(${i},"${producerCurrent.producer_id}",this)`,
+        //-     href="#features",
+        //-     )= i
+        //- else
+        a.btn.mr-2.page-btn.js-scroll-trigger(
+          style="background-color: #c1c1c1",
+          onclick=`clickPage(${i},"${producerCurrent.producer_id}",this)`,
+          href="#features",
+          )= i
+  script(src = "/public/js/axios.min.js")
+  script.
+    const containerFeature = document.getElementById('containerFeature');
+    function render(container, items){
+      container.innerHTML = items;
+    }
+    async function clickPage (num, producer, event) {
+      const promiseData = await axios.get('/getCategory/?producer='+producer+'&page='+num);
+      setActivePage(event);
+      render(containerFeature,promiseData.data);
+    }
+    setActivePage(document.getElementsByClassName('page-btn')[0]);
+    function setActivePage(page){
+      const btnPage = document.getElementsByClassName('page-btn');
+      for(let i = 0; i < btnPage.length; i++){
+        btnPage[i].className = 'btn mr-2 page-btn js-scroll-trigger';
+        btnPage[i].style.backgroundColor = '#c1c1c1';
+      }
+      page.className = 'btn mr-2 active page-btn js-scroll-trigger';
+      page.style.backgroundColor = '#fdcc52';
+    }

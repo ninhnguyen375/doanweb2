@@ -1,0 +1,19 @@
+#containerFeature.row.d-flex.flex-wrap.justify-content-around
+  - let pages = Math.ceil(products.length / 9)
+  - let start = (((querys.page) - 1)*9)
+  - let end = ((querys.page)*9)
+  - for(let i = start; i < end && i < products.length; i++)
+    - const producerCurrent = producers.find(p => (p.producer_id == products[i].producer))
+      figure.snip1527.mt-3
+        .image
+          img(src= products[i].product_img, alt='pr-sample25')
+        figcaption
+          .date
+            i.fas.fa-cart-plus
+          h3= products[i].product_name
+          h4= producerCurrent.producer_name
+          p It is a long established fact that a reader will be distracted.
+        a(href='/product/'+products[i].id)
+          span.border.btn.btn-light.text-danger.ml-2.mt-2= '$' + products[i].product_price
+          span.border.rounded-0.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
+    

@@ -1,6 +1,6 @@
 * {
   outline: none !important;
-  /* scroll-behavior: smooth; */
+  scroll-behavior: smooth;
 }
 body {
   position: relative;
@@ -240,4 +240,8 @@ body {
   height: 200px !important;
   -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
   transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+}
+.image{
+  width: 310px;
+  height: 370px;
 }

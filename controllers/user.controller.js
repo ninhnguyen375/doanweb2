@@ -31,5 +31,5 @@ module.exports.postLogin = async (req, res) => {
 module.exports.postSignup = async (req, res) => {
   const newUser = req.body;
   await Users.insertMany(newUser);
-  res.redirect('/');
+  res.redirect('/user/login');
 };

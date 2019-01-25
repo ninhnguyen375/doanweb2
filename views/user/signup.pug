@@ -1,92 +1,3 @@
-//- extends ../layouts/library
-//- block content
-//-   .container(style="padding-top:50px")
-//-     #alertDanger
-//-     .d-flex.m-auto.col-5
-//-           h1.col-8.mb-3 SIGN UP
-//-           .col-2
-//-           a(href="/").mt-2
-//-                 button(class="btn btn-light") BACK
-//-     form(
-//-         action="/user/signup",
-//-         method="POST",
-//-         class="col-3 mt-2",
-//-         onsubmit="return checkpass()",
-//-       ).needs-validation.col-5.m-auto
-//-       //- Name
-//-       label(for="username") Name
-//-       input#username.form-control(
-//-             type='text', 
-//-             placeholder='Name', 
-//-             required='',
-//-             name="user_name")
-//-       .invalid-feedback Please provide a valid Name.
-//-       //- Phone
-//-       label(for="userphone") Phone
-//-       input#userphone.form-control(
-//-             type='text', 
-//-             placeholder='Phone',
-//-             pattern="[0-9]{10,}", 
-//-             required='',
-//-             name="user_phone")
-//-       .invalid-feedback Please provide a valid Phone.
-//-       //- Email
-//-       label(for="useremail") Email
-//-       input#useremail.form-control(
-//-             name="user_email",
-//-             type='email', 
-//-             placeholder='Email', 
-//-             required='')
-//-       .invalid-feedback Please provide a valid Email.
-//-       //- Password
-//-       label(for="userpassword") Password (6 character)
-//-       input#userpassword.form-control(
-//-             name="user_password",
-//-             type='password', 
-//-             placeholder='Password', 
-//-             required='',
-//-             pattern='.{6,}')
-//-       .invalid-feedback Please provide a valid Password.
-//-       //- Password again
-//-       label(for="userpassword2") Confirm password
-//-       input#userpassword2.form-control(
-//-             type='password', 
-//-             placeholder='Confirm Password', 
-//-             required='',
-//-             pattern='.{6,}')
-//-       .invalid-feedback Please provide a valid Confirm Password.
-//-       //- user permission
-//-       input(value="client", type="hidden", name="user_permission")
-//-       //- Create
-//-       button.btn.btn-success.mt-3 Sign up
-//-       a(href='/user/login').btn.btn-light.mt-3.float-right Login
-
-    
-      //- $(document).ready( async () => {
-      //-   const datas = await axios.get('/api/user');
-      //-   const pass1 = $('#userpassword');
-      //-   const pass2 = $('#userpassword2');
-      //-   let canSubmit = false;
-      //-   $('#nameInput').on('keyup',function () {
-      //-     let found = datas.data.find(dat => (
-      //-       dat.user_email === $(this).val()
-      //-     ));
-      //-     if(found){
-      //-       $('.text-danger.alertDanger').html('This email has been used!');
-      //-       $(this).focus();
-      //-     } else {
-      //-       $('.text-danger.alertDanger').html('');
-      //-       canSubmit = true;
-      //-     }
-      //-   });
-      //-   $('form').on('submit', () => {
-      //-     if(canSubmit && (pass1.value === pass2.value)){
-      //-       return true;
-      //-     }else{
-      //-       return false;
-      //-     }
-      //-   });
-      //- });
 doctype html
 html
   head
@@ -99,8 +10,6 @@ html
     link(rel='stylesheet', href='/public/signup/css/Footer-Dark.css')
     link(rel='stylesheet', href='/public/signup/css/Login-Form-Dark.css')
     link(rel='stylesheet', href='/public/signup/css/styles.css')
-    //- progress bar
-    //- link(rel="stylesheet", type="text/css", href="https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/nprogress.css")
   body
     .login-dark(style='height: 100vh;color: rgb(255,255,255);')
       .row
@@ -193,9 +102,6 @@ html
     script(src='/public/signup/bootstrap/js/bootstrap.min.js')
     script(src="/public/js/scripts.js")
     script(src="/public/js/axios.min.js")
-    //- progress bar 
-    //- script(src="https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/index.js")
-    //- script(src="https://unpkg.com/axios/dist/axios.min.js")
     script.
       const noti = document.getElementById('alert');
       const inputEmail = document.getElementById('emailInput');
@@ -212,11 +118,7 @@ html
           cansub = true;
         }
       }
-      axios.get('/api/user/email', {
-        onDownloadProgress: function(e){
-          noti.innerHTML += 'load ajax : ' + e.loaded/ e.total * 100 + '%';
-        }
-      })
+      axios.get('/api/user/email')
         .then(function(res){
           inputEmail.addEventListener('keyup', function(){
             check(res.data);
@@ -242,66 +144,6 @@ html
         }
         return false;
       }
-      //- loadProgressBar();
-      //- $(() => {
-
-        //- async function testApi () {
-        //-   try {
-        //-     const dpromise = await axios.get('https://kitsu.io/api/edge/anime', {
-        //-       onDownloadProgress: function(progressEvent) {
-        //-         console.log((progressEvent.loaded / 10000) * 100);
-        //-         console.log(progressEvent);
-        //-       }
-        //-     });
-        //-     console.log(dpromise.data);
-        //-   } catch (error) {
-        //-     console.log(error);
-        //-   }
-        //- }
-        //- testApi();
-
-
-      //-   let canSubmit = false;
-
-      //-   async function checkCoincidentEmail (val) {
-      //-     try {
-      //-       const datasPromise = await axios.get('/api/user', {
-      //-         onDownloadProgress: function(progressEvent) {
-      //-         }
-      //-       });
-      //-       const { data } = datasPromise;
-      //-       const found = data.find(dat => (dat.user_email === val));
-      //-       if(found){
-      //-         $('.text-danger.alertDanger').html('This Email Has Been Used');
-      //-         canSubmit = false;
-      //-       } else {
-      //-         $('.text-danger.alertDanger').html('');
-      //-         canSubmit = true;
-      //-       }
-      //-     } catch (error) {
-      //-       $('.text-danger.alertDanger').html(`Can not connect to server
-      //-       Please check your network.`);
-      //-     }
-      //-   }
-      //-   //- call on load 
-      //-   checkCoincidentEmail($('#emailInput').val());
-      //-   //- check on keyup
-      //-   $('#emailInput').on('keyup change click ', function () {
-      //-     checkCoincidentEmail($(this).val());
-      //-   });
-      //-   //- check on autocomplete
-      //-   $('html').bind('input', function() {
-      //-     checkCoincidentEmail($('#emailInput').val());
-      //-   });
-      //-   //- finaly, check on submit
-      //-   $('form').on('submit',() => {
-      //-     if(canSubmit && ($('#userpassword').val() === $('#userpassword2').val())){
-      //-       return true;
-      //-     } else {
-      //-       return false;
-      //-     }
-      //-   });
-      //- });
 
 
 

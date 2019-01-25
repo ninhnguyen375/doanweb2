@@ -8,6 +8,13 @@ module.exports.getCategory = async (req, res) => {
   products = await Products.find({ producer: querys.producer });
   res.render('home/getCategory', { products, producers, querys });
 };
+module.exports.getAll = async (req, res) => {
+  const querys = req.query;
+  const producers = await Producers.find();
+  let products = [];
+  products = await Products.find();
+  res.render('home/getAll', { products, producers, querys });
+};
 module.exports.index = async (req, res) => {
   const querys = req.query;
   const producers = await Producers.find();
@@ -26,9 +33,7 @@ module.exports.index = async (req, res) => {
   } else if (querys.search) {
     const temps = await Products.find();
     products = temps.filter(
-      product => product.product_name
-        .toLowerCase()
-        .indexOf(querys.search.toLowerCase()) !== -1,
+      product => product.product_name.toLowerCase().indexOf(querys.search.toLowerCase()) !== -1,
     );
     res.render('home/index', {
       products,

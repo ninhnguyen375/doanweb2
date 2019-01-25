@@ -1,11 +1,23 @@
 extends ../layouts/common
 block content
-  header(style="background:url('/public/home/img/bg-pattern.png'), linear-gradient(to left, #7b4397, #dc2430);height:10%;")
-  .container(style="padding-top:60px")
-    h1 Your Profile
-    h4= "user id : " + user[0].id
-    h4= "user name : " + user[0].user_name
-    h4= "user email : " + user[0].user_email
-    h4= "user phone : " + user[0].user_phone
-    h4= "user permission : " + user[0].user_permission
-    script!= "(function() {let items = "+JSON.stringify(user[0])+"; localStorage.setItem('auth', JSON.stringify(items)); })();"
+  - const auth = user[0]
+    header(style="background:url('/public/home/img/bg-pattern.png'), linear-gradient(to left, #7b4397, #dc2430);height:10%;")
+    .container(style="padding-top:60px")
+      h1 Your Profile
+      h4= "user id : " + auth.id
+      h4= "user name : " + auth.user_name
+      h4= "user email : " + auth.user_email
+      h4= "user phone : " + auth.user_phone
+      h4= "user permission : " + auth.user_permission
+    //- script!= "(function() {let items = "+JSON.stringify(user[0])+"; localStorage.setItem('auth', JSON.stringify(items)); })();"
+    script.
+      const objAuth = {
+        user_id:'!{auth.id}',
+        user_name:'!{auth.user_name}',
+        user_email:'!{auth.user_email}',
+    //- progress bart", type="text/css", href="https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/nprogress.css")
+        user_phone:'!{auth.user_phone}',
+        user_permission:'!{auth.user_permission}',
+      }
+      localStorage.setItem('auth',JSON.stringify(objAuth));
+      

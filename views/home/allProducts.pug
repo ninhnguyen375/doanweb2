@@ -46,9 +46,39 @@ block content
                 span.border.rounded-0.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
     div.text-center.mt-3
       - for(let i = 1; i <= pages; i++)
-        if querys.page == i
-          a.btn.mr-2.active(
-            href="?producer=" + querys.producer + "&page=" + i)= i
-        else
-          a.btn.mr-2( style="background-color: #c1c1c1"
-            href="?producer=" + querys.producer + "&page=" + i)= i
+        a.btn.mr-2.page-btn(
+          style="background-color: #c1c1c1",
+          onclick=`clickPage(${i},"",this)`,
+          href="#features",
+          )= i
+  script(src = "/public/js/axios.min.js")
+  script.
+    const containerFeature = document.getElementById('containerFeature');
+    function render(container, items){
+      container.innerHTML = items;
+    }
+    async function clickPage (num, producer, event) {
+      addLoadingAnimate();
+      const promiseData = await axios.get('/getAll/?producer=&page='+num);
+      setActivePage(event);
+      render(containerFeature,promiseData.data);
+    }
+    setActivePage(document.getElementsByClassName('page-btn')[0]);
+    function setActivePage(page){
+      const btnPage = document.getElementsByClassName('page-btn');
+      for(let i = 0; i < btnPage.length; i++){
+        btnPage[i].className = 'btn mr-2 page-btn';
+        btnPage[i].style.backgroundColor = '#c1c1c1';
+      }
+      page.className = 'btn mr-2 active page-btn';
+      page.style.backgroundColor = '#fdcc52';
+    }
+    function addLoadingAnimate(){
+      $('#containerFeature').html(`
+        <div class="lds-css ng-scope" style="margin:auto;width: 200px; height: 200px;">
+          <div style="width:100%;height:100%" class="lds-ripple">
+            <div></div>
+            <div></div>
+          </div>
+      </div>`);
+    }

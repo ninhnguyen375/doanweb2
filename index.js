@@ -68,7 +68,6 @@ app.use('/admin', adminRoute);
 app.use('/api/product', apiProductRoute);
 app.use('/api/user', apiUserRoute);
 
-
 // Listen Port
 app.listen(PORT, () => {
   console.log(`localhost:${PORT}`);

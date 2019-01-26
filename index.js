@@ -12,6 +12,7 @@ const billRoute = require('./routes/bill.route');
 const searchRoute = require('./routes/search.route');
 const adminRoute = require('./routes/admin.route');
 
+console.log('testing');
 // API
 const apiProductRoute = require('./api/routes/product.api.route');
 const apiUserRoute = require('./api/routes/user.api.route');

@@ -1,8 +1,8 @@
 /* eslint-disable */
-const Products = require("../models/products.model");
-const Producers = require("../models/producers.model");
-const Cart = require("../models/cart.model");
-const Bills = require("../models/bills.model");
+const Products = require('../models/products.model');
+const Producers = require('../models/producers.model');
+const Cart = require('../models/cart.model');
+const Bills = require('../models/bills.model');
 
 module.exports.index = async (req, res) => {
   const { id } = req.params;
@@ -10,7 +10,7 @@ module.exports.index = async (req, res) => {
   const cart = await Cart.find({ userId: id });
   const products = await Products.find();
   const producers = await Producers.find();
-  res.render("cart/index", {
+  res.render('cart/index', {
     cart,
     products,
     producers,
@@ -39,10 +39,7 @@ module.exports.addBill = async (req, res) => {
     // find() return an array
     const curr = await Products.find({ product_id: p.proId });
     const newQua = curr[0].quantity - p.proQua;
-    await Products.findOneAndUpdate(
-      { product_id: p.proId },
-      { quantity: newQua }
-    );
+    await Products.findOneAndUpdate({ product_id: p.proId }, { quantity: newQua });
   });
 
   res.redirect(`/bill/${theBill.authId}`);

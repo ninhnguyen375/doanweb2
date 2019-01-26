@@ -17,10 +17,10 @@ html
           section.float-left
             a(href='/', style='font-size: 32px;padding: 9px;color: rgb(225,225,225);text-decoration: none;') ShopPi
       form(
-            method='post',
-            action='/user/signup', 
-            style='max-width: 494px;padding: 40px;padding-top: 14px;padding-bottom: 16px;',
-            onsubmit='return canSubmit()')
+        method='post',
+        action='/user/signup', 
+        style='max-width: 494px;padding: 40px;padding-top: 14px;padding-bottom: 16px;',
+        onsubmit='return canSubmit()')
         .illustration(style='height: 171px;padding-top: 0px;padding-bottom: 0px;')
           i.far.fa-user-circle(style='font-size: 125px;color: rgb(168,206,255);')
         .text-danger.alertDanger#alert
@@ -32,30 +32,30 @@ html
         //-   Phone
         .form-group
           input.form-control(
-                type='text', 
-                placeholder='Phone', 
-                name='user_phone', 
-                required,
-                pattern='[0-9]{10,}')
+            type='text', 
+            placeholder='Phone', 
+            name='user_phone', 
+            required,
+            pattern='[0-9]{10,}')
         //-   Email
         .form-group
           input#emailInput.form-control(type='email', placeholder='Email', name='user_email', required)
         //-   Password
         .form-group
           input.form-control(
-                type='password', 
-                name='user_password', 
-                required, 
-                pattern='.{6,}',
-                placeholder='Password')#userpassword
+            type='password', 
+            name='user_password', 
+            required, 
+            pattern='.{6,}',
+            placeholder='Password')#userpassword
         //-   Confirm Password
         .form-group
           input.form-control(
-                type='password', 
-                name='confirmPassword', 
-                required, 
-                pattern='.{6,}',
-                placeholder='Confirm Password')#userpassword2
+            type='password', 
+            name='confirmPassword', 
+            required, 
+            pattern='.{6,}',
+            placeholder='Confirm Password')#userpassword2
         //- User permission
         input(type="hidden", name='user_permission', value='client')
         .form-group

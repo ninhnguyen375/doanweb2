@@ -14,7 +14,8 @@ module.exports.index = async (req, res) => {
 
 module.exports.postAddToCart = async (req, res) => {
   const reqBody = await req.body;
-  const cart = await Cart.find({ proId: reqBody.proId });
+  console.log(reqBody);
+  const cart = await Cart.find({ proId: reqBody.proId, userId: reqBody.userId });
   if (cart[0]) {
     const newQua = parseInt(reqBody.quantity, 10) + cart[0].quantity;
     await Cart.findOneAndUpdate({ proId: reqBody.proId }, { quantity: newQua });

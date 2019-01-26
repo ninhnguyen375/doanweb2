@@ -24,7 +24,7 @@ router.get('/user', controller.user);
 router.post('/product/delete', controller.deleteProduct);
 router.post('/product/deleteManyProduct', controller.deleteManyProduct);
 router.post('/product/edit', upload.single('product_img'), controller.editProduct);
-router.post('/product/add', controller.addProduct);
+router.post('/product/add', upload.single('product_img'), controller.addProduct);
 
 router.post('/user/delete', controller.deleteUser);
 router.post('/user/deleteManyUser', controller.deleteManyUser);

@@ -23,9 +23,9 @@ block content
   section#features.features
     .container
       .section-heading.text-center
-          h2= `All Phones`
-          p.text-muted All the best for you.
-          hr
+        h2= `All Phones`
+        p.text-muted All the best for you.
+        hr
       #containerFeature.row.d-flex.flex-wrap.justify-content-around
         - let pages = Math.ceil(products.length / 9)
         - let start = (((querys.page) - 1)*9)
@@ -44,7 +44,7 @@ block content
               a(href='/product/'+products[i].id)
                 span.border.btn.btn-light.text-danger.ml-2.mt-2= '$' + products[i].product_price
                 span.border.rounded-0.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
-    div.text-center.mt-3
+    .text-center.mt-3
       - for(let i = 1; i <= pages; i++)
         a.btn.mr-2.page-btn(
           style="background-color: #c1c1c1",

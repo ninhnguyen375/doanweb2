@@ -9,15 +9,12 @@ block content
       h4= "user email : " + auth.user_email
       h4= "user phone : " + auth.user_phone
       h4= "user permission : " + auth.user_permission
-    //- script!= "(function() {let items = "+JSON.stringify(user[0])+"; localStorage.setItem('auth', JSON.stringify(items)); })();"
     script.
       const objAuth = {
         user_id:'!{auth.id}',
         user_name:'!{auth.user_name}',
         user_email:'!{auth.user_email}',
-    //- progress bart", type="text/css", href="https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/nprogress.css")
         user_phone:'!{auth.user_phone}',
         user_permission:'!{auth.user_permission}',
       }
       localStorage.setItem('auth',JSON.stringify(objAuth));
-      

@@ -42,10 +42,10 @@ block content
               h4= producerCurrent.producer_name
               p It is a long established fact that a reader will be distracted.
             a(href='/product/'+products[i].id)
-            
+
               span.btn.btn-light.text-danger.border-danger.mt-1.ml-1= '$' + products[i].product_price
               span.border.rounded-0.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
-    div.text-center.mt-3
+    .text-center.mt-3
       - for(let i = 1; i <= pages; i++)
         a.btn.mr-2.page-btn(
           style="background-color: #c1c1c1",

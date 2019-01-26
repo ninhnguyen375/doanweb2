@@ -214,7 +214,14 @@ module.exports.editProduct = async (req, res) => {
 };
 // add
 module.exports.addProduct = async (req, res) => {
-  await Products.insertMany(req.body);
+  await Products.insertMany({
+    product_img: `/${req.file.path}`,
+    product_id: req.body.product_id,
+    product_name: req.body.product_name,
+    producer: req.body.producer,
+    product_price: req.body.product_price,
+    quantity: req.body.quantity,
+  });
   res.redirect(`/admin/product?page=1&added=1&note=${req.body.product_name}`);
 };
 

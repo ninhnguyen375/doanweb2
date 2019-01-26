@@ -1,42 +1,3 @@
-//- extends ../layouts/library
-//- block content
-//-   .container(style="padding-top:50px")
-//-     if err
-//-       .alert.alert-danger.m-auto.col-5= err
-//-     .d-flex.m-auto.col-5
-//-           h1.col-8.mb-3 LOGIN
-//-           .col-2
-//-           a(href="/").mt-2
-//-                 button(class="btn btn-light") BACK
-//-     form(
-//-         action="/user/login",
-//-         method="POST",
-//-         class="col-3 mt-2"
-//-       ).needs-validation.col-5.m-auto
-//-       //- Email
-//-       label(for="useremail") Email
-//-       input#useremail.form-control(
-//-             name="email",
-//-             type='email', 
-//-             placeholder='Email', 
-//-             required='')
-//-       .invalid-feedback Please provide a valid Email.
-//-       //- Password
-//-       label(for="userpassword") Password
-//-       input#userpassword.form-control(
-//-             name="password",
-//-             type='password', 
-//-             placeholder='Password', 
-//-             required='',
-//-             pattern='.{6,}')
-//-       .invalid-feedback Please provide a valid Password.
-//-       //- Create
-//-       button(type="submit").btn.btn-success.mt-3 Login
-//-       a(href='/user/signup').btn.btn-light.mt-3.float-right Sign up
-//-   script(type="text/javascript").
-//-     document.getElementById('useremail').focus()
-
-
 doctype html
 html
   head
@@ -63,7 +24,7 @@ html
                 a.nav-link.active(href='/user/signup', style='color: rgba(204,204,204,0.9);')
                   | Sign Up
                   br
-      
+
       form(method='post', action="/user/login")
         h2.sr-only Login Form
         .illustration

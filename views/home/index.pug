@@ -41,7 +41,7 @@ block content
               a(href='/product/'+products[i].id)
                 span.border.btn.btn-light.text-danger.ml-2.mt-2= '$' + products[i].product_price
                 span.border.rounded-0.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
-      div.text-center.mt-5          
+      .text-center.mt-5          
         a(href="/?producer=&page=1").btn.btn-outline-light.text-secondary  More >
   section.cta(style="background-image:url('/public/home/img/bg-cta.jpg');")
     .cta-content
@@ -53,6 +53,6 @@ block content
           br
         a.btn.btn-outline-warning.btn-xl.js-scroll-trigger(role='button', href='#features') buy now
     .overlay
-    
+
 
 

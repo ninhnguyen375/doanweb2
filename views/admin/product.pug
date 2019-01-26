@@ -8,8 +8,8 @@ block content
     span.ml-2.mr-2  / 
     span Product
   .container.col-11.mt-5.pt-4.pb-4(style=`background:white;
-          border-radius:5px;
-          border:1px solid #c1c1c1`)
+    border-radius:5px;
+    border:1px solid #c1c1c1`)
     h4.text-secondary.text-center.font-weight-bold Products Manager
     hr.mb-4
     if idIsDeleted
@@ -29,38 +29,44 @@ block content
       .alert.alert-danger.text-center.m-auto= error
     //- Add new product
     h4.text-secondary Add new Product
-    form(action="/admin/product/add", method='POST')#addNewProduct.col-8
+    form(
+      action='/admin/product/add', 
+      method='POST', 
+      enctype='multipart/form-data')#addNewProduct.col-8
+      //- product_img
+      label(for='add-product_img') Product Name
+      input(type='file', name='product_img', required)#add-product_img
       //- product_name
-      label(for="add-product_name") Product Name
+      label(for='add-product_name') Product Name
       input#add-product_name(
-        type="text", 
-        placeholder="Product Name", 
+        type='text', 
+        placeholder='Product Name', 
         name='product_name',
         required).form-control
       //- product quantity
-      label(for="add-product_name") Quantity
+      label(for='add-product_name') Quantity
       input#add-quantity(
-        type="number",
-        min="1", 
-        placeholder="Quantity", 
+        type='number',
+        min='1', 
+        placeholder='Quantity', 
         name='quantity',
         required).form-control
       //- product_price
-      label(for="add-product_price") Product Price ( $ )
+      label(for='add-product_price') Product Price ( $ )
       input#add-product_price(
-        type="number",
-        min="1", 
-        placeholder="Product Price", 
+        type='number',
+        min='1', 
+        placeholder='Product Price', 
         name='product_price',
         required).form-control
       //- search price
-      label(for="add-producer").mt-2 Producer
-      select.custom-select#add-producer(name="producer")
+      label(for='add-producer').mt-2 Producer
+      select.custom-select#add-producer(name='producer')
         each producer in producers
           option(value=producer.producer_id)= producer.producer_name
       //- product_id
       - const proId = products.length + 1
-        input(type="hidden", name='product_id', value=proId)
+        input(type='hidden', name='product_id', value=proId)
       button.btn.btn-success.mb-3.mt-3(form='addNewProduct', type='submit') Add Product
     //- END Add Product
     h4.text-secondary.text-center.font-weight-bold All Products
@@ -71,8 +77,8 @@ block content
         input#valueToRenderSearch.d-inline.form-control.col-4(type='text', placeholder='Search', style='margin-right: 95px;')
       //- Remove many
       .col.text-right
-        form(action="/admin/product/deleteManyProduct", method='post')#deleteMany
-          input(type="hidden", name='idToDeletes')#idToDeletes
+        form(action='/admin/product/deleteManyProduct', method='post')#deleteMany
+          input(type='hidden', name='idToDeletes')#idToDeletes
           button.btn.btn-danger(type='submit', form='deleteMany') Remove selected
     //- table products
     table#table-sp.text-center
@@ -101,7 +107,7 @@ block content
         tr(class=testClass).items
           td= i + 1
           td
-            img(src= products[i].product_img, width="110px")
+            img(src= products[i].product_img, width='110px')
           td.item-names= products[i].product_name
           td= producers.find(p => products[i].producer == p.producer_id).producer_name
           td='$'+ products[i].product_price
@@ -109,7 +115,7 @@ block content
           td= products[i].quantity
           td
             form(action='#', method='POST')
-              input(type="hidden", value=products[i].id, name='id')
+              input(type='hidden', value=products[i].id, name='id')
               button.xoa_sp(type='submit', formaction='/admin/product/delete') Delete
 
             // Button trigger modal
@@ -119,8 +125,8 @@ block content
               data-target='#form' + products[i].id) Edit
             // Modal
             form(
-              action="/admin/product/edit", 
-              method="post",
+              action='/admin/product/edit', 
+              method='post',
               tabindex='-1', 
               role='dialog',
               aria-hidden='true',
@@ -133,42 +139,42 @@ block content
                       button.close(type='button', data-dismiss='modal', aria-label='Close')
                         span(aria-hidden='true') ×
                     .modal-body
-                      input(type="hidden",value=products[i].id, name='id').form-control
+                      input(type='hidden',value=products[i].id, name='id').form-control
                       //- Image
                       label Product Image
                       input(
-                        type="file", 
-                        name="product_img", 
-                        accept="image/*")
+                        type='file', 
+                        name='product_img', 
+                        accept='image/*')
                       //- product_name
-                      label(for="edit-product_name") Product Name
+                      label(for='edit-product_name') Product Name
                       input#edit-product_name(
-                        type="text", 
-                        placeholder="Product Name", 
+                        type='text', 
+                        placeholder='Product Name', 
                         name='product_name',
                         value=products[i].product_name,
                         required).form-control
                       //- product quantity
-                      label(for="edit-product_name") Quantity
+                      label(for='edit-product_name') Quantity
                       input#edit-quantity(
-                        type="number",
-                        min="1", 
-                        placeholder="Quantity", 
+                        type='number',
+                        min='1', 
+                        placeholder='Quantity', 
                         name='quantity',
                         value=products[i].quantity,
                         required).form-control
                       //- product_price
-                      label(for="edit-product_price") Product Price ( $ )
+                      label(for='edit-product_price') Product Price ( $ )
                       input#edit-product_price(
-                        type="number",
-                        min="1", 
-                        placeholder="Product Price", 
+                        type='number',
+                        min='1', 
+                        placeholder='Product Price', 
                         name='product_price',
                         value=products[i].product_price,
                         required).form-control
                       //- search price
-                      label(for="edit-producer").mt-2 Producer
-                      select.custom-select#edit-producer(name="producer")
+                      label(for='edit-producer').mt-2 Producer
+                      select.custom-select#edit-producer(name='producer')
                         each producer in producers
                           if producer.producer_id == products[i].producer
                             option(value=producer.producer_id, selected)= producer.producer_name
@@ -178,7 +184,7 @@ block content
                       button.btn.btn-secondary(type='button', data-dismiss='modal') Close
                       button.btn.btn-primary(type='submit', form='form'+products[i].id) Save changes
           td
-            input.checkbox(type="checkbox", value=products[i].id)
+            input.checkbox(type='checkbox', value=products[i].id)
 
     .container.text-center.d-flex.flex-wrap.justify-content-center#listPages
       - const pages = Math.ceil(products.length/10)

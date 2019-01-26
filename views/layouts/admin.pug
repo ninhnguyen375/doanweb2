@@ -15,7 +15,7 @@ html
         i.fas.fa-user-lock.mr-2(style='margin-top:20px')
         .ten-admin#adminName
         a(href='/')
-          div.admin-signout(style='font-size: 15px;margin:17px 8px 0 8px') - Sign Out
+          .admin-signout(style='font-size: 15px;margin:17px 8px 0 8px') - Sign Out
     .left-menu
       a.left-menu__item(href='/admin/dashboard')
         i.fas.fa-tachometer-alt.mr-2
@@ -34,11 +34,11 @@ html
         span Categories
       .copyright © ShopPi 2018
     .container-fluid(
-        style=`
-          padding-top:55px;
-          padding-left:200px;
-          background:#E4E5E6;
-          padding-bottom:25px;`
+      style=`
+        padding-top:55px;
+        padding-left:200px;
+        background:#E4E5E6;
+        padding-bottom:25px;`
       )
       block content
     .row.footer
@@ -60,8 +60,8 @@ html
         //- Toggle check box
         let checkBox;
         $("#checkAll").click(function() {
-            var checkBoxes = $("input[type=checkbox");
-            checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+          var checkBoxes = $("input[type=checkbox");
+          checkBoxes.prop("checked", !checkBoxes.prop("checked"));
         });
         //- Toggle left-menu
         $('#toggleLeftMenu').on('click',()=>{

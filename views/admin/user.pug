@@ -27,49 +27,6 @@ block content
     //- check error
     if error
       .alert.alert-danger.text-center.m-auto= error
-    //- //- Add new user
-    //- h4.text-secondary Add new User
-    //- form(action="/admin/user/add", method='POST')#addNewUser.col-8
-    //-   //- user_name
-    //-   label(for="add-user_name") User Name
-    //-   input#add-user_name(
-    //-     type="text", 
-    //-     placeholder="User Name", 
-    //-     name='user_name',
-    //-     required,
-    //-     autocomplete="off").form-control
-    //-   //- user quantity
-    //-   label(for="add-user_phone") Phone
-    //-   input#add-user_phone(
-    //-     type="text",
-    //-     placeholder="Phone", 
-    //-     name='user_phone',
-    //-     required,
-    //-     pattern="[0-9]{10,}").form-control
-    //-   //- user_price
-    //-   label(for="add-user_email") User Email
-    //-   input#add-user_email(
-    //-     type="email",
-    //-     placeholder="User Email", 
-    //-     name='user_email',
-    //-     required,
-    //-     autocomplete="off").form-control
-    //-   //- user_password
-    //-   label(for="add-user_password") User Password
-    //-   input#add-user_password(
-    //-     type="password",
-    //-     placeholder="User Password", 
-    //-     name='user_password',
-    //-     required,
-    //-     pattern=".{6,}").form-control
-    //-   //- select permission
-    //-   label(for="add-user_permission").mt-2 Permission
-    //-   select.custom-select#add-user_permission(name="user_permission")
-    //-     option(value="client") Client
-    //-     option(value="admin") Admin
-    //-   button.btn.btn-success.mb-3.mt-3(form='addNewUser', type='submit') Add User
-    //- //- END Add User
-    //- search 
     h4.text-secondary.text-center.font-weight-bold All Users
     hr.mb-4
     .row(style='margin-bottom: 5px;')

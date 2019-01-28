@@ -1,8 +1,8 @@
 /* eslint-disable */
-const Products = require("../models/products.model");
-const Producers = require("../models/producers.model");
-const Bills = require("../models/bills.model");
-const Users = require("../models/user.model");
+const Products = require('../models/products.model');
+const Producers = require('../models/producers.model');
+const Bills = require('../models/bills.model');
+const Users = require('../models/user.model');
 
 module.exports.index = async (req, res) => {
   const products = await Products.find();
@@ -12,14 +12,14 @@ module.exports.index = async (req, res) => {
   let bills = await Bills.find();
   bills = bills.filter(b => b.authId === authId);
   if (!user) {
-    res.render("/");
+    res.render('/');
   }
-  res.render("bill/index", {
+  res.render('bill/index', {
     producers,
     products,
     bills,
     user,
-    authId
+    authId,
   });
 };
 
@@ -33,21 +33,18 @@ module.exports.deleteBill = async (req, res) => {
   for (let i = 0; i < proId.length; i++) {
     const obj = {
       proId: proId[i],
-      proQuan: proQuantity[i]
+      proQuan: proQuantity[i],
     };
     data.push(obj);
   }
   data.forEach(async d => {
     const currPro = await Products.find({ product_id: d.proId });
     const newQuan = currPro[0].quantity + d.proQuan;
-    await Products.findOneAndUpdate(
-      { product_id: d.proId },
-      { quantity: newQuan }
-    );
+    await Products.findOneAndUpdate({ product_id: d.proId }, { quantity: newQuan });
   });
   await Bills.findByIdAndDelete(billId);
   if (fromAdminPage) {
-    res.redirect('/admin/bill');
+    res.redirect('/admin/bill?page=1&idIsDeleted=' + billId);
   } else {
     res.redirect(`/bill/${userId}`);
   }

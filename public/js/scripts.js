@@ -239,6 +239,10 @@ function isAdmin() {
   }
   return true;
 }
+function fadeOut(e){
+  console.log('hello');
+  $(e).fadeOut();
+}
 window.onload = () => {
   changeAuth();
   activeLeftMenu();

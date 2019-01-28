@@ -5,7 +5,7 @@
   "author": "ninh",
   "license": "NINH",
   "scripts": {
-    "dev": "nodemon --inspect index.js",
+    "dev": "nodemon index.js",
     "start": "node index.js"
   },
   "dependencies": {

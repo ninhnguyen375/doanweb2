@@ -38,12 +38,12 @@ module.exports.bill = async (req, res) => {
 // delete
 module.exports.deleteBill = async (req, res) => {
   const idToDelete = req.body.id;
-  const producerIsDeleted = await Producers.findById(idToDelete);
-  if (!producerIsDeleted) {
+  const billIsDeleted = await Bills.findById(idToDelete);
+  if (!billIsDeleted) {
     res.redirect('/admin/bill?page=1');
   } else {
-    const idIsDeleted = producerIsDeleted.id;
-    await Producers.findByIdAndDelete(idToDelete);
+    const idIsDeleted = billIsDeleted.id;
+    await Bills.findByIdAndDelete(idToDelete);
     res.redirect(`/admin/bill?page=1&idIsDeleted=${idIsDeleted}`);
   }
 };

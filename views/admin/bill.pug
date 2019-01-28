@@ -56,13 +56,13 @@ block content
             td= bills[i].status
             td
               //- Delete Bill
-              form(action="/bill/deleteBill", method="POST")
+              form(action="/bill/deleteBill", method="POST", id="delete"+bills[i].id)
                 input(type="hidden", name='billId', value=bills[i].id)
                 input(type="hidden", name='fromAdminPage', value='1')
                 input(type="hidden", name='userId', value=user.id)
                 input(type="hidden", name='proId', value=bills[i].details.proId)
                 input(type="hidden", name='proQuantity', value=bills[i].details.proQuantity)
-                button.xoa_sp.mt-2 Cancel
+                button.xoa_sp.mt-2(type="submit", form="delete"+bills[i].id) Cancel
               //- Edit Bill
               //- Button trigger modal
               button.xoa_sp(
@@ -76,7 +76,7 @@ block content
                 tabindex='-1', 
                 role='dialog',
                 aria-hidden='true',
-                id='form' + bills[i].id).modal.fade
+                id='edit' + bills[i].id).modal.fade
                   .modal-dialog(role='document')
                     .modal-content
                       .modal-header
@@ -98,7 +98,7 @@ block content
                         button.btn.btn-secondary(type='button', data-dismiss='modal') Close
                           button.btn.btn-primary(
                             type='submit', 
-                            form='form'+bills[i].id) Save changes
+                            form='edit'+bills[i].id) Save changes
               br
               //- Show Details
               button.xoa_sp(

@@ -15,7 +15,7 @@ block content
         .col-lg-5.my-auto
           .device-container
             .device-mockup.iphone6_plus.portrait.white
-              .device(style="background-image:url('/public/home/img/iphone_6_plus_white_port.png');")
+              .device(style="background-image:url('/public/home/img/iphone_6_plus_white_port.png')")
                 .screen
                   img.img-fluid(src='/public/home/img/demo-screen-1.jpg')
                 .button
@@ -34,14 +34,19 @@ block content
                 img(src= products[i].product_img, alt='pr-sample25')
               figcaption
                 .date
-                  i.fas.fa-cart-plus
+                  i.fas.fa-info
                 h3= products[i].product_name
                 h4= producerCurrent.producer_name
                 p It is a long established fact that a reader will be distracted.
-              a(href='/product/'+products[i].id)
-                span.border.btn.btn-light.text-danger.ml-2.mt-2= '$' + products[i].product_price
-                span.border.rounded-0.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
-      .text-center.mt-5          
+              if products[i].quantity != "0"
+                a(href='/product/'+products[i].id)
+                  span.btn.btn-light.text-danger.border-danger.mt-1.ml-1= '$' + products[i].product_price
+                  span.border.rounded-0.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
+              else
+                a(onclick="alert('The product is currently out, please wait for the shop to add more')")
+                  span.btn.btn-light.text-danger.border-danger.mt-1.ml-1= '$' + products[i].product_price
+                  span.border.rounded-0.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
+    .text-center.mt-5          
         a(href="/?producer=&page=1").btn.btn-outline-light.text-secondary  More >
   section.cta(style="background-image:url('/public/home/img/bg-cta.jpg');")
     .cta-content

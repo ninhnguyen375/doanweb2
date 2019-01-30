@@ -33,7 +33,8 @@ block content
                     //- End hidden input
                   tr
                     td
-                      img(src=productCurrent.product_img,
+                      img(
+                        src=productCurrent.product_img,
                         style='width:100px').img-thumbnail.rounded
                     td= productCurrent.product_name
                     td= producerCurrent.producer_name
@@ -51,28 +52,19 @@ block content
                       form(action="/cart/removeCart", method="post")
                         input(type="hidden", name='userId', value=userId)
                         input(type="hidden", name='id', value=item.id)
-                        button.btn.btn-danger.ml-3
+                        button.btn.btn-danger.ml-3(type="button" onclick="confirmForm(this.form)")
                           i.far.fa-trash-alt
                 //- Total
                 tr
-                  td
-                  td
-                  td
-                  td
+                  td(colspan="4")
                   td Sub-Total
                   td.text-right.subTotalAndTotal="$" + total
                 tr
-                  td
-                  td
-                  td
-                  td
+                  td(colspan="4")
                   td Shipping
                   td.text-right="$" + 0
                 tr
-                  td
-                  td
-                  td
-                  td
+                  td(colspan="4")
                   td
                     strong Total
                   td.text-right
@@ -92,3 +84,9 @@ block content
       h3.text-center Your Cart is Empty
       h4.text-center
         a(href="/").btn.btn-primary Go to shopping
+  script.
+    function confirmForm(form){
+      if(confirm('Do You Want To Do It?')){
+        form.submit();
+      }
+    }  

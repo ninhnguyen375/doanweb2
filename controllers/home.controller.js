@@ -21,26 +21,19 @@ module.exports.index = async (req, res) => {
   let products = [];
   if (querys.producer) {
     products = await Products.find({ producer: querys.producer });
+    const producer = await Producers.find({ producer_id: querys.producer });
     res.render('home/category', {
       products,
       producers,
       querys,
+      producer,
     });
   }
   if (querys.producer === '') {
     products = await Products.find();
     res.render('home/allProducts', { products, producers, querys });
-  } else if (querys.search) {
-    const temps = await Products.find();
-    products = temps.filter(
-      product => product.product_name.toLowerCase().indexOf(querys.search.toLowerCase()) !== -1,
-    );
-    res.render('home/index', {
-      products,
-      producers,
-      querys,
-    });
-  } else {
+  }
+  if (!querys.producer) {
     products = await Products.find();
     res.render('home/index', {
       products,

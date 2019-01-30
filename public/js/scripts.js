@@ -3,6 +3,7 @@ function nonAuth() {
   localStorage.removeItem('auth');
   window.location = '/';
 }
+
 function changeAuth() {
   const login = document.getElementById('login');
   const signup = document.getElementById('signup');
@@ -30,7 +31,7 @@ function changeAuth() {
     loginDropdown.innerHTML = auth.user_name;
   }
   if (login) {
-    login.removeAttribute('href');
+    login.href = `/user/${auth.user_id}`;
     login.addEventListener('click', () => {
       const showAuth = document.getElementById('showAuth');
       showAuth.style.display = 'block';
@@ -47,19 +48,20 @@ function changeAuth() {
     login.innerHTML = 'Profile';
   }
 }
+
 function renderSearch() {
   const search = document.getElementById('valueToRenderSearch');
   if (!search) return;
-  search.onkeyup = function() {
+  search.onkeyup = function () {
     const items = document.getElementsByClassName('items');
     const item_names = document.getElementsByClassName('item-names');
     const listPages = document.getElementById('listPages');
     for (let i = 0; i < items.length; i++) {
       if (
         item_names[i].innerHTML
-          .toLowerCase()
-          .trim()
-          .indexOf(search.value.toLowerCase().trim()) !== -1
+        .toLowerCase()
+        .trim()
+        .indexOf(search.value.toLowerCase().trim()) !== -1
       ) {
         items[i].className = 'items';
       } else {
@@ -73,6 +75,7 @@ function renderSearch() {
     }
   };
 }
+
 function goToBillandCart() {
   const auth = JSON.parse(localStorage.getItem('auth'));
   const gotobill = document.getElementById('goToBill');
@@ -95,6 +98,7 @@ function goToBillandCart() {
     };
   }
 }
+
 function postAddBill() {
   const addBill = document.getElementById('addBill');
   if (!addBill) return;
@@ -120,12 +124,18 @@ function postAddBill() {
       proId.push(proIdInput[i].value);
       proPrice.push(proPriceInput[i].value);
       proQuantity.push(proQuantityInput[i].value);
-      if (parseInt(proQuantityInput[i].value, 10) > parseInt(rootQuantity[i].value, 10)) {
+      const inputQuan = parseInt(proQuantityInput[i].value, 10);
+      const rootQuan = parseInt(rootQuantity[i].value, 10);
+      if (
+        inputQuan > rootQuan ||
+        inputQuan < 1 ||
+        isNaN(inputQuan)
+      ) {
         alert(
           'Product : ' +
-            proName[i].value +
-            ' not enough quantity!\nCurrent quantity in stock : ' +
-            rootQuantity[i].value,
+          proName[i].value +
+          ' not enough quantity!\nCurrent quantity in stock : ' +
+          rootQuantity[i].value,
         );
         proQuantityInput[i].focus();
         return false;
@@ -147,6 +157,7 @@ function postAddBill() {
     return true;
   };
 }
+
 function changeDataFromCart() {
   const proQuantity = document.getElementsByName('proQuantity');
   const proPrice = document.getElementsByName('proPrice');
@@ -155,13 +166,14 @@ function changeDataFromCart() {
     return;
   }
   for (let i = 0; i < proQuantity.length; i++) {
-    proQuantity[i].onchange = function() {
+    proQuantity[i].onchange = function () {
       const total = proPrice[i].value * this.value;
       totalPriceOfProduct[i].innerHTML = '$' + total;
       getTotalPriceAll();
     };
   }
 }
+
 function getTotalPriceAll() {
   const price = document.getElementsByName('proPrice');
   const quantity = document.getElementsByName('proQuantity');
@@ -173,6 +185,7 @@ function getTotalPriceAll() {
   Total[0].innerHTML = '$' + total;
   Total[1].innerHTML = '$' + total;
 }
+
 function changeQuantity(e) {
   const proId = document.getElementById('proId');
   const proPrice = document.getElementById('proPrice');
@@ -184,9 +197,10 @@ function changeQuantity(e) {
   console.log(proQuantity);
   console.log(totalPrice);
 }
+
 function changeAdminPermisson(e, p) {
   const form = document.getElementById(e);
-  form.onsubmit = function() {
+  form.onsubmit = function () {
     const prom = prompt("Enter this admin's Password:");
     if (prom == p) {
       form.innerHTML += '<input type="hidden" value=' + p + ' name="user_password"/>';
@@ -196,21 +210,29 @@ function changeAdminPermisson(e, p) {
     }
   };
 }
+
 function completeFormPOSTAddToCart() {
   const form = document.getElementById('formPOSTAddToCart');
   if (!form) return;
   form.onsubmit = () => {
     const userId = document.getElementsByName('userId')[0];
+    const quantity = parseInt(document.getElementsByName('quantity')[0].value);
     const auth = JSON.parse(localStorage.getItem('auth'));
+    if (isNaN(quantity) || quantity < 1){
+      alert('input invalid');
+      return false;
+    }
     if (!auth) {
       alert('login first');
       return false;
     } else {
       userId.value = auth.user_id;
       return true;
+      // return false;
     }
   };
 }
+
 function activeLeftMenu() {
   const links = document.getElementsByClassName('left-menu__item');
   if (!links) {
@@ -222,6 +244,7 @@ function activeLeftMenu() {
     }
   }
 }
+
 function isAdmin() {
   const auth = JSON.parse(localStorage.getItem('auth'));
   const showQuantity = document.getElementsByClassName('showQuantity');
@@ -239,7 +262,8 @@ function isAdmin() {
   }
   return true;
 }
-function fadeOut(e){
+
+function fadeOut(e) {
   console.log('hello');
   $(e).fadeOut();
 }

@@ -1,6 +1,6 @@
 * {
   outline: none !important;
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; */
 }
 body {
   position: relative;
@@ -245,3 +245,11 @@ body {
   width: 310px;
   height: 370px;
 }
+
+/* responsive */
+@media only screen and (max-width: 768px){
+  .masthead{
+    padding-bottom: 200px;
+    overflow: auto;
+  }
+} 

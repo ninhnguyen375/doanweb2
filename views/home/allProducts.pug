@@ -37,13 +37,18 @@ block content
                 img(src= products[i].product_img, alt='pr-sample25')
               figcaption
                 .date
-                  i.fas.fa-cart-plus
+                  i.fas.fa-info
                 h3= products[i].product_name
                 h4= producerCurrent.producer_name
                 p It is a long established fact that a reader will be distracted.
-              a(href='/product/'+products[i].id)
-                span.border.btn.btn-light.text-danger.ml-2.mt-2= '$' + products[i].product_price
-                span.border.rounded-0.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
+              if products[i].quantity != "0"
+                a(href='/product/'+products[i].id)
+                  span.btn.btn-light.text-danger.border-danger.mt-1.ml-1= '$' + products[i].product_price
+                  span.border.rounded-0.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
+              else
+                a(onclick="alert('The product is currently out, please wait for the shop to add more')")
+                  span.btn.btn-light.text-danger.border-danger.mt-1.ml-1= '$' + products[i].product_price
+                  span.border.rounded-0.showQuantity.btn.btn-light.text-capitalize='in stock: ' + products[i].quantity
     .text-center.mt-3
       - for(let i = 1; i <= pages; i++)
         a.btn.mr-2.page-btn(

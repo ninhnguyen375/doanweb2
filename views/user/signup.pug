@@ -4,6 +4,7 @@ html
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1.0, shrink-to-fit=no')
     title Sign Up
+    link(rel='shortcut icon', href='/public/img/icon.jpg')
     link(rel='stylesheet', href='/public/signup/bootstrap/css/bootstrap.min.css')
     link(rel='stylesheet', href='/public/signup/fonts/fontawesome-all.min.css')
     link(rel='stylesheet', href='/public/signup/fonts/ionicons.min.css')
@@ -24,8 +25,8 @@ html
         .illustration(style='height: 171px;padding-top: 0px;padding-bottom: 0px;')
           i.far.fa-user-circle(style='font-size: 125px;color: rgb(168,206,255);')
         .text-danger.alertDanger#alert
-        if err
-          .text-danger.alertDanger= err
+        if error
+          .text-danger.alertDanger= error
         //-   Name
         .form-group
           input.form-control(type='text', placeholder='Name', name='user_name', required)

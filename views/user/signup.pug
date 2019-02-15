@@ -16,7 +16,7 @@ html
       .row
         .col.float-left
           section.float-left
-            a(href='/', style='font-size: 32px;padding: 9px;color: rgb(225,225,225);text-decoration: none;') ShopPi
+            a(href='/home', style='font-size: 32px;padding: 9px;color: rgb(225,225,225);text-decoration: none;') ShopPi
       form(
         method='post',
         action='/user/signup', 
@@ -40,7 +40,9 @@ html
             pattern='[0-9]{10,}')
         //-   Email
         .form-group
-          input#emailInput.form-control(type='email', placeholder='Email', name='user_email', required)
+          input#emailInput.form-control(
+            pattern="^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$"
+            type='email', placeholder='Email', name='user_email', required)
         //-   Password
         .form-group
           input.form-control(
@@ -119,7 +121,7 @@ html
           cansub = true;
         }
       }
-      axios.get('/api/user/email')
+      axios.get('/api/users/email')
         .then(function(res){
           inputEmail.addEventListener('keyup', function(){
             check(res.data);

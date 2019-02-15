@@ -3,6 +3,7 @@ const Producers = require('../models/producers.model');
 const Users = require('../models/user.model');
 const Bills = require('../models/bills.model');
 
+
 module.exports.index = async (req, res) => {
   const products = await Products.find();
   const producers = await Producers.find();

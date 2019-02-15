@@ -21,13 +21,13 @@ const apiProducerRoute = require('./api/routes/producer.api.route');
 
 const PORT = process.env.PORT || 3001 || 8080;
 // ---------- local
-const mongodb = 'mongodb://127.0.0.1:27017/webbanhangdb';
-mongoose.connect(mongodb, { useNewUrlParser: true });
+// const mongodb = 'mongodb://127.0.0.1:27017/webbanhangdb';
+// mongoose.connect(mongodb, { useNewUrlParser: true });
 // ---------- online
-// mongoose.connect(
-//   process.env.MONGO_URL,
-//   { useNewUrlParser: true },
-// );
+mongoose.connect(
+  process.env.MONGO_URL,
+  { useNewUrlParser: true },
+);
 
 const db = mongoose.connection;
 

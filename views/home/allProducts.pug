@@ -64,7 +64,7 @@ block content
     }
     async function clickPage (num, producer, event) {
       addLoadingAnimate();
-      const promiseData = await axios.get('/getAll/?producer=&page='+num);
+      const promiseData = await axios.get('/home/getAll/?producer=&page='+num);
       setActivePage(event);
       render(containerFeature,promiseData.data);
     }

@@ -38,7 +38,7 @@ html(lang='en')
       .float-right.mb-3
         i.fas.fa-user-lock.mr-2(style='margin-top:20px')
         span.ten-admin#adminName
-        a(href='/')
+        a(href='/home')
           span.admin-signout(style='font-size: 15px;margin:17px 8px 0 8px') - Sign Out
     .app-body
       .sidebar.left-menu
@@ -63,7 +63,7 @@ html(lang='en')
         // Breadcrumb
         ol.breadcrumb
           li.breadcrumb-item
-            a(href='/') Client page
+            a(href='/home') Client page
           li.breadcrumb-item Admin
           li.breadcrumb-item.active Dashboard
           // Breadcrumb Menu
@@ -162,11 +162,11 @@ html(lang='en')
 
     footer.app-footer
       div
-        a(href='/') ShopPhone 
+        a(href='/home') ShopPhone 
         span © 2018
       .ml-auto
         span Project on 
-        a(href='/')
+        a(href='/home')
           span Github 
           i.fab.fa-github
     script(src="/public/js/jquery.min.js")

@@ -52,16 +52,16 @@ function changeAuth() {
 function renderSearch() {
   const search = document.getElementById('valueToRenderSearch');
   if (!search) return;
-  search.onkeyup = function () {
+  search.onkeyup = function() {
     const items = document.getElementsByClassName('items');
     const item_names = document.getElementsByClassName('item-names');
     const listPages = document.getElementById('listPages');
     for (let i = 0; i < items.length; i++) {
       if (
         item_names[i].innerHTML
-        .toLowerCase()
-        .trim()
-        .indexOf(search.value.toLowerCase().trim()) !== -1
+          .toLowerCase()
+          .trim()
+          .indexOf(search.value.toLowerCase().trim()) !== -1
       ) {
         items[i].className = 'items';
       } else {
@@ -126,16 +126,12 @@ function postAddBill() {
       proQuantity.push(proQuantityInput[i].value);
       const inputQuan = parseInt(proQuantityInput[i].value, 10);
       const rootQuan = parseInt(rootQuantity[i].value, 10);
-      if (
-        inputQuan > rootQuan ||
-        inputQuan < 1 ||
-        isNaN(inputQuan)
-      ) {
+      if (inputQuan > rootQuan || inputQuan < 1 || isNaN(inputQuan)) {
         alert(
           'Product : ' +
-          proName[i].value +
-          ' not enough quantity!\nCurrent quantity in stock : ' +
-          rootQuantity[i].value,
+            proName[i].value +
+            ' not enough quantity!\nCurrent quantity in stock : ' +
+            rootQuantity[i].value,
         );
         proQuantityInput[i].focus();
         return false;
@@ -143,6 +139,9 @@ function postAddBill() {
     }
     bill = {
       authId: auth.user_id,
+      createAt: moment()
+        .format()
+        .toString(),
       totalPrice: totalPrice,
       status: 'unpaid',
       details: {
@@ -151,7 +150,7 @@ function postAddBill() {
         proQuantity: proQuantity,
       },
     };
-
+    console.log(bill, 'My bill');
     bill = JSON.stringify(bill);
     billValue.value = bill;
     return true;
@@ -166,7 +165,7 @@ function changeDataFromCart() {
     return;
   }
   for (let i = 0; i < proQuantity.length; i++) {
-    proQuantity[i].onchange = function () {
+    proQuantity[i].onchange = function() {
       const total = proPrice[i].value * this.value;
       totalPriceOfProduct[i].innerHTML = '$' + total;
       getTotalPriceAll();
@@ -200,7 +199,7 @@ function changeQuantity(e) {
 
 function changeAdminPermisson(e, p) {
   const form = document.getElementById(e);
-  form.onsubmit = function () {
+  form.onsubmit = function() {
     const prom = prompt("Enter this admin's Password:");
     if (prom == p) {
       form.innerHTML += '<input type="hidden" value=' + p + ' name="user_password"/>';
@@ -218,7 +217,7 @@ function completeFormPOSTAddToCart() {
     const userId = document.getElementsByName('userId')[0];
     const quantity = parseInt(document.getElementsByName('quantity')[0].value);
     const auth = JSON.parse(localStorage.getItem('auth'));
-    if (isNaN(quantity) || quantity < 1){
+    if (isNaN(quantity) || quantity < 1) {
       alert('input invalid');
       return false;
     }

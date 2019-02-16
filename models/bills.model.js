@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const billShema = new mongoose.Schema({
   authId: String,
+  createAt: String,
   totalPrice: Number,
   status: String,
   details: {

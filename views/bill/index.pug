@@ -10,6 +10,9 @@ block content
     each bill in bills
       .container.col-8
         p
+          b Create At :  
+          span= bill.createAt
+        p
           b Status :  
           span= bill.status
         table.table.text-center.m-auto

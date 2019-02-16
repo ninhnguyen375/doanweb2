@@ -27,7 +27,7 @@ html
                 each producer in producers
                   a.dropdown-item(
                     role='presentation', 
-                    href=`/?producer=${producer.producer_id}`)= producer.producer_name
+                    href=`/home/?producer=${producer.producer_id}`)= producer.producer_name
             li.nav-item(role='presentation')
               a.nav-link.js-scroll-trigger(href='/#features') Features
             li.nav-item(role='presentation')
@@ -105,6 +105,7 @@ html
         p.copyright ShopPhone © 2017
 
     script(src='/public/home/js/jquery.min.js')
+    script(src="/public/js/moment.js")
     script(src='/public/home/bootstrap/js/bootstrap.min.js')
     script(src='/public/home/js/jquery-ui.min.js')
     script(src='/public/home/js/new-age.js')

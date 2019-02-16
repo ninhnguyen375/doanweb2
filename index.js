@@ -67,12 +67,9 @@ app.use('/user', userRoute);
 app.use('/search', searchRoute);
 app.use('/bill', billRoute);
 // app.use('/admin', adminRoute);
-app.get('/admin', (req, res) => {
+app.get('/admin/*', (req, res) => {
   res.sendFile('./admin/index.html', { root: __dirname });
 });
-// app.get('*', (req, res) => {
-//   res.send('404 :)))');
-// });
 
 // API
 app.use('/api/products', apiProductRoute);

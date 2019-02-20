@@ -19,7 +19,7 @@ module.exports.postSignIn = async (req, res) => {
       });
       if (!users[0]) {
         res.send({ err: 'Account Does Not Exist' });
-      } else if (users[0].user_permission !== 'admin') {
+      } else if (users[0].user_group !== 'admin') {
         res.send({ err: 'This account is not Admin Permission' });
       } else {
         res.send({ adminDetails: users[0] });
@@ -38,7 +38,7 @@ module.exports.getEmail = async (req, res) => {
 module.exports.checkAdmin = async (req, res) => {
   try {
     const user = await Users.findById(req.params.id);
-    if (user.user_permission === 'admin') {
+    if (user.user_group === 'admin') {
       res.send({ isAdmin: true });
     } else {
       res.send({ err: 'This user Is not admin' });
@@ -82,8 +82,9 @@ module.exports.editUser = async (req, res) => {
           user_name: u.user_name,
           user_password: u.user_password,
           user_phone: u.user_phone,
-          user_permission: u.user_permission,
+          user_group: u.user_group,
           user_email: u.user_email,
+          user_permission: u.user_permission,
         });
         res.send('Success');
       }
@@ -91,4 +92,9 @@ module.exports.editUser = async (req, res) => {
   } else {
     res.send({ err: 'Invalid id' });
   }
+};
+
+module.exports.getAdminPermission = async (req, res) => {
+  const user = await Users.findById(req.params.id);
+  return res.send({ admin: user.user_permission });
 };

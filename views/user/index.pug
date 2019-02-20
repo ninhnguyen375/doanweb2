@@ -9,6 +9,7 @@ block content
       h4= "user email : " + auth.user_email
       h4= "user phone : " + auth.user_phone
       h4= "user permission : " + auth.user_permission
+      h4= "user group : " + auth.user_group
     script.
       const objAuth = {
         user_id:'!{auth.id}',
@@ -16,5 +17,6 @@ block content
         user_email:'!{auth.user_email}',
         user_phone:'!{auth.user_phone}',
         user_permission:'!{auth.user_permission}',
+        user_group:'!{auth.user_group}',
       }
       localStorage.setItem('auth',JSON.stringify(objAuth));

@@ -50,24 +50,34 @@ function validateEmail(email) {
   return email.indexOf('@') !== -1;
 }
 module.exports.postSignup = async (req, res) => {
-  // const newUser = req.body;
-  // await Users.insertMany(newUser);
-  // res.redirect('/user/login');
   const users = await Users.find();
   const reqUser = req.body;
   const isDuplicatedEmail = false;
   let isEmail = false;
-  let foundUser = users.find(user => (user.user_email === reqUser.user_email));
+  let foundUser = users.find(user => user.user_email === reqUser.user_email);
   if (foundUser) {
     isDuplicatedEmail = true;
   }
-  if (validateEmail(reqUser.user_email)){
+  if (validateEmail(reqUser.user_email)) {
     isEmail = true;
   }
-  if(isDuplicatedEmail || !isEmail){
+  if (isDuplicatedEmail || !isEmail) {
     res.render('user/signup', { error: 'Fail to sign up, please try again' });
   } else {
-    await Users.insertMany(reqUser);
+    const obj = {
+      user_name: reqUser.user_name,
+      user_phone: reqUser.user_phone,
+      user_email: reqUser.user_email,
+      user_password: reqUser.user_password,
+      user_group: 'client',
+      user_permission: {
+        product: false,
+        user: false,
+        bill: false,
+        category: false,
+      },
+    };
+    await Users.insertMany(obj);
     res.redirect('/user/login');
   }
 };

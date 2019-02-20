@@ -14,7 +14,7 @@ function changeAuth() {
   if (!auth) {
     return;
   }
-  if (auth.user_permission === 'admin') {
+  if (auth.user_group === 'admin') {
     if (adminPage) {
       adminPage.style.display = 'block';
     }
@@ -253,7 +253,7 @@ function isAdmin() {
   if (!auth) {
     return;
   }
-  if (auth.user_permission !== 'admin') {
+  if (auth.user_group !== 'admin') {
     return false;
   }
   for (let i = 0; i < showQuantity.length; i++) {

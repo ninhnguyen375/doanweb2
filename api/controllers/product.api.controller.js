@@ -1,4 +1,5 @@
 const Products = require('../../models/products.model');
+const Producers = require('../../models/producers.model');
 
 // index
 module.exports.index = async (req, res) => {
@@ -7,6 +8,27 @@ module.exports.index = async (req, res) => {
     data: products,
   };
   res.json(datas);
+};
+
+// get product
+module.exports.getProduct = async (req, res) => {
+  if (!req.params.id) {
+    res.send({ err: 'invalid ID' });
+  } else {
+    try {
+      const product = await Products.findById(req.params.id);
+      if (!product) res.send({ err: 'This product does not exist' });
+      else {
+        const producer = await Producers.find({ producer_id: product.producer });
+        if (!producer[0]) res.send({ err: 'producer does not exist' });
+        else {
+          res.send({ product, producer: producer[0] });
+        }
+      }
+    } catch (err) {
+      res.send({ err: 'This product does not exist' });
+    }
+  }
 };
 
 // add new product

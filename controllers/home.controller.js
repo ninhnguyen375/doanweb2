@@ -22,7 +22,7 @@ module.exports.index = async (req, res) => {
   if (querys.producer) {
     products = await Products.find({ producer: querys.producer });
     const producer = await Producers.find({ producer_id: querys.producer });
-    res.render('home/category', {
+    return res.render('home/category', {
       products,
       producers,
       querys,
@@ -31,11 +31,11 @@ module.exports.index = async (req, res) => {
   }
   if (querys.producer === '') {
     products = await Products.find();
-    res.render('home/allProducts', { products, producers, querys });
+    return res.render('home/allProducts', { products, producers, querys });
   }
   if (!querys.producer) {
     products = await Products.find();
-    res.render('home/index', {
+    return res.render('home/index', {
       products,
       producers,
       querys,

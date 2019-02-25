@@ -98,3 +98,34 @@ module.exports.getAdminPermission = async (req, res) => {
   const user = await Users.findById(req.params.id);
   return res.send({ admin: user.user_permission });
 };
+
+function validateEmail(email) {
+  return email.indexOf('@') !== -1;
+}
+module.exports.postSignup = async (req, res) => {
+  const users = await Users.find();
+  const reqUser = req.body;
+  const isDuplicatedEmail = false;
+  let isEmail = false;
+  let foundUser = users.find(user => user.user_email === reqUser.user_email);
+  if (foundUser) {
+    isDuplicatedEmail = true;
+  }
+  if (validateEmail(reqUser.user_email)) {
+    isEmail = true;
+  }
+  if (isDuplicatedEmail || !isEmail) {
+    res.render('user/signup', { error: 'Fail to sign up, please try again' });
+  } else {
+    const obj = {
+      user_name: reqUser.user_name,
+      user_phone: reqUser.user_phone,
+      user_email: reqUser.user_email,
+      user_password: reqUser.user_password,
+      user_group: reqUser.user_group,
+      user_permission: reqUser.user_permission,
+    };
+    await Users.insertMany(obj);
+    res.redirect('/user/login');
+  }
+};

@@ -26,35 +26,35 @@ html
               .dropdown-menu(role='menu')
                 each producer in producers
                   a.dropdown-item(
-                    role='presentation', 
+                    role='presentation',
                     href=`/home/?producer=${producer.producer_id}`)= producer.producer_name
             li.nav-item(role='presentation')
-              a.nav-link.js-scroll-trigger(href='/#features') Features
+              a.nav-link.js-scroll-trigger(href='#features') Features
             li.nav-item(role='presentation')
               a.nav-link.js-scroll-trigger(href='#contact') Contact
             li.nav-item.dropdown
               a.dropdown-toggle.nav-link(
-                data-toggle='dropdown', 
-                aria-expanded='false', 
+                data-toggle='dropdown',
+                aria-expanded='false',
                 href='#')#loginDropdown Login
               .dropdown-menu(role='menu')
                 a.dropdown-item(role='presentation', href='/user/login')#login Login
                 a.dropdown-item(role='presentation', href='/user/signup')#signup Sign Up
                 a.dropdown-item(
-                  role='presentation', 
+                  role='presentation',
                   href='/admin',
                   style='display:none')#adminPage Admin Manager
             //- Cart & Bill
             li.nav-item.dropdown
               a.dropdown-toggle.nav-link(
-                data-toggle='dropdown', 
-                aria-expanded='false', 
+                data-toggle='dropdown',
+                aria-expanded='false',
                 href='#')#searchDropdown
                 i.fas.fa-shopping-cart(style="font-size: 15px;")
               .dropdown-menu(role='menu').col-4
                 a#goToCart(href="/cart").dropdown-item Cart
                 a#goToBill(href="").dropdown-item Bill
-            //- search 
+            //- search
             li.nav-item
               form(action="/search")
                 .search__wrapper

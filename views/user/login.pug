@@ -13,7 +13,7 @@ html
     .login-dark(style='height: 100vh;color: rgb(255,255,255);')
       nav.navbar.navbar-light.navbar-expand-md
         .container-fluid
-          a.navbar-brand(href='/home', style='color: rgba(255,255,255,0.9);') ShopPi
+          a.navbar-brand(href='/home', style='color: rgba(255,255,255,0.9);') ShopPhone
           button.navbar-toggler(data-toggle='collapse', data-target='#navcol-1')
             span.sr-only Toggle navigation
             span.navbar-toggler-icon
@@ -35,32 +35,32 @@ html
         if email
           .form-group
             input.form-control#useremail(
-              type='email', 
-              name='email', 
-              placeholder='Email', 
+              type='email',
+              name='email',
+              placeholder='Email',
               required,
               value=email)
         else
           .form-group
             input.form-control#useremail(
-              type='email', 
-              name='email', 
-              placeholder='Email', 
+              type='email',
+              name='email',
+              placeholder='Email',
               required)
         if password
           .form-group
             input.form-control(
-              type='password', 
-              name='password', 
-              placeholder='Password', 
+              type='password',
+              name='password',
+              placeholder='Password',
               required,
               value=password)
         else
           .form-group
             input.form-control(
-              type='password', 
-              name='password', 
-              placeholder='Password', 
+              type='password',
+              name='password',
+              placeholder='Password',
               required)
         .form-group
           button.btn.btn-primary.btn-block(type='submit') Log In

@@ -261,7 +261,27 @@ function isAdmin() {
   }
   return true;
 }
-
+function handleChangePaymentMethod() {
+  const creditCardPaymentMethod = document.getElementById('creditCardPaymentMethod');
+  if (creditCardPaymentMethod.style.display === 'none') {
+    creditCardPaymentMethod.style.display = 'block';
+    document.getElementById('cardNumber').setAttribute('required', '');
+    document.getElementById('cardNumber').pattern =
+      '^(?:4[0-9]{12}(?:[0-9]{3})?|(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12})$';
+    document.getElementById('cardUserName').setAttribute('required', '');
+    document.getElementById('DD').setAttribute('required', '');
+    document.getElementById('MM').setAttribute('required', '');
+    document.getElementById('CCV').setAttribute('required', '');
+  } else {
+    creditCardPaymentMethod.style.display = 'none';
+    document.getElementById('cardNumber').removeAttribute('required');
+    document.getElementById('cardNumber').removeAttribute('pattern');
+    document.getElementById('cardUserName').removeAttribute('required');
+    document.getElementById('DD').removeAttribute('required');
+    document.getElementById('MM').removeAttribute('required');
+    document.getElementById('CCV').removeAttribute('required');
+  }
+}
 function fadeOut(e) {
   console.log('hello');
   $(e).fadeOut();

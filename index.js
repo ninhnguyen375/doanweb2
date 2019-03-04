@@ -18,19 +18,14 @@ const apiProductRoute = require('./api/routes/product.api.route');
 const apiUserRoute = require('./api/routes/user.api.route');
 const apiBillRoute = require('./api/routes/bill.api.route');
 const apiProducerRoute = require('./api/routes/producer.api.route');
+const dashboardRoute = require('./api/routes/dashboard.route');
 
 const PORT = process.env.PORT || 3001 || 8080;
-// ---------- local
-// const mongodb = 'mongodb://127.0.0.1:27017/webbanhangdb';
-// mongoose.connect(mongodb, { useNewUrlParser: true });
-// ---------- online
-mongoose.connect(
-  process.env.MONGO_URL,
-  { useNewUrlParser: true },
-);
 
+// MongoDB
+const mongodb = process.env.STATUS === 'dev' ? 'mongodb://127.0.0.1:27017/webbanhangdb' : process.env.MONGO_URL;
+mongoose.connect(mongodb, { useNewUrlParser: true });
 const db = mongoose.connection;
-
 // check connection
 db.once('open', () => console.log('Connected to MongoDB'));
 // check error
@@ -76,8 +71,10 @@ app.use('/api/products', apiProductRoute);
 app.use('/api/users', apiUserRoute);
 app.use('/api/bills', apiBillRoute);
 app.use('/api/producers', apiProducerRoute);
+app.use('/api/dashboard', dashboardRoute);
 
 // Listen Port
 app.listen(PORT, () => {
-  console.log(`localhost:${PORT}`);
+  // eslint-disable-next-line no-console
+  console.log(`http://localhost:${PORT}`);
 });

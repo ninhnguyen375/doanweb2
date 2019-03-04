@@ -30,12 +30,22 @@ module.exports.login = (req, res) => {
 module.exports.postLogin = async (req, res) => {
   const { password, email } = req.body;
   const producers = await Producers.find();
-  const user = await Users.find({ user_email: email, user_password: password });
-  if (user[0]) {
-    res.render('user/index', {
-      producers,
-      user,
-    });
+  const user = await Users.findOne({ user_email: email, user_password: password });
+  if (user) {
+    if (!user.user_status) {
+      console.log(user);
+      const err = 'Account is Blocked';
+      res.render('user/login', {
+        err,
+        password,
+        email,
+      });
+    } else {
+      res.render('user/index', {
+        producers,
+        user,
+      });
+    }
   } else {
     const err = 'Account incorrect';
     res.render('user/login', {
@@ -76,6 +86,7 @@ module.exports.postSignup = async (req, res) => {
         bill: false,
         category: false,
       },
+      user_status: true,
     };
     await Users.insertMany(obj);
     res.redirect('/user/login');

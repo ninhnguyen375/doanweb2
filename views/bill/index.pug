@@ -10,10 +10,10 @@ block content
     each bill in bills
       .container.col-8
         p
-          b Create At :  
+          b Create At :
           span= bill.createAt
         p
-          b Status :  
+          b Status :
           span= bill.status
         table.table.text-center.m-auto
           thead
@@ -38,7 +38,7 @@ block content
               td
               td
               td
-                b= 'Total : ' 
+                b= 'Total : '
                 span.text-danger= '$'+bill.totalPrice
         form(action="/bill/deleteBill", method="POST").text-right.mr-4
           input(type="hidden", name='billId', value=bill.id)
@@ -50,4 +50,4 @@ block content
   - else
     h3.text-center Your Bills is Empty
     h4.text-center
-      a(href="/").btn.btn-primary Go to shopping
+      a(href="/home").btn.btn-primary Go to shopping

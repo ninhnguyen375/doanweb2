@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
   },
   user_group: String,
   user_email: String,
+  user_status: Boolean,
 });
 const Users = mongoose.model('Users', userSchema, 'Users');
 module.exports = Users;

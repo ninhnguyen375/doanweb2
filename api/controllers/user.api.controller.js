@@ -13,16 +13,16 @@ module.exports.postSignIn = async (req, res) => {
     res.send({ err: 'Does not have enough data' });
   } else {
     try {
-      const users = await Users.find({
+      const user = await Users.findOne({
         user_email: req.body.user_email,
         user_password: req.body.user_password,
       });
-      if (!users[0]) {
+      if (!user) {
         res.send({ err: 'Account Does Not Exist' });
-      } else if (users[0].user_group !== 'admin') {
-        res.send({ err: 'This account is not Admin Permission' });
+      } else if (user.user_group !== 'admin' || !user.user_status) {
+        res.send({ err: 'Permission Denied' });
       } else {
-        res.send({ adminDetails: users[0] });
+        res.send({ adminDetails: user });
       }
     } catch (err) {
       res.send({ err: err.message });
@@ -85,6 +85,7 @@ module.exports.editUser = async (req, res) => {
           user_group: u.user_group,
           user_email: u.user_email,
           user_permission: u.user_permission,
+          user_status: u.user_status,
         });
         res.send('Success');
       }
@@ -105,9 +106,9 @@ function validateEmail(email) {
 module.exports.postSignup = async (req, res) => {
   const users = await Users.find();
   const reqUser = req.body;
-  const isDuplicatedEmail = false;
+  let isDuplicatedEmail = false;
   let isEmail = false;
-  let foundUser = users.find(user => user.user_email === reqUser.user_email);
+  const foundUser = users.find(user => user.user_email === reqUser.user_email);
   if (foundUser) {
     isDuplicatedEmail = true;
   }
@@ -124,6 +125,7 @@ module.exports.postSignup = async (req, res) => {
       user_password: reqUser.user_password,
       user_group: reqUser.user_group,
       user_permission: reqUser.user_permission,
+      user_status: reqUser.user_status,
     };
     await Users.insertMany(obj);
     res.redirect('/user/login');

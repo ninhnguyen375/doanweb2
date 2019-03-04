@@ -12,7 +12,7 @@ module.exports.index = async (req, res) => {
   let bills = await Bills.find();
   bills = bills.filter(b => b.authId === authId);
   if (!user) {
-    res.render('/');
+    res.redirect('/');
   }
   res.render('bill/index', {
     producers,

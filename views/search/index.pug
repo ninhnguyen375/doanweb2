@@ -6,37 +6,40 @@ block content
       h2 More Search
       p.text-muted#noti everything you want
       hr
-    form(action="/search/get").d-flex
+    .d-flex.flex-wrap.justify-content-center
       //- search value
-      input.form-control#searchValue(type="text", placeholder="Search value", name="search", value=querys.search)
+      input.form-control.col-2#searchValue(type="text", placeholder="Search value", name="search", value=querys.search)
       //- input page
       input(type="hidden", value="1", name="page")
-      //- search price
-      select.custom-select#searchPrice(name="price")
-        option(value="") Choose Price
-        option(value="100to500") 100$ - 500$
-        option(value="500to1000") 500$ - 1000$
       //- search by producer
-      select.custom-select#searchProducer(name="producer")
+      select.col-2.custom-select#searchProducer(name="producer")
         option(value="") Choose Producer
         each producer in producers
           option(value=producer.producer_id)= producer.producer_name
       //- sort name
-      select.custom-select#sortByName(name="sortByName")
+      select.col-2.custom-select#sortByName(name="sortByName")
         option(value="") Sort By Name
         option(value="AtoZ") A - Z
         option(value="ZtoA") Z - A
       //- sort price
-      select.custom-select#sortByPrice(name="sortByPrice")
+      select.col-2.custom-select#sortByPrice(name="sortByPrice")
         option(value="") Sort By Price
         option(value="Asc") Asc
         option(value="Desc") Desc
       //- button seach
+
+  //- search price
+  .container.mt-4
+    .row
+      .col-md-8.m-auto
+        | Search by Price
+        input.form-control.col-4.searchPrice(placeholder='From')
+        input.form-control.col-4.searchPrice(placeholder='To')
+  //-
   .section-heading.text-center.mb-5.mt-5
-    //   h2 Your Search
-    //   p.text-muted='There is ' + products.length + '  products'
+    h2 Your Search
       hr
-  #root    
+  #root
     #containerFeature.d-flex.flex-wrap.justify-content-around.container
       - let pages = Math.ceil(products.length / 6)
       - let start = (((querys.page) - 1)*6)
@@ -70,7 +73,7 @@ block content
   script.
 
     const searchValue = $('#searchValue');
-    const searchPrice = $('#searchPrice');
+    const searchPrice = $('.searchPrice');
     const searchProducer = $('#searchProducer');
     const sortByName = $('#sortByName');
     const sortByPrice = $('#sortByPrice');
@@ -97,10 +100,16 @@ block content
       const data = await postSearch();
       render(root, data.data);
     });
-    //- Load search price on change
-    searchPrice.on('change', async function(){
+    //- Load search price on keyup
+    searchPrice.on('keyup', async function(){
+      const startPrice = searchPrice[0].value;
+      const endPrice = searchPrice[1].value;
       pageVal = 1;
-      priceVal = this.value;
+      if(startPrice && endPrice) {
+        priceVal = `${startPrice}to${endPrice}`;
+      } else {
+        priceVal = '';
+      }
       const data = await postSearch();
       render(root, data.data);
     });

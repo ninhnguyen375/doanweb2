@@ -6,7 +6,7 @@ const billShema = new mongoose.Schema({
   totalPrice: Number,
   status: String,
   details: {
-    proId: [String],
+    proId: [Number],
     proPrice: [Number],
     proQuantity: [Number],
   },

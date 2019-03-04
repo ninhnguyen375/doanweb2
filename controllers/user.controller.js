@@ -5,10 +5,10 @@ const Products = require('../models/products.model');
 
 module.exports.index = async (req, res) => {
   const { id } = req.params;
-  const user = await Users.find({ _id: id });
+  const user = await Users.findById(id);
   const products = await Products.find();
   const producers = await Producers.find();
-  if (user[0]) {
+  if (user) {
     res.render('user/index', {
       user,
       products,
